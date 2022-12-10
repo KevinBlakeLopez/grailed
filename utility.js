@@ -45,7 +45,7 @@ function wholesaleMarkup(price) {
 function convertEUtoUS(price) {
   const apiKey = "EhMTro6NJ5sqjjN2yKgCr7pJDWHK2KIW";
 
-  UrlFetchApp.fetch(`https:/api.apilayer.com/exchangerates_data/convert?to=USD&from=EUR&amount=${price}`, {
+  UrlFetchApp.fetch(`https://api.apilayer.com/exchangerates_data/convert?to=USD&from=EUR&amount=${price}`, {
         "headers":{
             "TRN-Api-Key":apiKey
         }
