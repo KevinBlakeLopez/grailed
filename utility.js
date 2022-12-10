@@ -42,15 +42,14 @@ function wholesaleMarkup(price) {
   return (price * 2.5) + 100;
 }
 
-function convertEUtoUS(price) {
+function convertEUtoUS() {
   const apiKey = "EhMTro6NJ5sqjjN2yKgCr7pJDWHK2KIW";
 
-  UrlFetchApp.fetch(`https://api.apilayer.com/exchangerates_data/convert?to=USD&from=EUR&amount=${price}`, {
+  const response = UrlFetchApp.fetch("https://api.apilayer.com/exchangerates_data/convert?to=USD&from=EUR&amount=1", {
         "headers":{
-            "TRN-Api-Key":apiKey
+            "apikey":apiKey
         }
     })
-    .then(response => response.json())
-    .then(result => wholesaleMarkup(result.result))
-    .catch(error => console.log("error", error));
+    const res = JSON.parse(response.getContentText());
+    return res.result;
 }

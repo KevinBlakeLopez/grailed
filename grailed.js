@@ -8,6 +8,8 @@ const grailed = SpreadsheetApp.getActive().getSheetByName("grailed-inventory");
 const link =
   "https://brandsgateway.com//wp-json/wc-brandsgateway/v1/dropshipping-catalog/?api_key=BP5J4SRL7z8w74nv4TRX&&lang=en&format=csv&download=1";
 
+const conversion = convertEUtoUS();
+
 function fetchMapCSV() {
   // grailed.clear();
   let response = UrlFetchApp.fetch(link).getContentText();
@@ -24,15 +26,6 @@ function fetchMapCSV() {
         (row[16].toLowerCase() === "men" || row[16].toLowerCase() === "women")
     )
     .map((row) => {
-      console.log(
-        findMatches({
-          id: row[3],
-          gender: row[16].toLowerCase(),
-          category: htmlEntities(row[18].toLowerCase()),
-          size: row[19],
-        })
-      );
-
       if (row[16].toLowerCase() === "men") {
         return [
           row[3],
@@ -52,7 +45,7 @@ function fetchMapCSV() {
           null,
           "new",
           null,
-          convertEUtoUS(row[8]),
+          Math.round(wholesaleMarkup(row[8] * conversion) / 10) * 10,
           "tags go here",
           row[13],
         ];
@@ -75,7 +68,7 @@ function fetchMapCSV() {
           }),
           "new",
           null,
-          convertEUtoUS(row[8]),
+          Math.round(wholesaleMarkup(row[8] * conversion) / 10) * 10,
           "tags go here",
           row[13],
         ];

@@ -219,7 +219,6 @@ const regexPatterns = {
 };
 
 function findMatches(product) {
-  console.log(222, product);
   const matches = [];
   let regexes;
   if (product.gender === "men") {
@@ -341,7 +340,7 @@ function findMatches(product) {
     // console.log(320, REgroups[i]);
     REgroups[i].forEach((pattern) => {
       if (pattern.toString() === regexPattern.toString()) {
-        console.log(323, i, matches[0][i + 1]);
+        // console.log(323, i, matches[0][i + 1]);
         formattedSizes.push(matches[0][i + 1]);
       }
     });
