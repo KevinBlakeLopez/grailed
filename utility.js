@@ -1,5 +1,3 @@
-import fetch, {Headers} from 'node-fetch';
-
 function onOpen(){
   var ui = SpreadsheetApp.getUi();
   let menue = ui.createMenu('Utilites');
@@ -40,20 +38,20 @@ function populateBGSheet() {
     .setValues(brandsGatewayInventory);
 }
 
-function convertEUtoUS(price) {
-  let myHeaders = new Headers();
-  myHeaders.append("apikey", "EhMTro6NJ5sqjjN2yKgCr7pJDWHK2KIW");
-
-  const requestOptions = {
-    method: "GET",
-    redirect: "follow",
-    headers: myHeaders
-  };
-
-  fetch(`https:/api.apilayer.com/exchangerates_data/convert?to=USD&from=EUR&amount=${price}`, requestOptions)
-    .then(response => console.log(response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log("error", error));
+function wholesaleMarkup(price) {
+  return (price * 2.5) + 100;
 }
 
-convertEUtoUS(100);
+function convertEUtoUS(price) {
+  const apiKey = "EhMTro6NJ5sqjjN2yKgCr7pJDWHK2KIW";
+  const url = "https:/api.apilayer.com/exchangerates_data/convert?to=USD&from=EUR&amount=";
+
+  UrlFetchApp.fetch(url + price, {
+        "headers":{
+            "TRN-Api-Key":apiKey
+        }
+    })
+    .then(response => response.json())
+    .then(result => wholesaleMarkup(result.result))
+    .catch(error => console.log("error", error));
+}

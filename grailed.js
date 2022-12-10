@@ -50,9 +50,9 @@ function fetchMapCSV() {
           size: row[19],
         }),
           null,
+          "new",
           null,
-          null,
-          row[7],
+          convertEUtoUS(row[9]),
           "tags go here",
           row[13],
         ];
@@ -73,9 +73,9 @@ function fetchMapCSV() {
           category: htmlEntities(row[18].toLowerCase()),
           size: row[19],
           }),
+          "new",
           null,
-          null,
-          row[7],
+          convertEUtoUS(row[9]),
           "tags go here",
           row[13],
         ];
