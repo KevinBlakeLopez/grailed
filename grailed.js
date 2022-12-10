@@ -52,7 +52,7 @@ function fetchMapCSV() {
           null,
           "new",
           null,
-          convertEUtoUS(row[9]),
+          convertEUtoUS(row[8]),
           "tags go here",
           row[13],
         ];
@@ -75,7 +75,7 @@ function fetchMapCSV() {
           }),
           "new",
           null,
-          convertEUtoUS(row[9]),
+          convertEUtoUS(row[8]),
           "tags go here",
           row[13],
         ];
