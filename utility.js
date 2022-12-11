@@ -43,7 +43,6 @@ function wholesaleMarkup(price) {
 }
 
 function convertEUtoUS() {
-  const apiKey = "EhMTro6NJ5sqjjN2yKgCr7pJDWHK2KIW";
 
   const response = UrlFetchApp.fetch("https://api.apilayer.com/exchangerates_data/convert?to=USD&from=EUR&amount=1", {
         "headers":{
