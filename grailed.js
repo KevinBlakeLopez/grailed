@@ -30,10 +30,10 @@ function fetchMapCSV() {
         return [
           row[3],
           row[20],
-          row[5] + " " + row[6],
+          htmlEntities(row[5]) + " " + row[6],
           "original size on tag: " + row[19] + "\n" + row[27],
           convertCategories(htmlEntities(row[18].toLowerCase()), row[16].toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).toLowerCase(), row[16].toLowerCase(), row[6].toLowerCase()),
-          row[5],
+          htmlEntities(row[5]),
           null,
           null,
           findMatches({
@@ -53,10 +53,10 @@ function fetchMapCSV() {
         return [
           row[3],
           row[20],
-          row[5] + " " + row[6],
+          htmlEntities(row[5]) + " " + row[6],
           "original size on tag: " + row[19] + "\n" + row[27],
           "womens_" + convertCategories(htmlEntities(row[18].toLowerCase()), row[16].toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).toLowerCase(), row[16].toLowerCase(), row[6].toLowerCase()),
-          row[5],
+          htmlEntities(row[5]),
           null,
           null,
           null,

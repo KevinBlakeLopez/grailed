@@ -43,10 +43,12 @@ function wholesaleMarkup(price) {
 }
 
 function convertEUtoUS() {
+  const scriptProperties = PropertiesService.getScriptProperties();
+  const apikey = scriptProperties.getProperty('APIKEY');
 
   const response = UrlFetchApp.fetch("https://api.apilayer.com/exchangerates_data/convert?to=USD&from=EUR&amount=1", {
         "headers":{
-            "apikey":apiKey
+            "apikey":apikey
         }
     })
     const res = JSON.parse(response.getContentText());
