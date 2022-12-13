@@ -46,8 +46,15 @@ function fetchMapCSV() {
           "new",
           null,
           Math.round(wholesaleMarkup(row[8] * conversion) / 10) * 10,
-          "tags go here",
+          htmlEntities(row[5].replace(/\s/g, "").toLowerCase()),
           row[13],
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
         ];
       } else if (row[16].toLowerCase() === "women") {
         return [
@@ -69,8 +76,15 @@ function fetchMapCSV() {
           "new",
           null,
           Math.round(wholesaleMarkup(row[8] * conversion) / 10) * 10,
-          "tags go here",
+          htmlEntities(row[5].replace(/\s/g, "").toLowerCase()),
           row[13],
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
         ];
       }
     });
