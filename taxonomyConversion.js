@@ -64,7 +64,7 @@ function convertCategories(subcategory, gender) {
   return category;
 }
 
-function convertSubCategories(subcategory, gender, title) {
+function convertSubCategories(subcategory, gender, title, description) {
     let newSubCat;
     let options;
     switch (subcategory) {
@@ -154,7 +154,7 @@ function convertSubCategories(subcategory, gender, title) {
         break;
         
     }
-    if (options) options.forEach(option => title.includes(option) ? newSubCat = option : false);
+    if (options) options.forEach(option => ((title.includes(option) || title.includes(option.substring(0, option.length - 1))) || description.includes(option)) ? newSubCat = option : false);
     if (newSubCat) return newSubCat;
     if (options) return options;
 }

@@ -247,11 +247,20 @@ function findMatches(product) {
       case "shorts":
         regexes = regexPatterns.menswear.shorts;
         break;
+      case "sleepwear":
+        regexes = regexPatterns.menswear.shirts;
+        break;
       case "suits":
+        regexes = regexPatterns.menswear.suits_and_blazers;
+        break;
+      case "suits & blazers":
         regexes = regexPatterns.menswear.suits_and_blazers;
         break;
       case "sweaters":
         regexes = regexPatterns.menswear.sweaters;
+        break;
+      case "sweatsuits":
+        regexes = regexPatterns.menswear.shorts;
         break;
       case "swim":
         regexes = regexPatterns.menswear.swim;
@@ -303,10 +312,16 @@ function findMatches(product) {
       case "skirts":
         regexes = regexPatterns.womenswear.skirts;
         break;
+      case "sleepwear":
+        regexes = regexPatterns.womenswear.swim;
+        break;
       case "sweaters":
         regexes = regexPatterns.womenswear.sweaters;
         break;
       case "swim":
+        regexes = regexPatterns.womenswear.swim;
+        break;
+      case "tights & socks":
         regexes = regexPatterns.womenswear.swim;
         break;
       case "tops":
