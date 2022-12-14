@@ -12,6 +12,9 @@ function convertCategories(subcategory, gender) {
     case "dresses":
       category = "dresses";
       break;
+    case "gloves":
+      category = "accessories";
+      break;
     case "jackets":
       category = "outerwear";
       break;
@@ -73,6 +76,9 @@ function convertSubCategories(subcategory, gender, title, description) {
         break;
       case "dresses":
         options = ["midi", "mini", "maxi", "gowns"];
+        break;
+      case "gloves":
+        newSubCat = "gloves";
         break;
       case "jackets":
         if (gender === "men") {

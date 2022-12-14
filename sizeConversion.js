@@ -10,9 +10,9 @@ const cmInchType2 = /^\s*(\d{2,3})\s*(cm)\s*\/\s*(\d{2})\s*(in|inches)\s*$/i;
 const OneSize1 = /^\s*(One Size)\s*$/i;
 
 //men's jackets and coats
-const ITUSre = /^\s*(IT)\s*([4-6]?\d)\s*\|\s*(XXS|XS|S|M|L|[2-6]?XL|XXL)\s*$/i;
+const ITUSre = /^\s*(IT)\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|L|[2-6]?XL|XXL)\s*$/i;
 const USre = /^\s*(XXS|XS|S|M|L|[2-6]?XL|XXL)\s*$/i;
-const numUSType2 = /^\s*([4-6]?\d)\s*\|\s*(XXS|XS|S|M|L|[2-6]XL|XXL)\s*$/i;
+const numUSType2 = /^\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|L|[2-6]XL|XXL)\s*$/i;
 
 //men's pants
 const USre2 = /^\s*(XXS|XS|S|M|L|[2-6]*XL|XXL)\s*$/i;
@@ -179,7 +179,7 @@ const REgroups = [REgroup1, REgroup2, REgroup3, REgroup4];
 
 const regexPatterns = {
   menswear: {
-    accessories: [cmInch, numUS],
+    accessories: [cmInch, numUS, OneSize],
     bags: [cmInchType2, OneSize1],
     jackets_and_coats: [ITUSre, USre, numUSType2],
     pants: [USre2, ITUSre2, WnumLnum, ITUSDEre2],
@@ -187,15 +187,15 @@ const regexPatterns = {
     shoes: [OneSize2],
     shorts: [USre4],
     suits_and_blazers: [USre5],
-    sweaters: [USre6],
+    sweaters: [USre6, ITUSre],
     swim: [USre7],
     underwear_and_swim: [USre8],
   },
   womenswear: {
-    accessories: [numUS2, cmInch2, cmUS, ITUSre4, USre9, ITUSDEre3],
+    accessories: [numUS2, cmInch2, cmUS, ITUSre4, USre9, ITUSDEre3, OneSize],
     bags: [USre10],
-    dresses: [USre11, USnum, ITUSDEre4, USre12],
-    jackets_and_coats: [USre13, ITUSDEre5],
+    dresses: [USre11, USnum, ITUSDEre4, USre12, ITUSre4],
+    jackets_and_coats: [USre13, ITUSDEre5, ITUSre, OneSize],
     jewelry: [USre14],
     pants_and_jumpsuits: [
       numUS1,
@@ -208,10 +208,10 @@ const regexPatterns = {
     ],
     shoes: [num, EUUSre1, OneSize3],
     shorts: [ITUSre6, Wnum1, USre16, ITUSDEre6],
-    skirts: [ITUSre7, USre17, ITUSDEre7],
-    sweaters: [ITUSre8, ITre1, USre18, USnum2],
+    skirts: [ITUSre7, USre17, ITUSDEre7, OneSize],
+    sweaters: [ITUSre8, ITre1, USre18, USnum2, OneSize],
     swim: [ITUSre9],
-    tops: [ITUSre10, ITre2, USre19, USnum3, ITUSDEre8],
+    tops: [ITUSre10, ITre2, USre19, USnum3, ITUSDEre8, numUSType2],
   },
   electronics: {
     OneSize: [OneSize],
@@ -259,11 +259,17 @@ function findMatches(product) {
       case "sweaters":
         regexes = regexPatterns.menswear.sweaters;
         break;
+      case "sweaters_knitwear":
+        regexes = regexPatterns.menswear.sweaters;
+        break;
       case "sweatsuits":
         regexes = regexPatterns.menswear.shorts;
         break;
       case "swim":
         regexes = regexPatterns.menswear.swim;
+        break;
+      case "ties & bowties":
+        regexes = regexPatterns.menswear.accessories;
         break;
       case "underwear and swim":
         regexes = regexPatterns.menswear.underwear_and_swim;
@@ -284,6 +290,12 @@ function findMatches(product) {
       case "dresses":
         regexes = regexPatterns.womenswear.dresses;
         break;
+      case "gloves":
+        regexes = regexPatterns.womenswear.accessories;
+        break;
+      case "headbands":
+        regexes = regexPatterns.womenswear.accessories;
+        break;
       case "jackets":
         regexes = regexPatterns.womenswear.jackets_and_coats;
         break;
@@ -298,6 +310,9 @@ function findMatches(product) {
         break;
       case "pants and jumpsuits":
         regexes = regexPatterns.womenswear.pants_and_jumpsuits;
+        break;
+      case "scarves":
+        regexes = regexPatterns.womenswear.accessories;
         break;
       // verify this is the correct pattern for shirts
       case "shirts":
@@ -339,17 +354,19 @@ function findMatches(product) {
     regexes = regexPatterns.electronics.OneSize;
   }
 
-  // console.log(270, regexes)
+  console.log(product.size, regexes);
 
   regexes.forEach((regex) =>
     regex.test(product.size) ? matches.push(product.size.match(regex)) : null
   );
 
-  // console.log(276, matches)
+  console.log(product.category, matches);
 
   const regexPattern = regexes.filter((regex) => regex.test(product.size));
-  // console.log(277, regexPattern);
+  console.log(277, regexPattern);
 
+
+// row 45 in spreadsheet is not pulling the right size?
   const formattedSizes = [];
   for (let i = 0; i < REgroups.length; i++) {
     // console.log(320, REgroups[i]);
