@@ -179,7 +179,7 @@ const REgroups = [REgroup1, REgroup2, REgroup3, REgroup4];
 
 const regexPatterns = {
   menswear: {
-    accessories: [cmInch, numUS, OneSize],
+    accessories: [cmInch, cmInchType2, numUS, OneSize, ITUSre, Wnum],
     bags: [cmInchType2, OneSize1],
     jackets_and_coats: [ITUSre, USre, numUSType2],
     pants: [USre2, ITUSre2, WnumLnum, ITUSDEre2],
@@ -229,7 +229,28 @@ function findMatches(product) {
       case "bags":
         regexes = regexPatterns.menswear.bags;
         break;
+      case "belts":
+        regexes = regexPatterns.menswear.accessories;
+        break;
       case "blazers":
+        regexes = regexPatterns.menswear.jackets_and_coats;
+        break;
+      case "cummerbund":
+        regexes = regexPatterns.menswear.accessories;
+        break;
+      case "gloves":
+        regexes = regexPatterns.menswear.accessories;
+        break;
+      case "handkerchief":
+        regexes = regexPatterns.menswear.accessories;
+        break;
+      case "hats":
+        regexes = regexPatterns.menswear.accessories;
+        break;
+      case "hats & caps":
+        regexes = regexPatterns.menswear.accessories;
+        break; 
+      case "jackets":
         regexes = regexPatterns.menswear.jackets_and_coats;
         break;
       case "jackets & coats":
@@ -238,8 +259,17 @@ function findMatches(product) {
       case "jeans & pants":
         regexes = regexPatterns.menswear.pants;
         break;
+      case "keychains":
+        regexes = regexPatterns.menswear.accessories;
+        break;
+      case "other":
+        regexes = regexPatterns.menswear.accessories;
+        break;
       case "pants":
         regexes = regexPatterns.menswear.pants;
+        break;
+      case "scarves":
+        regexes = regexPatterns.menswear.accessories;
         break;
       case "shirts":
         regexes = regexPatterns.menswear.shirts;
@@ -274,6 +304,9 @@ function findMatches(product) {
       case "underwear and swim":
         regexes = regexPatterns.menswear.underwear_and_swim;
         break;
+      case "vests":
+        regexes = regexPatterns.menswear.shirts;
+        break;
     }
   } else if (product.gender === "women") {
     switch (product.category) {
@@ -283,14 +316,26 @@ function findMatches(product) {
       case "bags":
         regexes = regexPatterns.womenswear.bags;
         break;
+      case "belts":
+        regexes = regexPatterns.womenswear.accessories;
+        break;
       // is this the correct set of regexPatterns for blazers?  verify.
       case "blazers":
         regexes = regexPatterns.womenswear.jackets_and_coats;
+        break;
+      case "bracelets":
+        regexes = regexPatterns.womenswear.jewelry;
         break;
       case "dresses":
         regexes = regexPatterns.womenswear.dresses;
         break;
       case "gloves":
+        regexes = regexPatterns.womenswear.accessories;
+        break;
+      case "hat":
+        regexes = regexPatterns.womenswear.accessories;
+        break;
+      case "hats":
         regexes = regexPatterns.womenswear.accessories;
         break;
       case "headbands":
@@ -307,6 +352,12 @@ function findMatches(product) {
         break;
       case "jewelry":
         regexes = regexPatterns.womenswear.jewelry;
+        break;
+      case "keychains":
+        regexes = regexPatterns.womenswear.accessories;
+        break;
+      case "other":
+        regexes = regexPatterns.womenswear.accessories;
         break;
       case "pants and jumpsuits":
         regexes = regexPatterns.womenswear.pants_and_jumpsuits;
@@ -353,8 +404,7 @@ function findMatches(product) {
   } else if (product.gender === "electronics") {
     regexes = regexPatterns.electronics.OneSize;
   }
-
-  console.log(product.size, regexes);
+  console.log(product.size + " " + product.category, regexes);
 
   regexes.forEach((regex) =>
     regex.test(product.size) ? matches.push(product.size.match(regex)) : null

@@ -19,7 +19,7 @@ function fetchMapCSV() {
   brandsGatewayInventory.shift();
 
   const grailedInventory = brandsGatewayInventory
-    .slice(0, 185)
+    .slice(0, 500)
     .filter(
       (row) =>
         row[0].toLowerCase() !== "parent" &&
