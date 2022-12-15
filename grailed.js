@@ -19,7 +19,7 @@ function fetchMapCSV() {
   brandsGatewayInventory.shift();
 
   const grailedInventory = brandsGatewayInventory
-    .slice(0, 500)
+    .slice(0, 2000)
     .filter(
       (row) =>
         row[0].toLowerCase() !== "parent" &&
@@ -39,8 +39,10 @@ function fetchMapCSV() {
           findMatches({
           id: row[3],
           gender: row[16].toLowerCase(),
-          category: htmlEntities(row[18].toLowerCase()),
+          category: htmlEntities(row[17].toLowerCase()),
+          subCategory: htmlEntities(row[18].toLowerCase()),
           size: row[19],
+          description: htmlEntities(row[27].toLowerCase())
         }),
           null,
           "new",
@@ -70,9 +72,11 @@ function fetchMapCSV() {
           findMatches({
           id: row[3],
           gender: row[16].toLowerCase(),
-          category: htmlEntities(row[18].toLowerCase()),
+          category: htmlEntities(row[17].toLowerCase()),
+          subCategory: htmlEntities(row[18].toLowerCase()),
           altCat: convertCategories(htmlEntities(row[18].toLowerCase())),
           size: row[19],
+          description: htmlEntities(row[27].toLowerCase())
           }),
           "new",
           row[21].toLowerCase(),

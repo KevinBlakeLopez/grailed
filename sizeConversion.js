@@ -181,12 +181,14 @@ const regexPatterns = {
   menswear: {
     accessories: [cmInch, cmInchType2, numUS, OneSize, ITUSre, Wnum],
     bags: [cmInchType2, OneSize1],
+    frames: [OneSize],
     jackets_and_coats: [ITUSre, USre, numUSType2],
+    hats: [cmUS, OneSize],
     pants: [USre2, ITUSre2, WnumLnum, ITUSDEre2],
     shirts: [ITUSre3, USre3],
-    shoes: [OneSize2],
+    shoes: [num, OneSize2, EUUSre1],
     shorts: [USre4],
-    suits_and_blazers: [USre5],
+    suits_and_blazers: [USre5, ITUSre],
     sweaters: [USre6, ITUSre],
     swim: [USre7],
     underwear_and_swim: [USre8],
@@ -195,6 +197,8 @@ const regexPatterns = {
     accessories: [numUS2, cmInch2, cmUS, ITUSre4, USre9, ITUSDEre3, OneSize],
     bags: [USre10],
     dresses: [USre11, USnum, ITUSDEre4, USre12, ITUSre4],
+    frames: [OneSize],
+    hats: [cmUS, OneSize],
     jackets_and_coats: [USre13, ITUSDEre5, ITUSre, OneSize],
     jewelry: [USre14],
     pants_and_jumpsuits: [
@@ -220,197 +224,112 @@ const regexPatterns = {
 
 function findMatches(product) {
   const matches = [];
+  const allCategories = ["backpacks", "bags", "briefcases", "clutch bags", "frames for men", "leather accessories", "luggage and travel", "messenger bags", "shoulder bags", "tote bags", "wallets", "accessories", "belts", "bracelets", "cufflinks", "cummerbund", "gloves", "handkerchief", "hats", "hats & caps", "keychains", "money clips", "necklaces for men", "other", "rings", "rings for men", "scarves", "ties & bowties", "tie clips", "watches for men", "boots", "casual", "formal", "loafers", "sandals", "sneakers", "blazers", "jackets", "jackets & coats", "frames for men", "sunglasses for men", "hats", "hat", "jeans & pants", "pants", "cardigans", "shirts", "t-shirts", "sleepwear", "vests", "shorts", "sweatsuits", "suits", "suits & blazers", "sweaters", "sweaters_knitwear", "swim", "underwear and swim", "watches for women", "backpacks", "bags", "belt bags", "clutch bags", "crossbody bags", "evening bags", "handbags", "leather accessories", "luggage and travel", "satchel bags", "shoulder bags", "tote bags", "wallets", "bracelets", "brooches", "earrings", "earrings for women", "jewelry", "jewellery sets for women", "necklaces", "necklaces for women", "other", "others", "rings", "wallets for women", "dresses", "flat shoes", "platforms & wedges", "pumps", "skirts"];
+  const descriptionStr = product.description.split(" ");
   let regexes;
+  let category;
+  if (product.subCategory) {
+    category = product.subCategory;
+  } else if (!product.subCategory && product.category) {
+    category = product.category
+  } else {
+    descriptionStr.forEach(description => allCategories.includes(description) ? category = description : null)
+  }
   if (product.gender === "men") {
-    switch (product.category) {
-      case "accessories":
-        regexes = regexPatterns.menswear.accessories;
-        break;
-      case "bags":
+      if (["backpacks", "bags", "briefcases", "clutch bags", "frames for men", "leather accessories", "luggage and travel", "messenger bags", "shoulder bags", "tote bags", "wallets"].includes(category)) {
         regexes = regexPatterns.menswear.bags;
-        break;
-      case "belts":
+      }
+      else if (["accessories", "belts", "bracelets", "cufflinks", "cummerbund", "gloves", "handkerchief", "hats", "hats & caps", "keychains", "money clips", "necklaces for men", "other", "rings", "rings for men", "scarves", "ties & bowties", "tie clips", "watches for men"].includes(category)) {
         regexes = regexPatterns.menswear.accessories;
-        break;
-      case "blazers":
+      }
+      else if (["boots", "casual", "formal", "loafers", "sandals", "sneakers"].includes(category)) {
+        regexes = regexPatterns.menswear.shoes;
+      }
+      else if (["blazers", "jackets", "jackets & coats"].includes(category)) {
         regexes = regexPatterns.menswear.jackets_and_coats;
-        break;
-      case "cummerbund":
-        regexes = regexPatterns.menswear.accessories;
-        break;
-      case "gloves":
-        regexes = regexPatterns.menswear.accessories;
-        break;
-      case "handkerchief":
-        regexes = regexPatterns.menswear.accessories;
-        break;
-      case "hats":
-        regexes = regexPatterns.menswear.accessories;
-        break;
-      case "hats & caps":
-        regexes = regexPatterns.menswear.accessories;
-        break; 
-      case "jackets":
-        regexes = regexPatterns.menswear.jackets_and_coats;
-        break;
-      case "jackets & coats":
-        regexes = regexPatterns.menswear.jackets_and_coats;
-        break;
-      case "jeans & pants":
+      }
+      else if (["frames for men", "sunglasses for men"].includes(category)) {
+        regexes = regexPatterns.menswear.frames;
+      }
+      else if (["hats", "hat"].includes(category)) {
+        regexes = regexPatterns.menswear.hats;
+      } 
+      else if (["jeans & pants", "pants"].includes(category)) {
         regexes = regexPatterns.menswear.pants;
-        break;
-      case "keychains":
-        regexes = regexPatterns.menswear.accessories;
-        break;
-      case "other":
-        regexes = regexPatterns.menswear.accessories;
-        break;
-      case "pants":
-        regexes = regexPatterns.menswear.pants;
-        break;
-      case "scarves":
-        regexes = regexPatterns.menswear.accessories;
-        break;
-      case "shirts":
+      }
+      else if (["cardigans", "shirts", "t-shirts", "sleepwear", "vests"].includes(category)) {
         regexes = regexPatterns.menswear.shirts;
-        break;
-      case "shorts":
+      }
+      else if (["shorts", "sweatsuits"].includes(category)) {
         regexes = regexPatterns.menswear.shorts;
-        break;
-      case "sleepwear":
-        regexes = regexPatterns.menswear.shirts;
-        break;
-      case "suits":
+      }
+      else if (["suits", "suits & blazers"].includes(category)) {
         regexes = regexPatterns.menswear.suits_and_blazers;
-        break;
-      case "suits & blazers":
-        regexes = regexPatterns.menswear.suits_and_blazers;
-        break;
-      case "sweaters":
+      }
+      else if (["sweaters", "sweaters_knitwear"].includes(category)) {
         regexes = regexPatterns.menswear.sweaters;
-        break;
-      case "sweaters_knitwear":
-        regexes = regexPatterns.menswear.sweaters;
-        break;
-      case "sweatsuits":
-        regexes = regexPatterns.menswear.shorts;
-        break;
-      case "swim":
+      }
+      else if (category === "swim") {
         regexes = regexPatterns.menswear.swim;
-        break;
-      case "ties & bowties":
-        regexes = regexPatterns.menswear.accessories;
-        break;
-      case "underwear and swim":
+      }
+      else if (category === "underwear and swim") {
         regexes = regexPatterns.menswear.underwear_and_swim;
-        break;
-      case "vests":
-        regexes = regexPatterns.menswear.shirts;
-        break;
-    }
+      }
   } else if (product.gender === "women") {
-    switch (product.category) {
-      case "accessories":
+      if (["accessories", "belts", "gloves", "hat", "headbands", "keychains", "other", "scarves", "watches for women"].includes(category)) {
         regexes = regexPatterns.womenswear.accessories;
-        break;
-      case "bags":
+      }
+      else if (["backpacks", "bags", "belt bags", "clutch bags", "crossbody bags", "evening bags", "handbags", "leather accessories", "luggage and travel", "satchel bags", "shoulder bags", "tote bags", "wallets"].includes(category)) {
         regexes = regexPatterns.womenswear.bags;
-        break;
-      case "belts":
-        regexes = regexPatterns.womenswear.accessories;
-        break;
+      }
       // is this the correct set of regexPatterns for blazers?  verify.
-      case "blazers":
+      else if (["blazers", "jackets", "jackets & coats", "suits & blazers"].includes(category)) {
         regexes = regexPatterns.womenswear.jackets_and_coats;
-        break;
-      case "bracelets":
+      }
+      else if (["bracelets", "brooches", "earrings", "earrings for women", "jewelry", "jewellery sets for women", "necklaces", "necklaces for women", "other", "others", "rings", "wallets for women"].includes(category)) {
         regexes = regexPatterns.womenswear.jewelry;
-        break;
-      case "dresses":
+      }
+      else if (category === "dresses") {
         regexes = regexPatterns.womenswear.dresses;
-        break;
-      case "gloves":
-        regexes = regexPatterns.womenswear.accessories;
-        break;
-      case "hat":
-        regexes = regexPatterns.womenswear.accessories;
-        break;
-      case "hats":
-        regexes = regexPatterns.womenswear.accessories;
-        break;
-      case "headbands":
-        regexes = regexPatterns.womenswear.accessories;
-        break;
-      case "jackets":
-        regexes = regexPatterns.womenswear.jackets_and_coats;
-        break;
-      case "jackets & coats":
-        regexes = regexPatterns.womenswear.jackets_and_coats;
-        break;
-      case "jeans & pants":
+      }
+      else if (["frames for women", "sunglasses for women"].includes(category)) {
+        regexes = regexPatterns.womenswear.frames;
+      }
+      else if (["hats", "hat"].includes(category)) {
+        regexes = regexPatterns.womenswear.hats;
+      } 
+      else if (["jeans & pants", "pants and jumpsuits"].includes(category)) {
         regexes = regexPatterns.womenswear.pants_and_jumpsuits;
-        break;
-      case "jewelry":
-        regexes = regexPatterns.womenswear.jewelry;
-        break;
-      case "keychains":
-        regexes = regexPatterns.womenswear.accessories;
-        break;
-      case "other":
-        regexes = regexPatterns.womenswear.accessories;
-        break;
-      case "pants and jumpsuits":
-        regexes = regexPatterns.womenswear.pants_and_jumpsuits;
-        break;
-      case "scarves":
-        regexes = regexPatterns.womenswear.accessories;
-        break;
+      }
       // verify this is the correct pattern for shirts
-      case "shirts":
+      else if (["clothing", "shirts", "t-shirts", "tops", "cardigans", "tops & t-shirts", "vests"].includes(category)) {
         regexes = regexPatterns.womenswear.tops;
-        break;
-      case "shoes":
+      }
+      else if (["boots", "flat shoes", "platforms & wedges", "pumps", "sandals", "sneakers", "shoes"].includes(category)) {
         regexes = regexPatterns.womenswear.shoes;
-        break;
-      case "shorts":
+      }
+      else if (category === "shorts") {
         regexes = regexPatterns.womenswear.shorts;
-        break;
-      case "skirts":
+      }
+      else if (category === "skirts") {
         regexes = regexPatterns.womenswear.skirts;
-        break;
-      case "sleepwear":
+      }
+      else if (["sleepwear", "swim", "tights & socks"].includes(category)) {
         regexes = regexPatterns.womenswear.swim;
-        break;
-      case "sweaters":
+      }
+      else if (category === "sweaters") {
         regexes = regexPatterns.womenswear.sweaters;
-        break;
-      case "swim":
-        regexes = regexPatterns.womenswear.swim;
-        break;
-      case "tights & socks":
-        regexes = regexPatterns.womenswear.swim;
-        break;
-      case "tops":
-        regexes = regexPatterns.womenswear.tops;
-        break;
-      case "tops & t-shirts":
-        regexes = regexPatterns.womenswear.tops;
-        break;
-      // is this the correct set of regexPatterns for vests?
-      case "vests":
-        regexes = regexPatterns.womenswear.tops;
-        break;
-    }
+      }
   } else if (product.gender === "electronics") {
     regexes = regexPatterns.electronics.OneSize;
   }
-  console.log(product.size + " " + product.category, regexes);
+  console.log(product.size + " " + category, regexes);
 
   regexes.forEach((regex) =>
     regex.test(product.size) ? matches.push(product.size.match(regex)) : null
   );
 
-  console.log(product.category, matches);
+  console.log(category, matches);
 
   const regexPattern = regexes.filter((regex) => regex.test(product.size));
   console.log(277, regexPattern);
