@@ -66,21 +66,6 @@ function convertCategories(subcategory, gender, bgCat) {
       case "dresses":
         category = "dresses";
         break;
-      case "earrings":
-        category = "jewelry";
-        break;
-      case "frames":
-        category = "accessories";
-        break;
-      case "frames for men":
-        category = "accessories";
-        break;
-      case "frames for women":
-        category = "accessories";
-        break;
-      case "gloves":
-        category = "accessories";
-        break;
       case "jackets":
         category = "outerwear";
         break;
@@ -88,27 +73,9 @@ function convertCategories(subcategory, gender, bgCat) {
         category = "outerwear"
         break;
       case "jeans & pants":
+        console.log("77 ", "I'm here")
         category = "bottoms";
         break;
-      case "jewellery sets":
-        category = "jewelry";
-        break;
-      case "necklaces":
-        if (gender === "men") {
-          category = "accessories";
-          break;
-        } else if (gender === "women") {
-          category = "jewelry"
-          break;
-        }
-      case "rings":
-        if (gender === "men") {
-          category = "accessories";
-          break;
-        } else if (gender === "women") {
-          category = "jewelry"
-          break;
-        }
       case "shirts":
         category = "tops";
         break;
@@ -160,8 +127,8 @@ function convertCategories(subcategory, gender, bgCat) {
 }
 
 function convertSubCategories(subcategory, gender, title, description) {
-    let newSubCat;
-    let options;
+  let newSubCat;
+  let options;
     if (["bags", "briefcases"].includes(subcategory)) {
       if (gender === "men") {
         newSubCat = "bags_luggage";
@@ -237,21 +204,28 @@ function convertSubCategories(subcategory, gender, title, description) {
     } else if (subcategory === "vests") {
       newSubCat = "vests";
     }
-    let newOptions;
-    if (options) newOptions = options.map(option =>  {
+    const newOptions = [];
+    if (options) {
+      options.forEach(option =>  {
       if (option.includes("_")) {
         let ind = option.indexOf("_");
         if (option.includes("_", ind)) {
           let idx = option.indexOf("_", ind);
-          return option.substring(0, idx);
+          newOptions.push(option.substring(0, ind) + " " + option.substring(ind, idx));
         } else {
-          return option.substring(0, ind);
+          newOptions.push(option.substring(0, ind) + " " + option.substring(ind));
         }
       } else {
-        return option;
+        newOptions.push(option);
       }
     })
-    newOptions.forEach(option => ((title.includes(option) || title.includes(option.substring(0, option.length - 1))) || description.includes(option)) ? newSubCat = option : false);
+  }
+    newOptions.forEach(option => {
+      if ((title.includes(option) || title.includes(option.substring(0, option.length - 1))) || description.includes(option)) {
+      let ind = newOptions.indexOf(option);
+      newSubCat = options[ind];
+    }});
+
     if (newSubCat) return newSubCat;
     if (options) return options; 
     }

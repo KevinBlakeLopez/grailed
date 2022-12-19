@@ -323,16 +323,16 @@ function findMatches(product) {
   } else if (product.gender === "electronics") {
     regexes = regexPatterns.electronics.OneSize;
   }
-  console.log("326" + product.size + " " + category, regexes);
+  // console.log("326  " + product.size + " " + category, regexes);
 
   regexes.forEach((regex) =>
     regex.test(product.size) ? matches.push(product.size.match(regex)) : null
   );
 
-  console.log(category, matches);
+  // console.log("332  " + category, matches);
 
   const regexPattern = regexes.filter((regex) => regex.test(product.size));
-  console.log(277, regexPattern);
+  // console.log("335", regexPattern);
 
 
 // row 45 in spreadsheet is not pulling the right size?
