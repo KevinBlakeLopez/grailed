@@ -323,7 +323,7 @@ function findMatches(product) {
   } else if (product.gender === "electronics") {
     regexes = regexPatterns.electronics.OneSize;
   }
-  console.log(product.size + " " + category, regexes);
+  console.log("326" + product.size + " " + category, regexes);
 
   regexes.forEach((regex) =>
     regex.test(product.size) ? matches.push(product.size.match(regex)) : null
