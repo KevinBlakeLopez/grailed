@@ -237,8 +237,22 @@ function convertSubCategories(subcategory, gender, title, description) {
     } else if (subcategory === "vests") {
       newSubCat = "vests";
     }
-      if (options) options.forEach(option => ((title.includes(option) || title.includes(option.substring(0, option.length - 1))) || description.includes(option)) ? newSubCat = option : false);
-      if (newSubCat) return newSubCat;
-      if (options) return options; 
+    let newOptions;
+    if (options) newOptions = options.map(option =>  {
+      if (option.includes("_")) {
+        let ind = option.indexOf("_");
+        if (option.includes("_", ind)) {
+          let idx = option.indexOf("_", ind);
+          return option.substring(0, idx);
+        } else {
+          return option.substring(0, ind);
+        }
+      } else {
+        return option;
+      }
+    })
+    newOptions.forEach(option => ((title.includes(option) || title.includes(option.substring(0, option.length - 1))) || description.includes(option)) ? newSubCat = option : false);
+    if (newSubCat) return newSubCat;
+    if (options) return options; 
     }
     
