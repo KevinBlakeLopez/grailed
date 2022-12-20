@@ -105,7 +105,7 @@ function convertCategories(subcategory, gender, bgCat) {
         category = "accessories?";
         break;
       case "snow googles":
-        category = "";
+        category = "?";
         break;
       case "suits":
         category = "tailoring";
@@ -155,17 +155,21 @@ function convertSubCategories(subcategory, gender, title, description) {
       } else if (gender === "women") {
         newSubCat = subcategory;
       }  
-    } else if (["belts", "blazers", "boots", "bracelets", "brooches", "charms", "cufflinks", "earrings", "flats", "gloves", "heels", "leather", "mules", "platforms", "necklaces", "rings", "sandals", "scarves", "shorts", "suits", "vests"].includes(subcategory)) {
+    } else if (["belts", "blazers", "boots", "bracelets", "brooches", "charms", "cufflinks", "earrings", "flats", "gloves", "heels", "leather", "mules", "platforms", "necklaces", "rings", "sandals", "scarves", "shorts", "suits", "sunglasses", "vests"].includes(subcategory)) {
       newSubCat = subcategory;
-    } else if (["cummerbund", "handkerchief", "hand bag", "headbands", "pumps"].includes(subcategory)) {
+    } else if (["cummerbund", "handkerchief", "hand bag", "headbands", "pumps", "sleepwear", "sweatsuits"].includes(subcategory)) {
       newSubCat = "unknown???";
     } else if (["hitop sneakers", "lowtop sneakers", "sneakers", "slip ons"].includes(subcategory)) {
       options = ["hitop_sneakers", "lowtop_sneakers", "sneakers", "slip_ons"];
     } else if (["belt bags", "bucket bags", "clutch bags", "crossbody bags", "handle bags", "hobo bags", "luggage travel", "messengers satchels", "mini bags", "other", "shoulder bags", "toiletry pouches", "tote bags"].includes(subcategory)) {
       options = ["belt_bags", "bucket_bags", "clutch_bags", "crossbody_bags", "handle_bags", "hobo_bags", "luggage_travel", "messengers_satchels", "mini_bags", "other", "shoulder_bags", "toiletry_pouches", "tote_bags"];
     } else if (["dresses"].includes(subcategory)) {
-      if (description.includes("above-knee")) {
+      if (description.includes("above-knee") || description.includes("above knee")) {
         newSubCat = "mini";
+      } else if (description.includes("knee length") || description.includes("knee-length")) {
+        newSubCat = "midi";
+      } else if (description.includes("floor length") || description.includes("floor-length")) {
+        newSubCat = "maxi";
       } else {
         options = ["midi", "mini", "maxi", "gowns"];
       }
@@ -173,20 +177,20 @@ function convertSubCategories(subcategory, gender, title, description) {
       newSubCat = "formal_shoes";
     } else if (subcategory === "jackets") {
       if (gender === "men") {
-        options = ["denim_jackets", "leather_jackets", "light_jackets"];
+        options = ["bombers", "denim_jackets", "heavy_coats", "leather_jackets", "light_jackets", "parkas", "raincoats"];
       } else if (gender === "women") {
-        options = ["denim_jackets", "down_jackets", "jackets", "leather_jackets", "rain_jackets"];
+        options = ["blazers", "bombers", "coats", "denim_jackets", "down_jackets", "fur_faux_fur", "jackets", "leather_jackets", "rain_jackets"];
       }
     } else if (subcategory === "jackets & coats") {
       if (gender === "men") {
-        options = ["denim_jackets", "leather_jackets", "light_jackets", "heavy_coats", "raincoats"];
+        options = ["bombers", "denim_jackets", "leather_jackets", "light_jackets", "heavy_coats", "parkas", "raincoats"];
       } else if (gender === "women") {
-        options = ["denim_jackets", "down_jackets", "jackets", "leather_jackets", "rain_jackets", "coats"];
+        options = ["blazers", "bombers", "coats", "denim_jackets", "down_jackets", "fur_faux_fur", "jackets", "leather_jackets", "rain_jackets"];
       }
     } else if (subcategory === "jeans & pants") {
       if (gender === "men") {
         if (title.includes("jeans") || description.includes("jeans")) {
-          newSubCat = "denim???";
+          newSubCat = "denim";
         } else {
           options = ["denim", "casual_pants", "cropped_pants"];
         }
@@ -196,8 +200,12 @@ function convertSubCategories(subcategory, gender, title, description) {
     } else if (subcategory === "shirts") {
       options = ["long_sleeve_shirts", "short_sleeve_shirts"];
     } else if (subcategory === "skirts") {
-      if (description.includes("above-knee")) {
+      if (description.includes("above-knee") || description.includes("above knee")) {
         newSubCat = "mini_skirts";
+      } else if (description.includes("knee length") || description.includes("knee-length")) {
+        newSubCat = "midi_skirts";
+      } else if (description.includes("floor length") || description.includes("floor-length")) {
+        newSubCat = "maxi_skirts";
       } else {
         options = ["maxi_skirts", "midi_skirts", "mini_skirts"];
       }
@@ -214,7 +222,7 @@ function convertSubCategories(subcategory, gender, title, description) {
     } else if (subcategory === "sweatsuits") {
       newSubCat = "?";
     } else if (subcategory === "t-shirts") {
-      options = ["long_sleeve_shirts", "short_sleeve_shirts"];
+      options = ["blouses", "button_ups", "jerseys", "long_sleeve_shirts", "polos", "short_sleeve_shirts", "sleeveless"];
     } else if (subcategory === "ties & bowties") {
       newSubCat = "ties_pocketsquares";
     } else if (subcategory === "tights & socks") {
@@ -225,9 +233,9 @@ function convertSubCategories(subcategory, gender, title, description) {
       }
     } else if (subcategory === "tops & t-shirts") {
       if (title.includes("t-shirt") || description.includes("t-shirt")) {
-        newSubCat = "short_sleeve_shirts???";
+        newSubCat = "short_sleeve_shirts";
       } else {
-        options = ["blouses", "long_sleeve_shirts", "short_sleeve_shirts"];
+        options = ["blouses", "button_ups", "jerseys", "long_sleeve_shirts", "polos", "short_sleeve_shirts", "sleeveless"];
       }
     } else if (subcategory === "underwear") {
       if (gender === "men") {

@@ -8,7 +8,8 @@ const grailed = SpreadsheetApp.getActive().getSheetByName("grailed-inventory");
 const link =
   "https://brandsgateway.com//wp-json/wc-brandsgateway/v1/dropshipping-catalog/?api_key=BP5J4SRL7z8w74nv4TRX&&lang=en&format=csv&download=1";
 
-const conversion = convertEUtoUS();
+// const conversion = convertEUtoUS();
+const conversion = 1.1;
 
 function fetchMapCSV() {
   // grailed.clear();
