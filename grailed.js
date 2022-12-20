@@ -22,27 +22,27 @@ function fetchMapCSV() {
     .slice(0, 1000)
     .filter(
       (row) =>
-        row[0].toLowerCase() !== "parent" &&
-        (row[16].toLowerCase() === "men" || row[16].toLowerCase() === "women")
+        row[0].trim().toLowerCase() !== "parent" &&
+        (row[16].trim().toLowerCase() === "men" || row[16].trim().toLowerCase() === "women")
     )
     .map((row) => {
-      if (row[16].toLowerCase() === "men") {
+      if (row[16].trim().toLowerCase() === "men") {
         return [
           row[3],
           row[20],
           htmlEntities(row[5]) + " " + row[6],
-          "original size on tag: " + row[19] + "\n" + row[27],
-          convertCategories(htmlEntities(row[18].toLowerCase()), row[16].toLowerCase(), row[17].toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).toLowerCase(), row[16].toLowerCase(), row[6].toLowerCase(), row[27].toLowerCase()),
+         "original  size on tag: " + row[19] + "\n" + row[27],
+          createOptionsArray(convertCategories(htmlEntities(row[18].trim().toLowerCase()), row[16].trim().toLowerCase(), row[17].trim().toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).trim().toLowerCase(), row[16].trim().toLowerCase(), row[6].trim().toLowerCase(), row[27].trim().toLowerCase())),
           htmlEntities(row[5]),
           null,
           null,
           findMatches({
           id: row[3],
-          gender: row[16].toLowerCase(),
-          category: htmlEntities(row[17].toLowerCase()),
-          subCategory: htmlEntities(row[18].toLowerCase()),
+          gender: row[16].trim().toLowerCase(),
+          category: htmlEntities(row[17].trim().toLowerCase()),
+          subCategory: htmlEntities(row[18].trim().toLowerCase()),
           size: row[19],
-          description: htmlEntities(row[27].toLowerCase())
+          description: htmlEntities(row[27].trim().toLowerCase())
         }),
           null,
           "new",
@@ -58,25 +58,25 @@ function fetchMapCSV() {
           0,
           0
         ];
-      } else if (row[16].toLowerCase() === "women") {
+      } else if (row[16].trim().toLowerCase() === "women") {
         return [
           row[3],
           row[20],
           htmlEntities(row[5]) + " " + row[6],
           "original size on tag: " + row[19] + "\n" + row[27],
-          "womens_" + convertCategories(htmlEntities(row[18].toLowerCase()), row[16].toLowerCase(), row[17].toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).toLowerCase(), row[16].toLowerCase(), row[6].toLowerCase(), row[27].toLowerCase()),
+          createOptionsArray("womens_" + convertCategories(htmlEntities(row[18].trim().toLowerCase()), row[16].trim().toLowerCase(), row[17].trim().toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).trim().toLowerCase(), row[16].trim().toLowerCase(), row[6].trim().toLowerCase(), row[27].trim().toLowerCase())),
           htmlEntities(row[5]),
           null,
           null,
           null,
           findMatches({
           id: row[3],
-          gender: row[16].toLowerCase(),
-          category: htmlEntities(row[17].toLowerCase()),
-          subCategory: htmlEntities(row[18].toLowerCase()),
-          altCat: convertCategories(htmlEntities(row[18].toLowerCase())),
+          gender: row[16].trim().toLowerCase(),
+          category: htmlEntities(row[17].trim().toLowerCase()),
+          subCategory: htmlEntities(row[18].trim().toLowerCase()),
+          altCat: convertCategories(htmlEntities(row[18].trim().toLowerCase())),
           size: row[19],
-          description: htmlEntities(row[27].toLowerCase())
+          description: htmlEntities(row[27].trim().toLowerCase())
           }),
           "new",
           row[21].toLowerCase(),
@@ -94,6 +94,7 @@ function fetchMapCSV() {
       }
     });
 
+
   let startRow = 2;
   let startCol = 1;
   let numRows = grailedInventory.length;
@@ -103,5 +104,11 @@ function fetchMapCSV() {
   grailed
     .getRange(startRow, startCol, numRows, numColumns)
     .setValues(grailedInventory);
-}
+  // const categoryColumn = grailed.getRange("E2:E");
+  // console.log(categoryColumn.getValues());
 
+// var cell = SpreadsheetApp.getActive().getRange('A1');
+// const rule = SpreadsheetApp.newDataValidation().requireValueInList(categoryColumn.getValues().forEach(arr => Array.isArray(arr[0])) ? arr[0]: false).build();
+// categoryColumn.setDataValidation(rule);
+  
+}

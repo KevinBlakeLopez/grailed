@@ -2,7 +2,7 @@ function onOpen(){
   var ui = SpreadsheetApp.getUi();
   let menue = ui.createMenu('Utilites');
   menue.addItem(`BG Data`, 'populateBGSheet');
-  menue.addToUi()  
+  menue.addToUi();  
 }
 
 
