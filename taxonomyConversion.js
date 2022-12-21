@@ -191,6 +191,12 @@ function convertSubCategories(subcategory, gender, title, description, bgCat) {
       } else if ((description.includes("leather") || title.includes("leather")) && gender === "men") {
         newSubCat = "leather";
       }
+    } else if (bgCat === "accessories" && (subcategory === "gloves" || description.includes("gloves") || title.includes("gloves"))) {
+      if (gender === "men") {
+        newSubCat = "gloves_scarves";
+      } else if (gender === "women") {
+        newSubCat = "gloves";
+      }
     } else if (bgCat === "accessories" && (description.includes("hat") || title.includes("hat"))) {
       newSubCat = "hats";
     } else if (["headbands"].includes(subcategory)) {
@@ -273,6 +279,8 @@ function convertSubCategories(subcategory, gender, title, description, bgCat) {
       } else if (gender === "women") {
         newSubCat = "socks_intimates";
       }
+    } else if (bgCat === "bags" && (subcategory === "wallets" || description.includes("wallets") || title.includes("wallets"))) {
+      newSubCat = "wallets";
     } else if (bgCat === "watches" && (["watches", "watches for women", "watches for men"].includes(subcategory) || description.includes("watch") || title.includes("watch"))) {
       if (gender === "men") {
         newSubCat = "jewelry_watches";

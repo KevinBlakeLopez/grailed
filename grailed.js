@@ -12,10 +12,38 @@ const link =
 const conversion = 1.1;
 
 function fetchMapCSV() {
-  // grailed.clear();
+  grailed.clear();
+  grailed
+    .getRange(1, 1, 1, 22)
+    .setValues([
+      [
+        "external_seller_reference",
+        "inventory",
+        "title",
+        "description",
+        "category",
+        "designer",
+        "designer2",
+        "designer3",
+        "size",
+        "exact_size",
+        "condition",
+        "color",
+        "price",
+        "tags",
+        "photo_urls",
+        "shipping_us",
+        "shipping_ca",
+        "shipping_uk",
+        "shipping_eu",
+        "shipping_asia",
+        "shipping_au",
+        "shipping_other",
+      ],
+    ]);
+    
   let response = UrlFetchApp.fetch(link).getContentText();
   const brandsGatewayInventory = Utilities.parseCsv(response);
-
 
   brandsGatewayInventory.shift();
 
@@ -23,7 +51,8 @@ function fetchMapCSV() {
     .filter(
       (row) =>
         row[0].trim().toLowerCase() !== "parent" &&
-        (row[16].trim().toLowerCase() === "men" || row[16].trim().toLowerCase() === "women")
+        (row[16].trim().toLowerCase() === "men" ||
+          row[16].trim().toLowerCase() === "women")
     )
     .map((row) => {
       if (row[16].trim().toLowerCase() === "men") {
@@ -31,19 +60,26 @@ function fetchMapCSV() {
           row[3],
           row[20],
           htmlEntities(row[5]) + " " + row[6],
-         "original  size on tag: " + row[19] + "\n" + row[27],
-          createOptionsArray(convertCategories(htmlEntities(row[18].trim().toLowerCase()), row[16].trim().toLowerCase(), row[17].trim().toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).trim().toLowerCase(), row[16].trim().toLowerCase(), row[6].trim().toLowerCase(), row[27].trim().toLowerCase(), row[17].trim().toLowerCase())),
+          "original  size on tag: " + row[19] + "\n" + row[27],
+          createOptionsArray(
+            convertCategories(
+              htmlEntities(row[18].trim().toLowerCase()),
+              row[16].trim().toLowerCase(),
+              row[17].trim().toLowerCase()
+            ) +
+              "." +
+              convertSubCategories(
+                htmlEntities(row[18]).trim().toLowerCase(),
+                row[16].trim().toLowerCase(),
+                row[6].trim().toLowerCase(),
+                row[27].trim().toLowerCase(),
+                row[17].trim().toLowerCase()
+              )
+          ),
           htmlEntities(row[5]),
           null,
           null,
-          findMatches({
-          id: row[3],
-          gender: row[16].trim().toLowerCase(),
-          category: htmlEntities(row[17].trim().toLowerCase()),
-          subCategory: htmlEntities(row[18].trim().toLowerCase()),
-          size: row[19],
-          description: htmlEntities(row[27].trim().toLowerCase())
-        }),
+          row[19],
           null,
           "new",
           row[21].toLowerCase(),
@@ -56,7 +92,7 @@ function fetchMapCSV() {
           0,
           0,
           0,
-          0
+          0,
         ];
       } else if (row[16].trim().toLowerCase() === "women") {
         return [
@@ -64,20 +100,27 @@ function fetchMapCSV() {
           row[20],
           htmlEntities(row[5]) + " " + row[6],
           "original size on tag: " + row[19] + "\n" + row[27],
-          createOptionsArray("womens_" + convertCategories(htmlEntities(row[18].trim().toLowerCase()), row[16].trim().toLowerCase(), row[17].trim().toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).trim().toLowerCase(), row[16].trim().toLowerCase(), row[6].trim().toLowerCase(), row[27].trim().toLowerCase(), row[17].trim().toLowerCase())),
+          createOptionsArray(
+            "womens_" +
+              convertCategories(
+                htmlEntities(row[18].trim().toLowerCase()),
+                row[16].trim().toLowerCase(),
+                row[17].trim().toLowerCase()
+              ) +
+              "." +
+              convertSubCategories(
+                htmlEntities(row[18]).trim().toLowerCase(),
+                row[16].trim().toLowerCase(),
+                row[6].trim().toLowerCase(),
+                row[27].trim().toLowerCase(),
+                row[17].trim().toLowerCase()
+              )
+          ),
           htmlEntities(row[5]),
           null,
           null,
           null,
-          findMatches({
-          id: row[3],
-          gender: row[16].trim().toLowerCase(),
-          category: htmlEntities(row[17].trim().toLowerCase()),
-          subCategory: htmlEntities(row[18].trim().toLowerCase()),
-          altCat: convertCategories(htmlEntities(row[18].trim().toLowerCase())),
-          size: row[19],
-          description: htmlEntities(row[27].trim().toLowerCase())
-          }),
+          row[19],
           "new",
           row[21].toLowerCase(),
           Math.round(wholesaleMarkup(row[8] * conversion) / 10) * 10,
@@ -89,11 +132,10 @@ function fetchMapCSV() {
           0,
           0,
           0,
-          0
+          0,
         ];
       }
     });
-
 
   let startRow = 2;
   let startCol = 1;
@@ -104,11 +146,22 @@ function fetchMapCSV() {
   grailed
     .getRange(startRow, startCol, numRows, numColumns)
     .setValues(grailedInventory);
-  // const categoryColumn = grailed.getRange("E2:E");
-  // console.log(categoryColumn.getValues());
 
-// var cell = SpreadsheetApp.getActive().getRange('A1');
-// const rule = SpreadsheetApp.newDataValidation().requireValueInList(categoryColumn.getValues().forEach(arr => Array.isArray(arr[0])) ? arr[0]: false).build();
-// categoryColumn.setDataValidation(rule);
-  
+  const resultSet = grailed.getSheetValues(2, 5, grailed.getLastRow(), 1);
+  resultSet.forEach((item, index) => {
+    try {
+      const options = JSON.parse(item);
+      const cell = grailed.getRange(index + 2, 5, 1, 1);
+      console.log(index + 2);
+      const rule =
+        SpreadsheetApp.newDataValidation().requireValueInList(options);
+      cell.setDataValidation(rule);
+    } catch (e) {
+      console.log("not options", item);
+    }
+  });
+
+  // var cell = SpreadsheetApp.getActive().getRange('A1');
+  // const rule = SpreadsheetApp.newDataValidation().requireValueInList(categoryColumn.getValues().forEach(arr => Array.isArray(arr[0])) ? arr[0]: false).build();
+  // categoryColumn.setDataValidation(rule);
 }
