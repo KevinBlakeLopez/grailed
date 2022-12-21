@@ -20,7 +20,6 @@ function fetchMapCSV() {
   brandsGatewayInventory.shift();
 
   const grailedInventory = brandsGatewayInventory
-    .slice(0, 1000)
     .filter(
       (row) =>
         row[0].trim().toLowerCase() !== "parent" &&
@@ -33,7 +32,7 @@ function fetchMapCSV() {
           row[20],
           htmlEntities(row[5]) + " " + row[6],
          "original  size on tag: " + row[19] + "\n" + row[27],
-          createOptionsArray(convertCategories(htmlEntities(row[18].trim().toLowerCase()), row[16].trim().toLowerCase(), row[17].trim().toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).trim().toLowerCase(), row[16].trim().toLowerCase(), row[6].trim().toLowerCase(), row[27].trim().toLowerCase())),
+          createOptionsArray(convertCategories(htmlEntities(row[18].trim().toLowerCase()), row[16].trim().toLowerCase(), row[17].trim().toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).trim().toLowerCase(), row[16].trim().toLowerCase(), row[6].trim().toLowerCase(), row[27].trim().toLowerCase(), row[17].trim().toLowerCase())),
           htmlEntities(row[5]),
           null,
           null,
@@ -65,7 +64,7 @@ function fetchMapCSV() {
           row[20],
           htmlEntities(row[5]) + " " + row[6],
           "original size on tag: " + row[19] + "\n" + row[27],
-          createOptionsArray("womens_" + convertCategories(htmlEntities(row[18].trim().toLowerCase()), row[16].trim().toLowerCase(), row[17].trim().toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).trim().toLowerCase(), row[16].trim().toLowerCase(), row[6].trim().toLowerCase(), row[27].trim().toLowerCase())),
+          createOptionsArray("womens_" + convertCategories(htmlEntities(row[18].trim().toLowerCase()), row[16].trim().toLowerCase(), row[17].trim().toLowerCase()) + "." + convertSubCategories(htmlEntities(row[18]).trim().toLowerCase(), row[16].trim().toLowerCase(), row[6].trim().toLowerCase(), row[27].trim().toLowerCase(), row[17].trim().toLowerCase())),
           htmlEntities(row[5]),
           null,
           null,
