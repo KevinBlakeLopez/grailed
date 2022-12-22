@@ -1,9 +1,8 @@
-// kevin was here
-
 const brandsgateway = SpreadsheetApp.getActive().getSheetByName(
   "brandsgateway-inventory"
 );
 const grailed = SpreadsheetApp.getActive().getSheetByName("grailed-inventory");
+// const grailed22 = SpreadsheetApp.getActive().getSheetByName("22grailed-inventory");
 
 const link =
   "https://brandsgateway.com//wp-json/wc-brandsgateway/v1/dropshipping-catalog/?api_key=BP5J4SRL7z8w74nv4TRX&&lang=en&format=csv&download=1";
@@ -41,13 +40,14 @@ function fetchMapCSV() {
         "shipping_other",
       ],
     ]);
-    
+
   let response = UrlFetchApp.fetch(link).getContentText();
   const brandsGatewayInventory = Utilities.parseCsv(response);
 
   brandsGatewayInventory.shift();
 
   const grailedInventory = brandsGatewayInventory
+    .slice(0, 1000)
     .filter(
       (row) =>
         row[0].trim().toLowerCase() !== "parent" &&
@@ -152,16 +152,23 @@ function fetchMapCSV() {
     try {
       const options = JSON.parse(item);
       const cell = grailed.getRange(index + 2, 5, 1, 1);
-      console.log(index + 2);
+       // Clear existing Dropdown
+      // cell.setDataValidation(null)
+       // Create new options Dropdown
+      cell.setValues([["Option Selection Required"]]);
       const rule =
         SpreadsheetApp.newDataValidation().requireValueInList(options);
       cell.setDataValidation(rule);
-    } catch (e) {
-      console.log("not options", item);
-    }
+      // Store SKU and Options Array in Script Properties (persistance)
+      const sku = grailed.getSheetValues(index + 2, 5, 1, 1);
+      const scriptProperties = PropertiesService.getScriptProperties();
+      scriptProperties.setProperties({
+        [sku]: options,
+      });
+    } catch (e) {}
   });
+}
 
-  // var cell = SpreadsheetApp.getActive().getRange('A1');
-  // const rule = SpreadsheetApp.newDataValidation().requireValueInList(categoryColumn.getValues().forEach(arr => Array.isArray(arr[0])) ? arr[0]: false).build();
-  // categoryColumn.setDataValidation(rule);
+function clearSheet() {
+  grailed.clearContents();
 }
