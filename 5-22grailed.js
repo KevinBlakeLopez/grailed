@@ -1,17 +1,8 @@
-const brandsgateway = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
-  "brandsgateway-inventory"
-);
-const grailed = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("grailed-inventory");
+const grailed22 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("22grailed-inventory");
 
-const link =
-  "https://brandsgateway.com//wp-json/wc-brandsgateway/v1/dropshipping-catalog/?api_key=BP5J4SRL7z8w74nv4TRX&&lang=en&format=csv&download=1";
-
-// const conversion = convertEUtoUS();
-const conversion = 1.1;
-
-function fetchMapCSV() {
-  grailed.clear();
-  grailed
+function fetchMapCSV22() {
+  grailed22.clear();
+  grailed22
     .getRange(1, 1, 1, 22)
     .setValues([
       [
@@ -150,32 +141,32 @@ function fetchMapCSV() {
   let numColumns = grailedInventory[0].length;
 
   // Appends data into the sheet.
-  grailed
+  grailed22
     .getRange(startRow, startCol, numRows, numColumns)
     .setValues(grailedInventory);
 
-  const resultSet = grailed.getSheetValues(2, 5, grailed.getLastRow(), 1);
-  resultSet.forEach((item, index) => {
-    try {
-      const options = JSON.parse(item);
-      const cell = grailed.getRange(index + 2, 5, 1, 1);
-       // Clear existing Dropdown
-      cell.setDataValidation(null)
-       // Create new options Dropdown
-      cell.setValues([["Option Selection Required"]]);
-      const rule =
-        SpreadsheetApp.newDataValidation().requireValueInList(options);
-      cell.setDataValidation(rule);
-      // Store SKU and Options Array in Script Properties (persistance)
-      const sku = grailed.getSheetValues(index + 2, 5, 1, 1);
-      const scriptProperties = PropertiesService.getScriptProperties();
-      scriptProperties.setProperties({
-        [sku]: options,
-      });
-    } catch (e) {}
-  });
+  // const resultSet = grailed22.getSheetValues(2, 5, grailed22.getLastRow(), 1);
+  // resultSet.forEach((item, index) => {
+  //   try {
+  //     const options = JSON.parse(item);
+  //     const cell = grailed22.getRange(index + 2, 5, 1, 1);
+  //      // Clear existing Dropdown
+  //     cell.setDataValidation(null)
+  //      // Create new options Dropdown
+  //     cell.setValues([["Option Selection Required"]]);
+  //     const rule =
+  //       SpreadsheetApp.newDataValidation().requireValueInList(options);
+  //     cell.setDataValidation(rule);
+  //     // Store SKU and Options Array in Script Properties (persistance)
+  //     const sku = grailed22.getSheetValues(index + 2, 5, 1, 1);
+  //     const scriptProperties = PropertiesService.getScriptProperties();
+  //     scriptProperties.setProperties({
+  //       [sku]: options,
+  //     });
+  //   } catch (e) {}
+  // });
 }
 
-function clearSheet() {
-  grailed.clearContents();
+function clearSheet22() {
+  grailed22.clearContents();
 }
