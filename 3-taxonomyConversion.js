@@ -193,9 +193,6 @@ function convertCategories(subcategory, gender, bgCat, title, description) {
         ) {
           category = "tailoring";
           break;
-        } else if (title.includes("vest") || description.includes("vest")) {
-          category = "outerwear";
-          break;
         } else {
           category = "tops";
           break;
@@ -479,21 +476,15 @@ function convertSubCategories(
         description.includes("heavy") ||
         title.includes("heavy") ||
         description.includes("coat") ||
-        title.includes("coat")
+        title.includes("coat") ||
+        description.includes("down") ||
+        title.includes("down")
       ) {
         newSubCat = "heavy_coats";
       } else if (description.includes("parka") || title.includes("parka")) {
         newSubCat = "parkas";
       } else {
-        options = [
-          "bombers",
-          "denim_jackets",
-          "leather_jackets",
-          "light_jackets",
-          "heavy_coats",
-          "parkas",
-          "raincoats",
-        ];
+        newSubCat = "light_jackets";
       }
     } else if (gender === "women") {
       if (
@@ -525,17 +516,7 @@ function convertSubCategories(
       } else if (description.includes("coat") || title.includes("coat")) {
         newSubCat = "coats";
       } else {
-        options = [
-          "blazers",
-          "bombers",
-          "coats",
-          "denim_jackets",
-          "down_jackets",
-          "fur_faux_fur",
-          "jackets",
-          "leather_jackets",
-          "rain_jackets",
-        ];
+        newSubCat = "jackets";
       }
     }
   } else if (subcategory === "jackets & coats") {
@@ -561,21 +542,15 @@ function convertSubCategories(
         description.includes("heavy") ||
         title.includes("heavy") ||
         description.includes("coat") ||
-        title.includes("coat")
+        title.includes("coat") ||
+        description.includes("down") ||
+        title.includes("down")
       ) {
         newSubCat = "heavy_coats";
       } else if (description.includes("parka") || title.includes("parka")) {
         newSubCat = "parkas";
       } else {
-        options = [
-          "bombers",
-          "denim_jackets",
-          "leather_jackets",
-          "light_jackets",
-          "heavy_coats",
-          "parkas",
-          "raincoats",
-        ];
+        newSubCat = "light_jackets";
       }
     } else if (gender === "women") {
       if (
@@ -607,17 +582,7 @@ function convertSubCategories(
       } else if (description.includes("coat") || title.includes("coat")) {
         newSubCat = "coats";
       } else {
-        options = [
-          "blazers",
-          "bombers",
-          "coats",
-          "denim_jackets",
-          "down_jackets",
-          "fur_faux_fur",
-          "jackets",
-          "leather_jackets",
-          "rain_jackets",
-        ];
+        newSubCat = "jackets";
       }
     }
   } else if (subcategory === "jeans & pants") {
