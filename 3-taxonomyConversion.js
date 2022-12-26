@@ -116,8 +116,19 @@ function convertCategories(subcategory, gender, bgCat, title, description) {
         category = "tops";
         break;
       case "shirts":
-        category = "tops";
-        break;
+        if (
+          gender === "men" &&
+          (title.includes("formal") ||
+            title.includes("dress") ||
+            description.includes("formal") ||
+            description.includes("formal"))
+        ) {
+          category = "tailoring";
+          break;
+        } else {
+          category = "tops";
+          break;
+        }
       case "shorts":
         category = "bottoms";
         break;
@@ -156,14 +167,39 @@ function convertCategories(subcategory, gender, bgCat, title, description) {
           break;
         }
       case "t-shirts":
-        category = "tops";
-        break;
+        if (
+          gender === "men" &&
+          (title.includes("formal") ||
+            title.includes("dress") ||
+            description.includes("formal") ||
+            description.includes("formal"))
+        ) {
+          category = "tailoring";
+          break;
+        } else {
+          category = "tops";
+          break;
+        }
       case "tights & socks":
         category = "accessories";
         break;
       case "tops & t-shirts":
-        category = "tops";
-        break;
+        if (
+          gender === "men" &&
+          (title.includes("formal") ||
+            title.includes("dress") ||
+            description.includes("formal") ||
+            description.includes("formal"))
+        ) {
+          category = "tailoring";
+          break;
+        } else if (title.includes("vest") || description.includes("vest")) {
+          category = "outerwear";
+          break;
+        } else {
+          category = "tops";
+          break;
+        }
       case "underwear":
         category = "accessories";
         break;
@@ -426,7 +462,9 @@ function convertSubCategories(
         description.includes("rain") ||
         title.includes("rain") ||
         description.includes("trench") ||
-        title.includes("trench")
+        title.includes("trench") ||
+        description.includes("waterproof") ||
+        title.includes("waterproof")
       ) {
         newSubCat = "raincoats";
       } else if (description.includes("denim") || title.includes("denim")) {
@@ -462,7 +500,9 @@ function convertSubCategories(
         description.includes("rain") ||
         title.includes("rain") ||
         description.includes("trench") ||
-        title.includes("trench")
+        title.includes("trench") ||
+        description.includes("waterproof") ||
+        title.includes("waterproof")
       ) {
         newSubCat = "rain_jackets";
       } else if (description.includes("denim") || title.includes("denim")) {
@@ -504,7 +544,9 @@ function convertSubCategories(
         description.includes("rain") ||
         title.includes("rain") ||
         description.includes("trench") ||
-        title.includes("trench")
+        title.includes("trench") ||
+        description.includes("waterproof") ||
+        title.includes("waterproof")
       ) {
         newSubCat = "raincoats";
       } else if (description.includes("denim") || title.includes("denim")) {
@@ -540,7 +582,9 @@ function convertSubCategories(
         description.includes("rain") ||
         title.includes("rain") ||
         description.includes("trench") ||
-        title.includes("trench")
+        title.includes("trench") ||
+        description.includes("waterproof") ||
+        title.includes("waterproof")
       ) {
         newSubCat = "rain_jackets";
       } else if (description.includes("denim") || title.includes("denim")) {
@@ -587,7 +631,14 @@ function convertSubCategories(
         description.includes("formal")
       ) {
         newSubCat = "formal_trousers";
-      } else if (description.includes("jog") || title.includes("jog")) {
+      } else if (
+        description.includes("jog") ||
+        title.includes("jog") ||
+        description.includes("sport") ||
+        title.includes("sport") ||
+        description.includes("gym") ||
+        title.includes("gym")
+      ) {
         newSubCat = "sweatpants_joggers";
       } else if (
         title.includes("comfort") ||
@@ -597,7 +648,15 @@ function convertSubCategories(
         title.includes("chinos") ||
         description.includes("chinos") ||
         description.includes("khakis") ||
-        title.includes("khakis")
+        title.includes("khakis") ||
+        description.includes("corduroy") ||
+        title.includes("corduroy") ||
+        description.includes("cargo") ||
+        title.includes("cargo") ||
+        description.includes("stretch") ||
+        title.includes("stretch") ||
+        description.includes("baggy") ||
+        title.includes("baggy")
       ) {
         newSubCat = "casual_pants";
       } else {
@@ -653,9 +712,30 @@ function convertSubCategories(
     newSubCat = "messengers_satchels";
   } else if (subcategory === "shirts") {
     if (gender === "men") {
-      if (title.includes("button up") || description.includes("button up")) {
+      if (
+        !(
+          title.includes("formal") ||
+          title.includes("dress") ||
+          description.includes("formal") ||
+          description.includes("formal")
+        ) &&
+        (title.includes("button up") || description.includes("button up"))
+      ) {
         newSubCat = "button_ups";
-      } else if (!title.includes("t-shirt") && !title.includes("short sleeve") && !description.includes("t-shirt") && !description.includes("short sleeve") && (title.includes("jersey") || description.includes("jersey"))) {
+      } else if (
+        title.includes("formal") ||
+        title.includes("dress") ||
+        description.includes("formal") ||
+        description.includes("formal")
+      ) {
+        newSubCat = "formal_shirting";
+      } else if (
+        !title.includes("t-shirt") &&
+        !title.includes("short sleeve") &&
+        !description.includes("t-shirt") &&
+        !description.includes("short sleeve") &&
+        (title.includes("jersey") || description.includes("jersey"))
+      ) {
         newSubCat = "jerseys";
       } else if (
         title.includes("long sleeve") ||
@@ -674,7 +754,12 @@ function convertSubCategories(
         description.includes("sleeveless")
       ) {
         newSubCat = "sleeveless";
-      } else if (title.includes("sweater") || description.includes("sweater")) {
+      } else if (
+        title.includes("sweater") ||
+        description.includes("sweater") ||
+        title.includes("turtleneck") ||
+        description.includes("turtleneck")
+      ) {
         newSubCat = "sweaters_knitwear";
       } else if (
         title.includes("sweatshirt") ||
@@ -720,7 +805,13 @@ function convertSubCategories(
         newSubCat = "crop_tops";
       } else if (title.includes("hoodie") || description.includes("hoodie")) {
         newSubCat = "hoodies";
-      } else if (!title.includes("t-shirt") && !title.includes("short sleeve") && !description.includes("t-shirt") && !description.includes("short sleeve") && (title.includes("jersey") || description.includes("jersey"))) {
+      } else if (
+        !title.includes("t-shirt") &&
+        !title.includes("short sleeve") &&
+        !description.includes("t-shirt") &&
+        !description.includes("short sleeve") &&
+        (title.includes("jersey") || description.includes("jersey"))
+      ) {
         newSubCat = "jerseys";
       } else if (
         title.includes("long sleeve") ||
@@ -734,7 +825,12 @@ function convertSubCategories(
         description.includes("t-shirt")
       ) {
         newSubCat = "short_sleeve_shirts";
-      } else if (title.includes("sweater") || description.includes("sweater")) {
+      } else if (
+        title.includes("sweater") ||
+        description.includes("sweater") ||
+        title.includes("turtleneck") ||
+        description.includes("turtleneck")
+      ) {
         newSubCat = "sweaters";
       } else if (
         title.includes("sweatshirt") ||
@@ -827,9 +923,30 @@ function convertSubCategories(
     newSubCat = "bodysuits";
   } else if (subcategory === "t-shirts") {
     if (gender === "men") {
-      if (title.includes("button up") || description.includes("button up")) {
+      if (
+        !(
+          title.includes("formal") ||
+          title.includes("dress") ||
+          description.includes("formal") ||
+          description.includes("formal")
+        ) &&
+        (title.includes("button up") || description.includes("button up"))
+      ) {
         newSubCat = "button_ups";
-      } else if (!title.includes("t-shirt") && !title.includes("short sleeve") && !description.includes("t-shirt") && !description.includes("short sleeve") && (title.includes("jersey") || description.includes("jersey"))) {
+      } else if (
+        title.includes("formal") ||
+        title.includes("dress") ||
+        description.includes("formal") ||
+        description.includes("formal")
+      ) {
+        newSubCat = "formal_shirting";
+      } else if (
+        !title.includes("t-shirt") &&
+        !title.includes("short sleeve") &&
+        !description.includes("t-shirt") &&
+        !description.includes("short sleeve") &&
+        (title.includes("jersey") || description.includes("jersey"))
+      ) {
         newSubCat = "jerseys";
       } else if (
         title.includes("long sleeve") ||
@@ -848,13 +965,20 @@ function convertSubCategories(
         description.includes("sleeveless")
       ) {
         newSubCat = "sleeveless";
-      } else if (title.includes("sweater") || description.includes("sweater")) {
+      } else if (
+        title.includes("sweater") ||
+        description.includes("sweater") ||
+        title.includes("turtleneck") ||
+        description.includes("turtleneck")
+      ) {
         newSubCat = "sweaters_knitwear";
       } else if (
         title.includes("sweatshirt") ||
         description.includes("sweatshirt") ||
         title.includes("hoodie") ||
-        description.includes("hoodie")
+        description.includes("hoodie") ||
+        title.includes("turtleneck") ||
+        description.includes("turtleneck")
       ) {
         newSubCat = "sweatshirts_hoodies";
       } else if (title.includes("tank") || description.includes("tank")) {
@@ -894,7 +1018,13 @@ function convertSubCategories(
         newSubCat = "crop_tops";
       } else if (title.includes("hoodie") || description.includes("hoodie")) {
         newSubCat = "hoodies";
-      } else if (!title.includes("t-shirt") && !title.includes("short sleeve") && !description.includes("t-shirt") && !description.includes("short sleeve") && (title.includes("jersey") || description.includes("jersey"))) {
+      } else if (
+        !title.includes("t-shirt") &&
+        !title.includes("short sleeve") &&
+        !description.includes("t-shirt") &&
+        !description.includes("short sleeve") &&
+        (title.includes("jersey") || description.includes("jersey"))
+      ) {
         newSubCat = "jerseys";
       } else if (
         title.includes("long sleeve") ||
@@ -912,7 +1042,9 @@ function convertSubCategories(
         newSubCat = "sweaters";
       } else if (
         title.includes("sweatshirt") ||
-        description.includes("sweatshirt")
+        description.includes("sweatshirt") ||
+        title.includes("turtleneck") ||
+        description.includes("turtleneck")
       ) {
         newSubCat = "sweatshirts";
       } else if (title.includes("tank") || description.includes("tank")) {
@@ -944,9 +1076,30 @@ function convertSubCategories(
     }
   } else if (subcategory === "tops & t-shirts") {
     if (gender === "men") {
-      if (title.includes("button up") || description.includes("button up")) {
+      if (
+        !(
+          title.includes("formal") ||
+          title.includes("dress") ||
+          description.includes("formal") ||
+          description.includes("formal")
+        ) &&
+        (title.includes("button up") || description.includes("button up"))
+      ) {
         newSubCat = "button_ups";
-      } else if (!title.includes("t-shirt") && !title.includes("short sleeve") && !description.includes("t-shirt") && !description.includes("short sleeve") && (title.includes("jersey") || description.includes("jersey"))) {
+      } else if (
+        title.includes("formal") ||
+        title.includes("dress") ||
+        description.includes("formal") ||
+        description.includes("formal")
+      ) {
+        newSubCat = "formal_shirting";
+      } else if (
+        !title.includes("t-shirt") &&
+        !title.includes("short sleeve") &&
+        !description.includes("t-shirt") &&
+        !description.includes("short sleeve") &&
+        (title.includes("jersey") || description.includes("jersey"))
+      ) {
         newSubCat = "jerseys";
       } else if (
         title.includes("long sleeve") ||
@@ -971,7 +1124,9 @@ function convertSubCategories(
         title.includes("sweatshirt") ||
         description.includes("sweatshirt") ||
         title.includes("hoodie") ||
-        description.includes("hoodie")
+        description.includes("hoodie") ||
+        title.includes("turtleneck") ||
+        description.includes("turtleneck")
       ) {
         newSubCat = "sweatshirts_hoodies";
       } else if (title.includes("tank") || description.includes("tank")) {
@@ -1011,7 +1166,13 @@ function convertSubCategories(
         newSubCat = "crop_tops";
       } else if (title.includes("hoodie") || description.includes("hoodie")) {
         newSubCat = "hoodies";
-      } else if (!title.includes("t-shirt") && !title.includes("short sleeve") && !description.includes("t-shirt") && !description.includes("short sleeve") && (title.includes("jersey") || description.includes("jersey"))) {
+      } else if (
+        !title.includes("t-shirt") &&
+        !title.includes("short sleeve") &&
+        !description.includes("t-shirt") &&
+        !description.includes("short sleeve") &&
+        (title.includes("jersey") || description.includes("jersey"))
+      ) {
         newSubCat = "jerseys";
       } else if (
         title.includes("long sleeve") ||
@@ -1029,7 +1190,9 @@ function convertSubCategories(
         newSubCat = "sweaters";
       } else if (
         title.includes("sweatshirt") ||
-        description.includes("sweatshirt")
+        description.includes("sweatshirt") ||
+        title.includes("turtleneck") ||
+        description.includes("turtleneck")
       ) {
         newSubCat = "sweatshirts";
       } else if (title.includes("tank") || description.includes("tank")) {
