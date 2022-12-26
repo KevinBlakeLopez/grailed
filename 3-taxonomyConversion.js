@@ -840,20 +840,7 @@ function convertSubCategories(
       } else if (title.includes("tank") || description.includes("tank")) {
         newSubCat = "tank_tops";
       } else {
-        options = [
-          "blouses",
-          "bodysuits",
-          "button_ups",
-          "crop_tops",
-          "hoodies",
-          "jerseys",
-          "long_sleeve_shirts",
-          "polos",
-          "short_sleeve_shirts",
-          "sweaters",
-          "sweatshirts",
-          "tank_tops",
-        ];
+        newSubCat = "blouses";
       }
     }
   } else if (subcategory === "skirts") {
@@ -1050,20 +1037,7 @@ function convertSubCategories(
       } else if (title.includes("tank") || description.includes("tank")) {
         newSubCat = "tank_tops";
       } else {
-        options = [
-          "blouses",
-          "bodysuits",
-          "button_ups",
-          "crop_tops",
-          "hoodies",
-          "jerseys",
-          "long_sleeve_shirts",
-          "polos",
-          "short_sleeve_shirts",
-          "sweaters",
-          "sweatshirts",
-          "tank_tops",
-        ];
+        newSubCat = "blouses";
       }
     }
   } else if (subcategory === "ties & bowties") {
@@ -1198,20 +1172,7 @@ function convertSubCategories(
       } else if (title.includes("tank") || description.includes("tank")) {
         newSubCat = "tank_tops";
       } else {
-        options = [
-          "blouses",
-          "bodysuits",
-          "button_ups",
-          "crop_tops",
-          "hoodies",
-          "jerseys",
-          "long_sleeve_shirts",
-          "polos",
-          "short_sleeve_shirts",
-          "sweaters",
-          "sweatshirts",
-          "tank_tops",
-        ];
+        newSubCat = "blouses";
       }
     }
   } else if (subcategory === "tote bags") {
