@@ -335,7 +335,7 @@ function convertSubCategories(
     if (title.includes("pants")) {
       newSubCat = "sweatpants_joggers";
     } else if (title.includes("sweatsuit")) {
-      newSubCat = "jumpsuits_unknown?";
+      newSubCat = "jumpsuits";
     }
   } else if (
     ["hitop sneakers", "lowtop sneakers", "sneakers", "slip ons"].includes(
