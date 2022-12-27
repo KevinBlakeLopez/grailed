@@ -1,4 +1,6 @@
-const grailed22 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("22grailed-inventory");
+const grailed22 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+  "22grailed-inventory"
+);
 
 function fetchMapCSV22() {
   grailed22.clear();
@@ -77,7 +79,15 @@ function fetchMapCSV22() {
           htmlEntities(row[5]),
           null,
           null,
-          row[19],
+          convertSize(
+            row[19],
+            row[17],
+            row[18],
+            row[9],
+            row[16],
+            convertCategories(row[18], row[16], row[17], row[6], row[9]),
+            convertSubCategories(row[18], row[16], row[6], row[9], row[17])
+          ),
           null,
           "new",
           row[21].toLowerCase(),
@@ -118,7 +128,15 @@ function fetchMapCSV22() {
           null,
           null,
           null,
-          row[19],
+          convertSize(
+            row[19],
+            row[17],
+            row[18],
+            row[9],
+            row[16],
+            convertCategories(row[18], row[16], row[17], row[6], row[9]),
+            convertSubCategories(row[18], row[16], row[6], row[9], row[17])
+          ),
           "new",
           row[21].toLowerCase(),
           Math.round(wholesaleMarkup(row[8] * conversion) / 10) * 10,
