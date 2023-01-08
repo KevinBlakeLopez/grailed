@@ -51,10 +51,14 @@ function fetchMapCSV() {
       (row) =>
         row[0].trim().toLowerCase() !== "parent" &&
         (row[16].trim().toLowerCase() === "men" ||
-          row[16].trim().toLowerCase() === "women")
+          row[16].trim().toLowerCase() === "women" ||
+          row[16].trim().toLowerCase() === "unisex")
     )
     .map((row) => {
-      if (row[16].trim().toLowerCase() === "men") {
+      if (
+        row[16].trim().toLowerCase() === "men" ||
+        row[16].trim().toLowerCase() === "unisex"
+      ) {
         return [
           row[3],
           row[20],

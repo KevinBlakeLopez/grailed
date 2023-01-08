@@ -39,14 +39,19 @@ function fetchMapCSV22() {
   brandsGatewayInventory.shift();
 
   const grailedInventory = brandsGatewayInventory
+    .slice(0, 1000)
     .filter(
       (row) =>
         row[0].trim().toLowerCase() !== "parent" &&
         (row[16].trim().toLowerCase() === "men" ||
-          row[16].trim().toLowerCase() === "women")
+          row[16].trim().toLowerCase() === "women" ||
+          row[16].trim().toLowerCase() === "unisex")
     )
     .map((row) => {
-      if (row[16].trim().toLowerCase() === "men") {
+      if (
+        row[16].trim().toLowerCase() === "men" ||
+        row[16].trim().toLowerCase() === "unisex"
+      ) {
         return [
           row[3],
           row[20],
@@ -80,13 +85,25 @@ function fetchMapCSV22() {
           null,
           null,
           convertSize(
-            row[19],
-            row[17],
-            row[18],
-            row[9],
-            row[16],
-            convertCategories(row[18], row[16], row[17], row[6], row[9]),
-            convertSubCategories(row[18], row[16], row[6], row[9], row[17])
+            row[19].trim().toLowerCase(),
+            row[17].trim().toLowerCase(),
+            htmlEntities(row[18].trim().toLowerCase()),
+            row[9].trim().toLowerCase(),
+            row[16].trim().toLowerCase(),
+            convertCategories(
+              htmlEntities(row[18].trim().toLowerCase()),
+              row[16].trim().toLowerCase(),
+              row[17].trim().toLowerCase(),
+              row[6].trim().toLowerCase(),
+              row[9].trim().toLowerCase()
+            ),
+            convertSubCategories(
+              htmlEntities(row[18].trim().toLowerCase()),
+              row[16].trim().toLowerCase(),
+              row[6].trim().toLowerCase(),
+              row[9].trim().toLowerCase(),
+              row[17].trim().toLowerCase()
+            )
           ),
           null,
           "new",
@@ -129,13 +146,25 @@ function fetchMapCSV22() {
           null,
           null,
           convertSize(
-            row[19],
-            row[17],
-            row[18],
-            row[9],
-            row[16],
-            convertCategories(row[18], row[16], row[17], row[6], row[9]),
-            convertSubCategories(row[18], row[16], row[6], row[9], row[17])
+            row[19].trim().toLowerCase(),
+            row[17].trim().toLowerCase(),
+            htmlEntities(row[18].trim().toLowerCase()),
+            row[9].trim().toLowerCase(),
+            row[16].trim().toLowerCase(),
+            convertCategories(
+              htmlEntities(row[18].trim().toLowerCase()),
+              row[16].trim().toLowerCase(),
+              row[17].trim().toLowerCase(),
+              row[6].trim().toLowerCase(),
+              row[9].trim().toLowerCase()
+            ),
+            convertSubCategories(
+              htmlEntities(row[18].trim().toLowerCase()),
+              row[16].trim().toLowerCase(),
+              row[6].trim().toLowerCase(),
+              row[9].trim().toLowerCase(),
+              row[17].trim().toLowerCase()
+            )
           ),
           "new",
           row[21].toLowerCase(),

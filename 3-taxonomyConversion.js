@@ -51,13 +51,13 @@ function convertCategories(subcategory, gender, bgCat, title, description) {
         category = "footwear";
         break;
       case "snow goggles":
-        category = "snow goggles???";
+        category = "accessories";
         break;
       case "sunglasses":
         category = "accessories";
         break;
       case "technology":
-        category = "technology???";
+        category = "accessories";
         break;
       case "wallets":
         category = "accessories";
@@ -152,7 +152,7 @@ function convertCategories(subcategory, gender, bgCat, title, description) {
         category = "accessories";
         break;
       case "snow googles":
-        category = "?";
+        category = "accessories";
         break;
       case "suits":
         category = "tailoring";
@@ -233,7 +233,7 @@ function convertSubCategories(
   title,
   description,
   bgCat,
-  gCat
+  gCat = ""
 ) {
   let newSubCat;
   let options;
@@ -277,7 +277,11 @@ function convertSubCategories(
       title.includes("sunglasses")
     ) {
       newSubCat = "sunglasses";
-    } else if (description.includes("wallets") || title.includes("wallets")) {
+    } else if (
+      subcategory === "wallets for women" ||
+      description.includes("wallets") ||
+      title.includes("wallets")
+    ) {
       newSubCat = "wallets";
     }
   } else if (
@@ -413,13 +417,18 @@ function convertSubCategories(
       newSubCat = "midi";
     }
   } else if (
-    ["frames", "frames for men", "frames for women", "glasses"].includes(
-      subcategory
-    ) ||
-    description.includes("frames") ||
-    title.includes("frames") ||
-    description.includes("glasses") ||
-    title.includes("glasses")
+    ([
+      "frames",
+      "frames for men",
+      "frames for women",
+      "glasses",
+      "unisex frames",
+    ].includes(subcategory) ||
+      description.includes("frames") ||
+      title.includes("frames") ||
+      description.includes("glasses") ||
+      title.includes("glasses")) &&
+    (!title.includes("sunglasses") || !description.includes("sunglasses"))
   ) {
     newSubCat = "glasses";
   } else if (bgCat === "shoes") {
@@ -607,8 +616,15 @@ function convertSubCategories(
         options = ["jeans", "joggers", "leggings", "pants", "shorts"];
       }
     }
-  } else if (["keychains", "money clips"].includes(subcategory)) {
-    if (gender === "men") {
+  } else if (
+    [
+      "keychains",
+      "money clips",
+      "snow goggles",
+      "unisex snow goggles",
+    ].includes(subcategory)
+  ) {
+    if (gender === "men" || gender === "unisex") {
       newSubCat = "misc";
     } else if (gender === "women") {
       newSubCat = "miscellaneous";
@@ -619,12 +635,22 @@ function convertSubCategories(
     newSubCat = "luggage_travel";
   } else if (description.includes("necklace") || title.includes("necklace")) {
     newSubCat = "necklaces";
-  } else if (subcategory === "option" || subcategory === "options") {
-    if (gender === "men") {
+  } else if (
+    subcategory === "option" ||
+    subcategory === "options" ||
+    subcategory === "other" ||
+    subcategory === "unisex snow goggles" ||
+    bgCat === "snow goggles" ||
+    title.includes("snow goggles") ||
+    description.includes("snow goggles")
+  ) {
+    if (gender === "men" || gender === "unisex") {
       newSubCat = "misc";
     } else if (gender === "women") {
       newSubCat = "miscellaneous";
     }
+  } else if (subcategory === "platforms & wedges") {
+    newSubCat = "platforms";
   } else if (
     subcategory === "polo shirts" ||
     subcategory === "polo shirt" ||
@@ -1124,13 +1150,16 @@ function convertSubCategories(
     }
   } else if (
     bgCat === "watches" &&
-    (["watches", "watches for women", "watches for men"].includes(
-      subcategory
-    ) ||
+    ([
+      "watches",
+      "watches for women",
+      "watches for men",
+      "unisex watches",
+    ].includes(subcategory) ||
       description.includes("watch") ||
       title.includes("watch"))
   ) {
-    if (gender === "men") {
+    if (gender === "men" || gender === "unisex" || !gender) {
       newSubCat = "jewelry_watches";
     } else if (gender === "women") {
       newSubCat = "watches";
@@ -1145,7 +1174,6 @@ function convertSubCategories(
       description.includes("flop"))
   ) {
     newSubCat = "sandals";
-    console.log(gender + " " + newSubCat + " " + subcategory);
   } else if (
     bgCat === "shoes" &&
     (description.includes("boot") || title.includes("boot"))
@@ -1200,14 +1228,12 @@ function convertSubCategories(
       newSubCat = options[ind];
     }
   });
-  if (!newSubCat && !options)
-    console.log(
-      gender + " " + bgCat + " " + subcategory + " " + gCat + " " + newSubCat
-    );
+
   if (newSubCat) {
     options = null;
     return newSubCat;
   } else if (options) return options;
+  else console.log(gender + " " + bgCat + " " + subcategory);
 }
 
 function inferSubCategories() {
