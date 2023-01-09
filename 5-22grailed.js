@@ -39,78 +39,79 @@ function fetchMapCSV22() {
   brandsGatewayInventory.shift();
 
   const grailedInventory = brandsGatewayInventory
-    .slice(0, 1000)
     .filter(
-      (row) =>
-        row[0].trim().toLowerCase() !== "parent" &&
-        (row[16].trim().toLowerCase() === "men" ||
-          row[16].trim().toLowerCase() === "women" ||
-          row[16].trim().toLowerCase() === "unisex")
+      (column) =>
+        column[0].trim().toLowerCase() !== "parent" &&
+        (column[16].trim().toLowerCase() === "men" ||
+          column[16].trim().toLowerCase() === "women" ||
+          column[16].trim().toLowerCase() === "unisex")
     )
-    .map((row) => {
+    .map((column) => {
       if (
-        row[16].trim().toLowerCase() === "men" ||
-        row[16].trim().toLowerCase() === "unisex"
+        column[16].trim().toLowerCase() === "men" ||
+        column[16].trim().toLowerCase() === "unisex"
       ) {
         return [
-          row[3],
-          row[20],
-          htmlEntities(row[5]) + " " + row[6],
-          "original  size on tag: " + row[19] + "\n" + row[27],
+          column[3],
+          column[20],
+          htmlEntities(column[5]) + " " + column[6],
+          "original  size on tag: " + column[19] + "\n" + column[27],
           createOptionsArray(
             convertCategories(
-              htmlEntities(row[18].trim().toLowerCase()),
-              row[16].trim().toLowerCase(),
-              row[17].trim().toLowerCase(),
-              row[6].trim().toLowerCase(),
-              row[27].trim().toLowerCase()
+              htmlEntities(column[18].trim().toLowerCase()),
+              column[16].trim().toLowerCase(),
+              column[17].trim().toLowerCase(),
+              column[6].trim().toLowerCase(),
+              column[27].trim().toLowerCase()
             ) +
               "." +
               convertSubCategories(
-                htmlEntities(row[18]).trim().toLowerCase(),
-                row[16].trim().toLowerCase(),
-                row[6].trim().toLowerCase(),
-                row[27].trim().toLowerCase(),
-                row[17].trim().toLowerCase(),
+                htmlEntities(column[18]).trim().toLowerCase(),
+                column[16].trim().toLowerCase(),
+                column[6].trim().toLowerCase(),
+                column[27].trim().toLowerCase(),
+                column[17].trim().toLowerCase(),
                 convertCategories(
-                  htmlEntities(row[18].trim().toLowerCase()),
-                  row[16].trim().toLowerCase(),
-                  row[17].trim().toLowerCase(),
-                  row[6].trim().toLowerCase(),
-                  row[27].trim().toLowerCase()
+                  htmlEntities(column[18].trim().toLowerCase()),
+                  column[16].trim().toLowerCase(),
+                  column[17].trim().toLowerCase(),
+                  column[6].trim().toLowerCase(),
+                  column[27].trim().toLowerCase()
                 )
               )
           ),
-          htmlEntities(row[5]),
+          htmlEntities(column[5]),
           null,
           null,
           convertSize(
-            row[19].trim().toLowerCase(),
-            row[17].trim().toLowerCase(),
-            htmlEntities(row[18].trim().toLowerCase()),
-            row[9].trim().toLowerCase(),
-            row[16].trim().toLowerCase(),
+            column[19].trim().toLowerCase(),
+            column[17].trim().toLowerCase(),
+            htmlEntities(column[18].trim().toLowerCase()),
+            column[9].trim().toLowerCase(),
+            column[16].trim().toLowerCase(),
             convertCategories(
-              htmlEntities(row[18].trim().toLowerCase()),
-              row[16].trim().toLowerCase(),
-              row[17].trim().toLowerCase(),
-              row[6].trim().toLowerCase(),
-              row[9].trim().toLowerCase()
+              htmlEntities(column[18].trim().toLowerCase()),
+              column[16].trim().toLowerCase(),
+              column[17].trim().toLowerCase(),
+              column[6].trim().toLowerCase(),
+              column[9].trim().toLowerCase()
             ),
             convertSubCategories(
-              htmlEntities(row[18].trim().toLowerCase()),
-              row[16].trim().toLowerCase(),
-              row[6].trim().toLowerCase(),
-              row[9].trim().toLowerCase(),
-              row[17].trim().toLowerCase()
-            )
+              htmlEntities(column[18].trim().toLowerCase()),
+              column[16].trim().toLowerCase(),
+              column[6].trim().toLowerCase(),
+              column[9].trim().toLowerCase(),
+              column[17].trim().toLowerCase()
+            ),
+            column[3],
+            column[6]
           ),
           null,
           "new",
-          row[21].toLowerCase(),
-          Math.round(wholesaleMarkup(row[8] * conversion) / 10) * 10,
-          htmlEntities(row[5].replace(/\s/g, "").toLowerCase()),
-          row[13],
+          column[21].toLowerCase(),
+          Math.round(wholesaleMarkup(column[8] * conversion) / 10) * 10,
+          htmlEntities(column[5].replace(/\s/g, "").toLowerCase()),
+          column[13],
           0,
           0,
           0,
@@ -119,58 +120,60 @@ function fetchMapCSV22() {
           0,
           0,
         ];
-      } else if (row[16].trim().toLowerCase() === "women") {
+      } else if (column[16].trim().toLowerCase() === "women") {
         return [
-          row[3],
-          row[20],
-          htmlEntities(row[5]) + " " + row[6],
-          "original size on tag: " + row[19] + "\n" + row[27],
+          column[3],
+          column[20],
+          htmlEntities(column[5]) + " " + column[6],
+          "original size on tag: " + column[19] + "\n" + column[27],
           createOptionsArray(
             "womens_" +
               convertCategories(
-                htmlEntities(row[18].trim().toLowerCase()),
-                row[16].trim().toLowerCase(),
-                row[17].trim().toLowerCase()
+                htmlEntities(column[18].trim().toLowerCase()),
+                column[16].trim().toLowerCase(),
+                column[17].trim().toLowerCase()
               ) +
               "." +
               convertSubCategories(
-                htmlEntities(row[18]).trim().toLowerCase(),
-                row[16].trim().toLowerCase(),
-                row[6].trim().toLowerCase(),
-                row[27].trim().toLowerCase(),
-                row[17].trim().toLowerCase()
+                htmlEntities(column[18]).trim().toLowerCase(),
+                column[16].trim().toLowerCase(),
+                column[6].trim().toLowerCase(),
+                column[27].trim().toLowerCase(),
+                column[17].trim().toLowerCase()
               )
           ),
-          htmlEntities(row[5]),
+          htmlEntities(column[5]),
           null,
           null,
           null,
           convertSize(
-            row[19].trim().toLowerCase(),
-            row[17].trim().toLowerCase(),
-            htmlEntities(row[18].trim().toLowerCase()),
-            row[9].trim().toLowerCase(),
-            row[16].trim().toLowerCase(),
+            column[19].trim().toLowerCase(),
+            column[17].trim().toLowerCase(),
+            htmlEntities(column[18].trim().toLowerCase()),
+            column[9].trim().toLowerCase(),
+            column[16].trim().toLowerCase(),
             convertCategories(
-              htmlEntities(row[18].trim().toLowerCase()),
-              row[16].trim().toLowerCase(),
-              row[17].trim().toLowerCase(),
-              row[6].trim().toLowerCase(),
-              row[9].trim().toLowerCase()
+              htmlEntities(column[18].trim().toLowerCase()),
+              column[16].trim().toLowerCase(),
+              column[17].trim().toLowerCase(),
+              column[6].trim().toLowerCase(),
+              column[9].trim().toLowerCase()
             ),
             convertSubCategories(
-              htmlEntities(row[18].trim().toLowerCase()),
-              row[16].trim().toLowerCase(),
-              row[6].trim().toLowerCase(),
-              row[9].trim().toLowerCase(),
-              row[17].trim().toLowerCase()
-            )
+              htmlEntities(column[18].trim().toLowerCase()),
+              column[16].trim().toLowerCase(),
+              column[6].trim().toLowerCase(),
+              column[9].trim().toLowerCase(),
+              column[17].trim().toLowerCase()
+            ),
+            column[3],
+            column[6]
           ),
           "new",
-          row[21].toLowerCase(),
-          Math.round(wholesaleMarkup(row[8] * conversion) / 10) * 10,
-          htmlEntities(row[5].replace(/\s/g, "").toLowerCase()),
-          row[13],
+          column[21].toLowerCase(),
+          Math.round(wholesaleMarkup(column[8] * conversion) / 10) * 10,
+          htmlEntities(column[5].replace(/\s/g, "").toLowerCase()),
+          column[13],
           0,
           0,
           0,

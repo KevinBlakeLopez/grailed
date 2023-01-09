@@ -1233,7 +1233,10 @@ function convertSubCategories(
     options = null;
     return newSubCat;
   } else if (options) return options;
-  else console.log("missed" + gender + " " + bgCat + " " + subcategory);
+  // else
+  //   console.log(
+  //     "no Taxonomy Conversion " + gender + " " + bgCat + " " + subcategory
+  //   );
 }
 
 function inferSubCategories() {

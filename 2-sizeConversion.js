@@ -3,23 +3,24 @@ const OneSize = /^\s*(One Size)\s*$/i;
 
 //men's accessories
 const cmInch = /^\s*(1?\d{2})\s*(cm)\s*\/\s*([2-4]\d)\s*(in|inches)\s*$/i;
-const numUS = /^\s*(1?\d,?.?5?)\s*\|\s*(XS|S|M|L|[2-6]?XL|XXL)\s*$/i;
+const numUS = /^\s*(1\d,?.?5?)\s*\|\s*(XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
 
 //men's bags
 const cmInchType2 = /^\s*(\d{2,3})\s*(cm)\s*\/\s*(\d{2})\s*(in|inches)\s*$/i;
 //OneSize
 
 //men's jackets and coats
-const ITUSre = /^\s*(IT)\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|L|[2-6]?XL|XXL)\s*$/i;
-const USre = /^\s*(XXS|XS|S|M|L|[2-6]?XL|XXL)\s*$/i;
-const numUSType2 = /^\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|L|[2-6]XL|XXL)\s*$/i;
+const ITnumUSre =
+  /^\s*(IT)\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
+const USre = /^\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
+const numUSType2 = /^\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]XL|XXL)\s*$/i;
 
 //men's pants
 //USre
 // ITUSre
-const WnumLnum = /^\s*(W)\s*([2-4][0-9])\s*\|?\s*(L\d{2})?$/i;
-const ITUSDEre =
-  /^\s*IT\s*([3-6][0-9])\s*-\s*(XS|S|M|L|[2-6]?XL|XXL)\s*-de\s*$/i;
+const WnumLnum = /^\s*(W)\s*([2-4][0-9])\s*\|?\s*(L\d{2})$/i;
+const ITnumUSDEre =
+  /^\s*IT\s*([3-6][0-9])\s*-\s*(XS|S|M|M-L|L|[2-6]?XL|XXL)\s*-de\s*$/i;
 
 //men's shirts
 // ITUSre
@@ -46,7 +47,7 @@ const ITUSDEre =
 //women's accessories
 // numUS
 // cmInch
-const cmUS = /^\s*(\d{2,3})\s*(cm)\s*\|\s*(XXS|XS|S|M|L|[2-6]?XL|XXL)\s*$/i;
+const cmUS = /^\s*(\d{2,3})\s*(cm)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
 // ITUSre
 // USre
 // ITUSDEre
@@ -80,15 +81,16 @@ const USnum =
 // 42 | S
 // numUS
 // ITUSre
-const ITre = /^\s*(IT)\s*([3-6]\d)\s*$/i;
+const ITnumre = /^\s*(IT)\s*([3-6]\d)\s*$/i;
 // USre
-const Wnum = /^\s*(W)\s*([2-4]\d)\s*$/i;
+const Wnum = /^\s*(W)\s*([2-5]\d)\s*$/i;
 const WnumITnum = /^\s*(W)\s*([2-4]\d)\s*\|\s*(IT)\s*([3-6]\d)\s*$/i;
 // USnum
 
 //women's shoes
 const num = /^\s*([2-4]\d)\s*$/i;
-const EUUSre1 = /^\s*(EU)\s*([2-4]\d\.?5?)\s*\/\s*(US)\s*(1?\d\.?5?)\s*$/i;
+const EUnumUSnumre1 =
+  /^\s*(EU)\s*([2-4]\d\.?5?)\s*\/\s*(US)\s*(1?\d\.?5?)\s*$/i;
 // OneSize
 
 //women's shorts
@@ -118,47 +120,65 @@ const EUUSre1 = /^\s*(EU)\s*([2-4]\d\.?5?)\s*\/\s*(US)\s*(1?\d\.?5?)\s*$/i;
 // USnum
 // ITUSDEre
 
-const REgroup1 = [USre, numUS];
-const REgroup2 = [numUSType2, USnum, ITre, Wnum, WnumITnum, ITUSre, ITUSDEre];
-// const REgroup3 = [ITUSre];
-// const REgroup4 = [WnumITnum];
+//women's underwear
+const ITUSre = /^\s*(IT)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL|One Size)\s*$/i;
+
+const REgroup1 = [USre, numUS, num];
+const REgroup2 = [
+  numUSType2,
+  USnum,
+  ITnumre,
+  Wnum,
+  WnumITnum,
+  WnumLnum,
+  ITnumUSre,
+  ITnumUSDEre,
+  EUnumUSnumre1,
+  ITUSre,
+];
+
+const REgroup4 = [WnumITnum];
 const REgroups = [REgroup1, REgroup2];
 const allREs = [
-  ITre,
+  EUnumUSnumre1,
+  ITnumre,
+  ITnumUSre,
+  ITnumUSDEre,
   ITUSre,
-  ITUSDEre,
+  num,
   numUS,
   numUSType2,
   USre,
   USnum,
   Wnum,
   WnumITnum,
+  WnumLnum,
 ];
 
-const grailedREPatterns = {
-  menswear: {
-    jackets_and_coats: [ITUSre, USre, numUSType2],
-    pants: [USre, ITUSre, WnumLnum, ITUSDEre],
-    shirts: [ITUSre, USre],
-    shoes: [num, OneSize, EUUSre1],
-    shorts: [USre],
-    suits_and_blazers: [USre, ITUSre],
-    sweaters: [USre, ITUSre],
-    swim: [USre],
-    underwear_and_swim: [USre],
-  },
-  womenswear: {
-    dresses: [USre, USnum, ITUSDEre, USre, ITUSre],
-    jackets_and_coats: [USre, ITUSDEre, ITUSre, OneSize],
-    pants_and_jumpsuits: [numUS, ITUSre, ITre, USre, Wnum, WnumITnum, USnum],
-    shoes: [num, EUUSre1, OneSize],
-    shorts: [ITUSre, Wnum, USre, ITUSDEre],
-    skirts: [ITUSre, USre, ITUSDEre, OneSize],
-    sweaters: [ITUSre, ITre, USre, USnum, OneSize],
-    swim: [ITUSre],
-    tops: [ITUSre, ITre, USre, USnum, ITUSDEre, numUSType2],
-  },
-};
+// const grailedREPatterns = {
+//   menswear: {
+//     jackets_and_coats: [ITUSre, USre, numUSType2],
+//     pants: [USre, ITUSre, WnumLnum, ITUSDEre],
+//     shirts: [ITUSre, USre],
+//     shoes: [num, OneSize, EUUSre1],
+//     shorts: [USre],
+//     suits_and_blazers: [USre, ITUSre],
+//     sweaters: [USre, ITUSre],
+//     swim: [USre],
+//     underwear_and_swim: [USre],
+//   },
+//   womenswear: {
+//     dresses: [USre, USnum, ITUSDEre, USre, ITUSre],
+//     jackets_and_coats: [USre, ITUSDEre, ITUSre, OneSize],
+//     pants_and_jumpsuits: [numUS, ITUSre, ITre, USre, Wnum, WnumITnum, USnum],
+//     shoes: [num, EUUSre1, OneSize],
+//     shorts: [ITUSre, Wnum, USre, ITUSDEre],
+//     skirts: [ITUSre, USre, ITUSDEre, OneSize],
+//     sweaters: [ITUSre, ITre, USre, USnum, OneSize],
+//     swim: [ITUSre],
+//     tops: [ITUSre, ITre, USre, USnum, ITUSDEre, numUSType2],
+//   },
+// };
 
 function convertMensBottoms(size) {
   if (
@@ -198,18 +218,18 @@ function convertMensBottoms(size) {
     } else if (size == 58) {
       return 42;
     }
-  } else if (["XS", "S", "M", "L", "XL", "XXL"].includes(size)) {
-    if (size === "XS") {
+  } else if (["xs", "s", "m", "l", "xl", "xxl"].includes(size)) {
+    if (size === "xs") {
       return 27;
-    } else if (size === "S") {
+    } else if (size === "s") {
       return 30;
-    } else if (size === "M") {
+    } else if (size === "m") {
       return 33;
-    } else if (size === "L") {
+    } else if (size === "l") {
       return 36;
-    } else if (size === "XL") {
+    } else if (size === "xl") {
       return 39;
-    } else if (size === "XXL") {
+    } else if (size === "xxl") {
       return 42;
     }
   }
@@ -222,12 +242,19 @@ function convertSize(
   description,
   gender,
   gCategory,
-  gSubCategory
+  gSubCategory,
+  SKU,
+  title
 ) {
-  if (gender === "unisex") {
+  const matches = [];
+  const regexes = allREs;
+
+  if (!size || size === " ") {
+    return "size missing!";
+  } else if (gender === "unisex") {
     return "one size";
   } else if (
-    [
+    ([
       "accessories",
       "bags",
       "frames",
@@ -240,7 +267,9 @@ function convertSize(
       "technology",
       "wallets",
       "watches",
-    ].includes(category) &&
+    ].includes(category) ||
+      (size === "one size" &&
+        ["tops", "outerwear", "dresses"].includes(gCategory))) &&
     gender === "women"
   ) {
     return "universal_os";
@@ -263,140 +292,144 @@ function convertSize(
   ) {
     return "one size";
   }
-  const matches = [];
-  const allCategories = [
-    "luggage and travel",
-    "belts",
-    "cummerbund",
-    "gloves",
-    "boots",
-    "casual",
-    "formal",
-    "loafers",
-    "sandals",
-    "sneakers",
-    "blazers",
-    "jackets",
-    "jackets & coats",
-    "jeans & pants",
-    "pants",
-    "cardigans",
-    "shirts",
-    "t-shirts",
-    "sleepwear",
-    "vests",
-    "shorts",
-    "sweatsuits",
-    "suits",
-    "suits & blazers",
-    "sweaters",
-    "sweaters_knitwear",
-    "swim",
-    "underwear and swim",
-    "dresses",
-    "flat shoes",
-    "platforms & wedges",
-    "pumps",
-    "skirts",
-  ];
-  const descriptionStr = description.split(" ");
-  let regexes;
-  let cat;
-  if (subCategory) {
-    cat = subCategory;
-  } else if (!subCategory && category) {
-    cat = category;
-  } else {
-    descriptionStr.forEach((description) =>
-      allCategories.includes(description) ? (cat = description) : null
-    );
-  }
-  if (gender === "men") {
-    if (
-      ["boots", "casual", "formal", "loafers", "sandals", "sneakers"].includes(
-        cat
-      )
-    ) {
-      regexes = grailedREPatterns.menswear.shoes;
-    } else if (["blazers", "jackets", "jackets & coats"].includes(cat)) {
-      regexes = grailedREPatterns.menswear.jackets_and_coats;
-    } else if (["jeans & pants", "pants"].includes(cat)) {
-      regexes = grailedREPatterns.menswear.pants;
-    } else if (
-      ["cardigans", "shirts", "t-shirts", "sleepwear", "vests"].includes(cat)
-    ) {
-      regexes = grailedREPatterns.menswear.shirts;
-    } else if (["shorts", "sweatsuits"].includes(cat)) {
-      regexes = grailedREPatterns.menswear.shorts;
-    } else if (["suits", "suits & blazers"].includes(cat)) {
-      regexes = grailedREPatterns.menswear.suits_and_blazers;
-    } else if (["sweaters", "sweaters_knitwear"].includes(cat)) {
-      regexes = grailedREPatterns.menswear.sweaters;
-    } else if (cat === "swim") {
-      regexes = grailedREPatterns.menswear.swim;
-    } else if (cat === "underwear and swim") {
-      regexes = grailedREPatterns.menswear.underwear_and_swim;
-    }
-  } else if (gender === "women") {
-    // is this the correct set of grailedREPatterns for blazers?  verify.
-    if (
-      ["blazers", "jackets", "jackets & coats", "suits & blazers"].includes(cat)
-    ) {
-      regexes = grailedREPatterns.womenswear.jackets_and_coats;
-    } else if (cat === "dresses") {
-      regexes = grailedREPatterns.womenswear.dresses;
-    } else if (["jeans & pants", "pants and jumpsuits"].includes(cat)) {
-      regexes = grailedREPatterns.womenswear.pants_and_jumpsuits;
-    }
-    // verify this is the correct pattern for shirts
-    else if (
-      [
-        "clothing",
-        "shirts",
-        "t-shirts",
-        "tops",
-        "cardigans",
-        "tops & t-shirts",
-        "vests",
-      ].includes(cat)
-    ) {
-      regexes = grailedREPatterns.womenswear.tops;
-    } else if (
-      [
-        "boots",
-        "flat shoes",
-        "platforms & wedges",
-        "pumps",
-        "sandals",
-        "sneakers",
-        "shoes",
-      ].includes(cat)
-    ) {
-      regexes = grailedREPatterns.womenswear.shoes;
-    } else if (cat === "shorts") {
-      regexes = grailedREPatterns.womenswear.shorts;
-    } else if (cat === "skirts") {
-      regexes = grailedREPatterns.womenswear.skirts;
-    } else if (["sleepwear", "swim", "tights & socks"].includes(cat)) {
-      regexes = grailedREPatterns.womenswear.swim;
-    } else if (cat === "sweaters") {
-      regexes = grailedREPatterns.womenswear.sweaters;
-    }
-  } else {
-    regexes = allREs;
-  }
-  // console.log("326  " + product.size + " " + category, regexes);
+
+  // const allCategories = [
+  //   "luggage and travel",
+  //   "belts",
+  //   "cummerbund",
+  //   "gloves",
+  //   "boots",
+  //   "casual",
+  //   "formal",
+  //   "loafers",
+  //   "sandals",
+  //   "sneakers",
+  //   "blazers",
+  //   "jackets",
+  //   "jackets & coats",
+  //   "jeans & pants",
+  //   "pants",
+  //   "cardigans",
+  //   "shirts",
+  //   "t-shirts",
+  //   "sleepwear",
+  //   "vests",
+  //   "shorts",
+  //   "sweatsuits",
+  //   "suits",
+  //   "suits & blazers",
+  //   "sweaters",
+  //   "sweaters_knitwear",
+  //   "swim",
+  //   "underwear and swim",
+  //   "dresses",
+  //   "flat shoes",
+  //   "platforms & wedges",
+  //   "pumps",
+  //   "skirts",
+  // ];
+  // const descriptionStr = description.split(" ");
+
+  // let cat;
+
+  // if (subCategory) {
+  //   cat = subCategory;
+  // } else if (!subCategory && category) {
+  //   cat = category;
+  // } else {
+  //   descriptionStr.forEach((description) =>
+  //     allCategories.includes(description) ? (cat = description) : null
+  //   );
+  // }
+  // if (gender === "men") {
+  //   if (
+  //     ["boots", "casual", "formal", "loafers", "sandals", "sneakers"].includes(
+  //       cat
+  //     )
+  //   ) {
+  //     regexes = grailedREPatterns.menswear.shoes;
+  //   } else if (["blazers", "jackets", "jackets & coats"].includes(cat)) {
+  //     regexes = grailedREPatterns.menswear.jackets_and_coats;
+  //   } else if (["jeans & pants", "pants"].includes(cat)) {
+  //     regexes = grailedREPatterns.menswear.pants;
+  //   } else if (
+  //     ["cardigans", "shirts", "t-shirts", "sleepwear", "vests"].includes(cat)
+  //   ) {
+  //     regexes = grailedREPatterns.menswear.shirts;
+  //   } else if (["shorts", "sweatsuits"].includes(cat)) {
+  //     regexes = grailedREPatterns.menswear.shorts;
+  //   } else if (["suits", "suits & blazers"].includes(cat)) {
+  //     regexes = grailedREPatterns.menswear.suits_and_blazers;
+  //   } else if (["sweaters", "sweaters_knitwear"].includes(cat)) {
+  //     regexes = grailedREPatterns.menswear.sweaters;
+  //   } else if (cat === "swim") {
+  //     regexes = grailedREPatterns.menswear.swim;
+  //   } else if (cat === "underwear and swim") {
+  //     regexes = grailedREPatterns.menswear.underwear_and_swim;
+  //   } else {
+  //     regexes = allREs;
+  //   }
+  // } else if (gender === "women") {
+  //   // is this the correct set of grailedREPatterns for blazers?  verify.
+  //   if (
+  //     ["blazers", "jackets", "jackets & coats", "suits & blazers"].includes(cat)
+  //   ) {
+  //     regexes = grailedREPatterns.womenswear.jackets_and_coats;
+  //   } else if (cat === "dresses") {
+  //     regexes = grailedREPatterns.womenswear.dresses;
+  //   } else if (["jeans & pants", "pants and jumpsuits"].includes(cat)) {
+  //     regexes = grailedREPatterns.womenswear.pants_and_jumpsuits;
+  //   }
+  //   // verify this is the correct pattern for shirts
+  //   else if (
+  //     [
+  //       "clothing",
+  //       "shirts",
+  //       "t-shirts",
+  //       "tops",
+  //       "cardigans",
+  //       "tops & t-shirts",
+  //       "vests",
+  //     ].includes(cat)
+  //   ) {
+  //     regexes = grailedREPatterns.womenswear.tops;
+  //   } else if (
+  //     [
+  //       "boots",
+  //       "flat shoes",
+  //       "platforms & wedges",
+  //       "pumps",
+  //       "sandals",
+  //       "sneakers",
+  //       "shoes",
+  //     ].includes(cat)
+  //   ) {
+  //     regexes = grailedREPatterns.womenswear.shoes;
+  //   } else if (cat === "shorts") {
+  //     regexes = grailedREPatterns.womenswear.shorts;
+  //   } else if (cat === "skirts") {
+  //     regexes = grailedREPatterns.womenswear.skirts;
+  //   } else if (["sleepwear", "swim", "tights & socks"].includes(cat)) {
+  //     regexes = grailedREPatterns.womenswear.swim;
+  //   } else if (cat === "sweaters") {
+  //     regexes = grailedREPatterns.womenswear.sweaters;
+  //   } else {
+  //     regexes = allREs;
+  //   }
+  // } else {
+  //   regexes = allREs;
+  // }
 
   regexes.forEach((regex) =>
     regex.test(size) ? matches.push(size.match(regex)) : null
   );
 
-  console.log("332  " + category, matches);
+  if (!matches) console.log("no matches  " + subCategory + " " + size);
 
   const regexPattern = regexes.filter((regex) => regex.test(size));
-  // console.log(`${description}  `, regexPattern);
+  if (!regexPattern) console.log("no regexPattern" + subCategory + " " + size);
 
-  // row 45 in spreadsheet is not pulling the right size?
+  // column 45 in spreadsheet is not pulling the right size?
   let grailedSize;
   for (let i = 0; i < REgroups.length; i++) {
     // console.log(320, REgroups[i]);
@@ -424,25 +457,27 @@ function convertSize(
         // } else {
         //   grailedSize = matches[0][i + 1];
         // }
-        if (REgroups[i] === REgroup1) {
-          grailedSize = matches[0][1];
-          console.log("group 1", grailedSize + " " + gender);
-        } else if (
-          REgroups[i] === REgroup2 &&
-          (gender === "women" ||
-            !regexPattern.toString().includes("IT") ||
-            !regexPattern.toString().includes("it"))
+        if (
+          (regexPattern.toString() === ITnumUSre ||
+            regexPattern.toString() === ITnumUSDEre) &&
+          gender === "men" &&
+          (gCategory === "tops" || gCategory === "outerwear")
         ) {
+          grailedSize = matches[0][3];
+        } else if (REgroups[i] === REgroup1) {
+          grailedSize = matches[0][1];
+          // console.log("group 1", grailedSize + " " + gender);
+        } else if (REgroups[i] === REgroup2) {
           grailedSize = matches[0][2];
-          console.log("group 2", grailedSize + " " + gender);
+          // console.log("group 2", grailedSize + " " + gender);
         } else if (REgroups[i] === REgroup3) {
           grailedSize = matches[0][3];
-          console.log("group 3", grailedSize + " " + gender);
+          // console.log("group 3", grailedSize + " " + gender);
         } else if (REgroups[i] === REgroup4) {
           grailedSize = matches[0][4];
-          console.log("group 4", grailedSize + " " + gender);
+          // console.log("group 4", grailedSize + " " + gender);
         } else {
-          return size;
+          console.log("no Regexes");
         }
       }
     });
@@ -455,15 +490,29 @@ function convertSize(
   // } else {
   //   return formattedSizes[0];
   // }
-  console.log(grailedSize);
+
   if (regexPattern.toString().includes("IT") && gender === "women") {
     return "it_" + grailedSize;
   } else if (
     gender === "men" &&
-    (gCategory === "bottoms" || gSubCategory === "socks_underwear")
+    (gCategory === "bottoms" || gSubCategory === "socks_underwear") &&
+    !Wnum.test(size)
   ) {
     return convertMensBottoms(grailedSize);
-  } else {
+  } else if (grailedSize) {
     return grailedSize;
+  } else if (!grailedSize) {
+    console.log(
+      "no size conversion " +
+        SKU +
+        " " +
+        title +
+        "size: " +
+        size +
+        "matches: " +
+        matches +
+        "regexPattern: " +
+        regexPattern
+    );
   }
 }
