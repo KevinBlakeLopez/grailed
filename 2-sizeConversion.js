@@ -1,12 +1,9 @@
-//electronics
-const OneSize = /^\s*(One Size)\s*$/i;
-
 //men's accessories
-const cmInch = /^\s*(1?\d{2})\s*(cm)\s*\/\s*([2-4]\d)\s*(in|inches)\s*$/i;
-const numUS = /^\s*(1\d,?.?5?)\s*\|\s*(XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
+// const cmInch = /^\s*(1?\d{2})\s*(cm)\s*\/\s*([2-4]\d)\s*(in|inches)\s*$/i;
+// const numUS = /^\s*(1\d,?.?5?)\s*\|\s*(XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
 
 //men's bags
-const cmInchType2 = /^\s*(\d{2,3})\s*(cm)\s*\/\s*(\d{2})\s*(in|inches)\s*$/i;
+// const cmInchType2 = /^\s*(\d{2,3})\s*(cm)\s*\/\s*(\d{2})\s*(in|inches)\s*$/i;
 //OneSize
 
 //men's jackets and coats
@@ -20,7 +17,7 @@ const numUSType2 = /^\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]XL|XXL)\s*$/i;
 // ITUSre
 const WnumLnum = /^\s*(W)\s*([2-4][0-9])\s*\|?\s*(L\d{2})$/i;
 const ITnumUSDEre =
-  /^\s*IT\s*([3-6][0-9])\s*-\s*(XS|S|M|M-L|L|[2-6]?XL|XXL)\s*-de\s*$/i;
+  /^\s*(IT)\s*([3-6][0-9])\s*-\s*(XS|S|M|M-L|L|[2-6]?XL|XXL)\s*-de\s*$/i;
 
 //men's shirts
 // ITUSre
@@ -47,7 +44,7 @@ const ITnumUSDEre =
 //women's accessories
 // numUS
 // cmInch
-const cmUS = /^\s*(\d{2,3})\s*(cm)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
+// const cmUS = /^\s*(\d{2,3})\s*(cm)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
 // ITUSre
 // USre
 // ITUSDEre
@@ -123,7 +120,7 @@ const EUnumUSnumre1 =
 //women's underwear
 const ITUSre = /^\s*(IT)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL|One Size)\s*$/i;
 
-const REgroup1 = [USre, numUS, num];
+const REgroup1 = [USre, num];
 const REgroup2 = [
   numUSType2,
   USnum,
@@ -137,7 +134,6 @@ const REgroup2 = [
   ITUSre,
 ];
 
-const REgroup4 = [WnumITnum];
 const REgroups = [REgroup1, REgroup2];
 const allREs = [
   EUnumUSnumre1,
@@ -146,7 +142,6 @@ const allREs = [
   ITnumUSDEre,
   ITUSre,
   num,
-  numUS,
   numUSType2,
   USre,
   USnum,
@@ -435,15 +430,7 @@ function convertSize(
     // console.log(320, REgroups[i]);
     REgroups[i].forEach((RE) => {
       if (RE.toString() === regexPattern.toString()) {
-        // console.log(323, i, matches[0][i + 1]);
         // if (
-        //   regexPattern.toString().includes("IT") &&
-        //   gender === "men" &&
-        //   REgroups[i] === REgroup2 &&
-        //   (gCategory === "tops" || gCategory === "outerwear")
-        // ) {
-        //   grailedSize = matches[0][2];
-        // } else if (
         //   (regexPattern.toString().includes("IT") &&
         //     REgroups[i] === REgroup2) ||
         //   (regexPattern.toString().includes("W") && gender === "men")
@@ -458,8 +445,8 @@ function convertSize(
         //   grailedSize = matches[0][i + 1];
         // }
         if (
-          (regexPattern.toString() === ITnumUSre ||
-            regexPattern.toString() === ITnumUSDEre) &&
+          (regexPattern.toString() === ITnumUSre.toString() ||
+            regexPattern.toString() === ITnumUSDEre.toString()) &&
           gender === "men" &&
           (gCategory === "tops" || gCategory === "outerwear")
         ) {
@@ -504,6 +491,14 @@ function convertSize(
     !Wnum.test(size)
   ) {
     return convertMensBottoms(grailedSize);
+  } else if (
+    ["xxs", "xs", "s", "m", "m-l", "l", "xl", "xxl", "3xl", "4xl"].includes(
+      grailedSize
+    ) &&
+    gender === "women" &&
+    ["womens_tops", "womens_dresses", "womens_outerwear"].includes(gCategory)
+  ) {
+    return "universal_" + grailedSize;
   } else if (grailedSize) {
     return grailedSize;
   } else if (!grailedSize) {
