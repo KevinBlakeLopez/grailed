@@ -424,26 +424,10 @@ function convertSize(
   const regexPattern = regexes.filter((regex) => regex.test(size));
   if (!regexPattern) console.log("no regexPattern" + subCategory + " " + size);
 
-  // column 45 in spreadsheet is not pulling the right size?
   let grailedSize;
   for (let i = 0; i < REgroups.length; i++) {
-    // console.log(320, REgroups[i]);
     REgroups[i].forEach((RE) => {
       if (RE.toString() === regexPattern.toString()) {
-        // if (
-        //   (regexPattern.toString().includes("IT") &&
-        //     REgroups[i] === REgroup2) ||
-        //   (regexPattern.toString().includes("W") && gender === "men")
-        // ) {
-        //   grailedSize = matches[0][i + 1];
-        // } else if (
-        //   regexPattern.toString().includes("W") &&
-        //   !regexPattern.toString().includes("IT")
-        // ) {
-        //   grailedSize = matches[0][i + 1];
-        // } else {
-        //   grailedSize = matches[0][i + 1];
-        // }
         if (
           (regexPattern.toString() === ITnumUSre.toString() ||
             regexPattern.toString() === ITnumUSDEre.toString()) &&
@@ -475,15 +459,12 @@ function convertSize(
     });
   }
 
-  // what you need to know is REgroups[i] in order to know which group to extract from formatted sizes?  but isn't that what is going on in the loop - you are extracting the correct group out of the matches?
-  // I need to know what kind of metric is being used in the regexPattern and then determine what to append to the formattedSize
-  // if (parseInt(formattedSizes[0])) {
-  //   return "it_" + formattedSizes[0];
-  // } else {
-  //   return formattedSizes[0];
-  // }
-
-  if (regexPattern.toString().includes("IT") && gender === "women") {
+  if (
+    (regexPattern.toString().includes("IT") ||
+      regexPattern.toString() === USnum) &&
+    gender === "women" &&
+    regexPattern.toString() !== ITUSre
+  ) {
     return "it_" + grailedSize;
   } else if (
     gender === "men" &&
