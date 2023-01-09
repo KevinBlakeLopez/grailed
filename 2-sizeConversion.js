@@ -464,6 +464,11 @@ function convertSize(
           (gCategory === "tops" || gCategory === "outerwear")
         ) {
           grailedSize = matches[0][3];
+        } else if (
+          regexPattern.toString() === WnumITnum &&
+          gender === "women"
+        ) {
+          grailedSize = matches[0][4];
         } else if (REgroups[i] === REgroup1) {
           grailedSize = matches[0][1];
           // console.log("group 1", grailedSize + " " + gender);
