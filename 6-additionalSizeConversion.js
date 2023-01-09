@@ -1,3 +1,125 @@
+//men's accessories
+// const cmInch = /^\s*(1?\d{2})\s*(cm)\s*\/\s*([2-4]\d)\s*(in|inches)\s*$/i;
+// const numUS = /^\s*(1\d,?.?5?)\s*\|\s*(XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
+
+//men's bags
+// const cmInchType2 = /^\s*(\d{2,3})\s*(cm)\s*\/\s*(\d{2})\s*(in|inches)\s*$/i;
+//OneSize
+
+// //men's jackets and coats
+// const ITnumUSre =
+//   /^\s*(IT)\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
+// const USre = /^\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
+// const numUSType2 = /^\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]XL|XXL)\s*$/i;
+
+// //men's pants
+// //USre
+// // ITUSre
+// const WnumLnum = /^\s*(W)\s*([2-4][0-9])\s*\|?\s*(L\d{2})$/i;
+// const ITnumUSDEre =
+//   /^\s*(IT)\s*([3-6][0-9])\s*-\s*(XS|S|M|M-L|L|[2-6]?XL|XXL)\s*-de\s*$/i;
+
+//men's shirts
+// ITUSre
+// USre
+
+//men's shoes
+// OneSize
+
+//men's shorts
+// USre
+
+//men's suits and blazers
+//USre
+
+//men's sweaters
+//USre
+
+//men's swim
+//USre
+
+//men's underwear & socks
+//USre
+
+//women's accessories
+// numUS
+// cmInch
+// const cmUS = /^\s*(\d{2,3})\s*(cm)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
+// ITUSre
+// USre
+// ITUSDEre
+
+//women's bags
+//One Size
+// USre
+
+//women's dresses
+//"US size"
+// USre
+// //"XL | 46"
+// const USnum =
+//   /^\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL|One Size)\s*\|\s*([3-5]\d)\s*$/i;
+// it52-xl-de
+// ITUSDEre
+//US size
+// USre
+
+//women's jackets and coats
+//US size
+// USre
+//it40-s-de
+// ITUSDEre
+
+//women's jewelry
+//US size
+// USre
+
+//women's pants and jumpsuits
+// 42 | S
+// numUS
+// ITUSre
+// const ITnumre = /^\s*(IT)\s*([3-6]\d)\s*$/i;
+// // USre
+// const Wnum = /^\s*(W)\s*([2-5]\d)\s*$/i;
+// const WnumITnum = /^\s*(W)\s*([2-4]\d)\s*\|\s*(IT)\s*([3-6]\d)\s*$/i;
+// USnum
+
+//women's shoes
+// const num = /^\s*([2-4]\d)\s*$/i;
+// const EUnumUSnumre1 =
+//   /^\s*(EU)\s*([2-4]\d\.?5?)\s*\/\s*(US)\s*(1?\d\.?5?)\s*$/i;
+// OneSize
+
+//women's shorts
+// ITUSre
+// Wnum
+// USre
+// ITUSDEre
+
+//women's skirts
+// ITUSre
+// USre
+// ITUSDEre
+
+//women's sweaters
+// ITUSre
+// ITre
+// USre
+// USnum
+
+//women's swim
+// ITUSre
+
+//women's tops
+// ITUSre
+// ITre
+// USre
+// USnum
+// ITUSDEre
+
+//women's underwear
+// const ITUSre = /^\s*(IT)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL|One Size)\s*$/i;
+
 // const grailedREPatterns = {
 //   menswear: {
 //     jackets_and_coats: [ITUSre, USre, numUSType2],
