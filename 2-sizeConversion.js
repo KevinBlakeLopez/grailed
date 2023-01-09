@@ -104,7 +104,6 @@ function convertSize(
   size,
   category,
   subCategory,
-  description,
   gender,
   gCategory,
   gSubCategory,
