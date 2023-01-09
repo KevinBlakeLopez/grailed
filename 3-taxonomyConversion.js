@@ -1233,7 +1233,7 @@ function convertSubCategories(
     options = null;
     return newSubCat;
   } else if (options) return options;
-  else console.log(gender + " " + bgCat + " " + subcategory);
+  else console.log("missed" + gender + " " + bgCat + " " + subcategory);
 }
 
 function inferSubCategories() {
