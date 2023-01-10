@@ -1,5 +1,7 @@
 const ITnumUSre =
-  /^\s*(IT)\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
+  /^\s*(IT)\s*([3-6]\d)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
+const ITnumUSreType2 =
+  /^\s*(IT)\s*(\d)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
 const USre = /^\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
 const numUSType2 = /^\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]XL|XXL)\s*$/i;
 const WnumLnum = /^\s*(W)\s*([2-4][0-9])\s*\|?\s*(L\d{2})$/i;
@@ -35,6 +37,7 @@ const allREs = [
   ITnumre,
   ITnumUSre,
   ITnumUSDEre,
+  ITnumUSreType2,
   ITUSre,
   num,
   numUSType2,
@@ -194,14 +197,21 @@ function convertSize(
             gSubCategory === "swimwear")
         ) {
           grailedSize = matches[0][3];
+        } else if (regexPattern.toString() === ITnumUSreType2.toString()) {
+          grailedSize = matches[0][3];
         } else if (
           regexPattern.toString() === numUSType2.toString() &&
           gCategory === "bottoms"
         ) {
           grailedSize = matches[0][1];
         } else if (
-          (regexPattern.toString() === WnumITnum && gender === "women") ||
-          regexPattern.toString() === EUnumUSnumre1
+          regexPattern.toString() === WnumITnum.toString() &&
+          gender === "women"
+        ) {
+          grailedSize = matches[0][4];
+        } else if (
+          regexPattern.toString() === EUnumUSnumre1.toString() &&
+          gCategory === "footwear"
         ) {
           grailedSize = matches[0][4];
         } else if (REgroups[i] === REgroup1) {
@@ -219,9 +229,9 @@ function convertSize(
 
   if (
     (regexPattern.toString().includes("IT") ||
-      regexPattern.toString() === USnum) &&
+      regexPattern.toString() === USnum.toString()) &&
     gender === "women" &&
-    regexPattern.toString() !== ITUSre
+    regexPattern.toString() !== ITUSre.toString()
   ) {
     return "it_" + grailedSize;
   } else if (
@@ -242,9 +252,11 @@ function convertSize(
     return "universal_" + grailedSize;
   } else if (gCategory === "tailoring") {
     return grailedSize + "r";
-  } else if (regexPattern.toString() === EUnumUSnumre1 && gender === "women") {
-    grailedSize.replace(".", "-");
-    return "us_" + grailedSize;
+  } else if (
+    regexPattern.toString() === EUnumUSnumre1.toString() &&
+    gender === "women"
+  ) {
+    return "us_" + grailedSize.toString().replace(".", "-");
   } else if (
     "BLC69376243_600BLUE-78030" == SKU ||
     "BIK1502 - IT2" == SKU ||

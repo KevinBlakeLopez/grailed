@@ -594,7 +594,9 @@ function convertSubCategories(
         description.includes("stretch") ||
         title.includes("stretch") ||
         description.includes("baggy") ||
-        title.includes("baggy")
+        title.includes("baggy") ||
+        description.includes("capri") ||
+        title.includes("capri")
       ) {
         newSubCat = "casual_pants";
       } else {
@@ -732,17 +734,7 @@ function convertSubCategories(
       } else if (title.includes("tank") || description.includes("tank")) {
         newSubCat = "tank_tops";
       } else {
-        options = [
-          "button_ups",
-          "jerseys",
-          "long_sleeve_shirts",
-          "polos",
-          "short_sleeve_shirts",
-          "sleeveless",
-          "sweaters_knitwear",
-          "sweatshirts_hoodies",
-          "tank_tops",
-        ];
+        newSubCat = "short_sleeve_shirts";
       }
     } else if (gender === "women") {
       if (
