@@ -83,7 +83,11 @@ function convertMensBottoms(size) {
     } else if (size == 58) {
       return 42;
     }
-  } else if (["xs", "s", "m", "l", "xl", "xxl"].includes(size)) {
+  } else if (
+    ["xs", "s", "m", "l", "xl", "xxl", "3xl", "4xl", "5xl", "6xl"].includes(
+      size
+    )
+  ) {
     if (size === "xs") {
       return 27;
     } else if (size === "s") {
@@ -96,6 +100,14 @@ function convertMensBottoms(size) {
       return 39;
     } else if (size === "xxl") {
       return 42;
+    } else if (size === "3xl") {
+      return 48;
+    } else if (size === "4xl") {
+      return 53;
+    } else if (size === "5xl") {
+      return 58;
+    } else if (size === "6xl") {
+      return 63;
     }
   }
 }
@@ -118,7 +130,7 @@ function convertSize(
   } else if (gender === "unisex") {
     return "one size";
   } else if (
-    ([
+    (([
       "accessories",
       "bags",
       "frames",
@@ -131,7 +143,9 @@ function convertSize(
       "technology",
       "wallets",
       "watches",
-    ].includes(category) ||
+    ].includes(category) &&
+      gender === "women") ||
+      (["socks_intimates"].includes(gSubCategory) && gender === "women") ||
       (size === "one size" &&
         ["tops", "outerwear", "dresses"].includes(gCategory))) &&
     gender === "women"
@@ -174,12 +188,20 @@ function convertSize(
           (regexPattern.toString() === ITnumUSre.toString() ||
             regexPattern.toString() === ITnumUSDEre.toString()) &&
           gender === "men" &&
-          (gCategory === "tops" || gCategory === "outerwear")
+          (gCategory === "tops" ||
+            gCategory === "outerwear" ||
+            gSubCategory === "socks_underwear" ||
+            gSubCategory === "swimwear")
         ) {
           grailedSize = matches[0][3];
         } else if (
-          regexPattern.toString() === WnumITnum &&
-          gender === "women"
+          regexPattern.toString() === numUSType2.toString() &&
+          gCategory === "bottoms"
+        ) {
+          grailedSize = matches[0][1];
+        } else if (
+          (regexPattern.toString() === WnumITnum && gender === "women") ||
+          regexPattern.toString() === EUnumUSnumre1
         ) {
           grailedSize = matches[0][4];
         } else if (REgroups[i] === REgroup1) {
@@ -188,12 +210,6 @@ function convertSize(
         } else if (REgroups[i] === REgroup2) {
           grailedSize = matches[0][2];
           // console.log("group 2", grailedSize + " " + gender);
-        } else if (REgroups[i] === REgroup3) {
-          grailedSize = matches[0][3];
-          // console.log("group 3", grailedSize + " " + gender);
-        } else if (REgroups[i] === REgroup4) {
-          grailedSize = matches[0][4];
-          // console.log("group 4", grailedSize + " " + gender);
         } else {
           console.log("no Regexes");
         }
@@ -218,10 +234,23 @@ function convertSize(
     ["xxs", "xs", "s", "m", "m-l", "l", "xl", "xxl", "3xl", "4xl"].includes(
       grailedSize
     ) &&
-    gender === "women" &&
-    ["womens_tops", "womens_dresses", "womens_outerwear"].includes(gCategory)
+    (gCategory === "tops" ||
+      gCategory === "outerwear" ||
+      gCategory === "dresses") &&
+    gender === "women"
   ) {
     return "universal_" + grailedSize;
+  } else if (gCategory === "tailoring") {
+    return grailedSize + "r";
+  } else if (regexPattern.toString() === EUnumUSnumre1 && gender === "women") {
+    grailedSize.replace(".", "-");
+    return "us_" + grailedSize;
+  } else if (
+    "BLC69376243_600BLUE-78030" == SKU ||
+    "BIK1502 - IT2" == SKU ||
+    "BI1405223-W62" == SKU
+  ) {
+    console.log(grailedSize + " " + matches + " " + regexPattern);
   } else if (grailedSize) {
     return grailedSize;
   } else if (!grailedSize) {
