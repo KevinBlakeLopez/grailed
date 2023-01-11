@@ -8,13 +8,13 @@ const ITnumre = /^\s*(IT)\s*([3-6]\d)\s*$/i;
 const ITUSre = /^\s*(IT)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL|One Size)\s*$/i;
 const USre = /^\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL)\s*$/i;
 const numUSType2 = /^\s*([3-6]?\d)\s*\|\s*(XXS|XS|S|M|M-L|L|[2-6]XL|XXL)\s*$/i;
-const WnumLnum = /^\s*(W)\s*([2-4][0-9])\s*\|?\s*(L\d{2})$/i;
+const WnumLnum = /^\s*(W)\s*([2-6]\d)\s*\|?\s*(L\d{2})$/i;
 
 const USnum =
   /^\s*(XXS|XS|S|M|M-L|L|[2-6]?XL|XXL|One Size)\s*\|\s*([3-5]\d)\s*$/i;
 
-const Wnum = /^\s*(W)\s*([2-5]\d)\s*$/i;
-const WnumITnum = /^\s*(W)\s*([2-4]\d)\s*\|\s*(IT)\s*([3-6]\d)\s*$/i;
+const Wnum = /^\s*(W)\s*([2-6]\d)\s*$/i;
+const WnumITnum = /^\s*(W)\s*([2-6]\d)\s*\|\s*(IT)\s*([3-6]\d)\s*$/i;
 const numRE = /^\s*([2-4]\d)\s*$/i;
 const EUnumUSnumre1 =
   /^\s*(EU)\s*([2-4]\d\.?5?)\s*\/\s*(US)\s*(1?\d\.?5?)\s*$/i;
@@ -136,38 +136,38 @@ function convertShoes(size, gender) {
   }
 }
 
-function convertMensShirts(size) {
+function convertMensShirts(gSize, RE) {
   //italian sizes
-  if (/^\s*([4-6]\d)\s*$/i.test(size)) {
-    if (size === "46") {
+  if (/^\s*([4-6]\d)\s*$/i.test(gSize) && RE.toString().includes("IT")) {
+    if ("46" >= gSize) {
       return "xs";
-    } else if (size == "48") {
+    } else if (gSize == "48") {
       return "s";
-    } else if (size == "50") {
+    } else if (gSize == "50") {
       return "m";
-    } else if (size == "52") {
+    } else if (gSize == "52") {
       return "l";
-    } else if (size == "54") {
+    } else if (gSize == "54") {
       return "xl";
-    } else if (size == "56") {
+    } else if (gSize == "56") {
       return "xxl";
     }
   }
-  //us sizes
-  else if (/^\s*([3-4]\d)\s*$/i.test(size)) {
-    if (size == "36") {
+  //us gSizes
+  else if (/^\s*([3-4]\d)\s*$/i.test(gSize)) {
+    if (gSize <= "36") {
       return "xs";
-    } else if (size == "38") {
+    } else if (gSize == "38") {
       return "s";
-    } else if (size == "39" || size == "40") {
+    } else if (["39", "40"].includes(gSize)) {
       return "m";
-    } else if (size == "41" || size == "42") {
+    } else if (["41", "42"].includes(gSize)) {
       return "l";
-    } else if (size == "44") {
+    } else if (gSize == "44") {
       return "xl";
     }
   } else {
-    return size;
+    return gSize;
   }
 }
 
@@ -203,6 +203,8 @@ function convertTailoring(size) {
       return "42";
     } else if (size == "43") {
       return "44";
+    } else {
+      return size;
     }
   } else if (USre.test(size)) {
     if (size === "xxs") {
@@ -221,6 +223,8 @@ function convertTailoring(size) {
       return "58";
     } else if (size === "3xl" || size === "xxxl") {
       return "60";
+    } else {
+      return size;
     }
   } else {
     return size;
@@ -431,7 +435,7 @@ function convertSize(
       return convertShoes(grailedSize, gender);
     }
   } else if (gCategory === "tops" && gender === "men") {
-    return convertMensShirts(grailedSize);
+    return convertMensShirts(grailedSize, regexPattern);
   } else if (gCategory === "bottoms" && gender === "women") {
     return convertWomensBottoms(grailedSize);
   } else if (grailedSize) {
