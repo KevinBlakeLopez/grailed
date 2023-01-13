@@ -78,14 +78,7 @@ function fetchMapCSV() {
                 column[16].trim().toLowerCase(),
                 column[6].trim().toLowerCase(),
                 column[27].trim().toLowerCase(),
-                column[17].trim().toLowerCase(),
-                convertCategories(
-                  htmlEntities(column[18].trim().toLowerCase()),
-                  column[16].trim().toLowerCase(),
-                  column[17].trim().toLowerCase(),
-                  column[6].trim().toLowerCase(),
-                  column[27].trim().toLowerCase()
-                )
+                column[17].trim().toLowerCase()
               )
           ),
           htmlEntities(column[5]),

@@ -315,7 +315,7 @@ function convertSize(
   ) {
     return "universal_os";
   } else if (
-    [
+    ([
       "accessories",
       "bags",
       "frames",
@@ -328,10 +328,43 @@ function convertSize(
       "technology",
       "wallets",
       "watches",
-    ].includes(category) &&
+    ].includes(category) ||
+      [
+        "accessories",
+        "bags",
+        "frames",
+        "frames for men",
+        "jewellery sets",
+        "jewelry",
+        "necklaces",
+        "rings",
+        "sunglasses",
+        "technology",
+        "wallets",
+        "watches",
+      ].includes(subCategory)) &&
     gender === "men"
   ) {
     return "one size";
+  } else if (
+    category === "bottoms" &&
+    size === "one size" &&
+    gender === "women"
+  ) {
+    console.log("here");
+    return "universal_32";
+  } else if (
+    (category === "tops" || category === "outerwear") &&
+    size === "one size" &&
+    gender === "men"
+  ) {
+    return "m";
+  } else if (
+    category === "bottoms" &&
+    size === "one size" &&
+    gender === "men"
+  ) {
+    return "35";
   }
 
   regexes.forEach((regex) =>

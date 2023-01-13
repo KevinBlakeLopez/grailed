@@ -56,30 +56,22 @@ function fetchMapCSV22() {
           column[20],
           htmlEntities(column[5]) + " " + column[6],
           "original  size on tag: " + column[19] + "\n" + column[27],
-          createOptionsArray(
-            convertCategories(
-              htmlEntities(column[18].trim().toLowerCase()),
+          convertCategories(
+            htmlEntities(column[18].trim().toLowerCase()),
+            column[16].trim().toLowerCase(),
+            column[17].trim().toLowerCase(),
+            column[6].trim().toLowerCase(),
+            column[27].trim().toLowerCase()
+          ) +
+            "." +
+            convertSubCategories(
+              htmlEntities(column[18]).trim().toLowerCase(),
               column[16].trim().toLowerCase(),
-              column[17].trim().toLowerCase(),
               column[6].trim().toLowerCase(),
-              column[27].trim().toLowerCase()
-            ) +
-              "." +
-              convertSubCategories(
-                htmlEntities(column[18]).trim().toLowerCase(),
-                column[16].trim().toLowerCase(),
-                column[6].trim().toLowerCase(),
-                column[27].trim().toLowerCase(),
-                column[17].trim().toLowerCase(),
-                convertCategories(
-                  htmlEntities(column[18].trim().toLowerCase()),
-                  column[16].trim().toLowerCase(),
-                  column[17].trim().toLowerCase(),
-                  column[6].trim().toLowerCase(),
-                  column[27].trim().toLowerCase()
-                )
-              )
-          ),
+              column[27].trim().toLowerCase(),
+              column[17].trim().toLowerCase(),
+              column[3]
+            ),
           htmlEntities(column[5]),
           null,
           null,
@@ -93,14 +85,15 @@ function fetchMapCSV22() {
               column[16].trim().toLowerCase(),
               column[17].trim().toLowerCase(),
               column[6].trim().toLowerCase(),
-              column[9].trim().toLowerCase()
+              column[27].trim().toLowerCase()
             ),
             convertSubCategories(
               htmlEntities(column[18].trim().toLowerCase()),
               column[16].trim().toLowerCase(),
               column[6].trim().toLowerCase(),
-              column[9].trim().toLowerCase(),
-              column[17].trim().toLowerCase()
+              column[27].trim().toLowerCase(),
+              column[17].trim().toLowerCase(),
+              column[3]
             ),
             column[3],
             column[6]
@@ -125,22 +118,23 @@ function fetchMapCSV22() {
           column[20],
           htmlEntities(column[5]) + " " + column[6],
           "original size on tag: " + column[19] + "\n" + column[27],
-          createOptionsArray(
-            "womens_" +
-              convertCategories(
-                htmlEntities(column[18].trim().toLowerCase()),
-                column[16].trim().toLowerCase(),
-                column[17].trim().toLowerCase()
-              ) +
-              "." +
-              convertSubCategories(
-                htmlEntities(column[18]).trim().toLowerCase(),
-                column[16].trim().toLowerCase(),
-                column[6].trim().toLowerCase(),
-                column[27].trim().toLowerCase(),
-                column[17].trim().toLowerCase()
-              )
-          ),
+          "womens_" +
+            convertCategories(
+              htmlEntities(column[18].trim().toLowerCase()),
+              column[16].trim().toLowerCase(),
+              column[17].trim().toLowerCase(),
+              column[6].trim().toLowerCase(),
+              column[27].trim().toLowerCase()
+            ) +
+            "." +
+            convertSubCategories(
+              htmlEntities(column[18]).trim().toLowerCase(),
+              column[16].trim().toLowerCase(),
+              column[6].trim().toLowerCase(),
+              column[27].trim().toLowerCase(),
+              column[17].trim().toLowerCase(),
+              column[3]
+            ),
           htmlEntities(column[5]),
           null,
           null,
@@ -155,14 +149,15 @@ function fetchMapCSV22() {
               column[16].trim().toLowerCase(),
               column[17].trim().toLowerCase(),
               column[6].trim().toLowerCase(),
-              column[9].trim().toLowerCase()
+              column[27].trim().toLowerCase()
             ),
             convertSubCategories(
               htmlEntities(column[18].trim().toLowerCase()),
               column[16].trim().toLowerCase(),
               column[6].trim().toLowerCase(),
-              column[9].trim().toLowerCase(),
-              column[17].trim().toLowerCase()
+              column[27].trim().toLowerCase(),
+              column[17].trim().toLowerCase(),
+              column[3]
             ),
             column[3],
             column[6]

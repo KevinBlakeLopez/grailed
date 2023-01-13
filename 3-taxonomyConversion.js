@@ -1,239 +1,10 @@
-function convertCategories(subcategory, gender, bgCat, title, description) {
-  let category;
-  if (bgCat !== "clothing") {
-    switch (bgCat) {
-      case "accessories":
-        category = "accessories";
-        break;
-      case "bags":
-        if (gender === "men" || subcategory === "wallets") {
-          category = "accessories";
-          break;
-        } else if (gender === "women") {
-          category = "bags_luggage";
-          break;
-        }
-      case "earrings":
-        category = "jewelry";
-        break;
-      case "frames":
-        category = "accessories";
-        break;
-      case "frames for men":
-        category = "accessories";
-        break;
-      case "frames for women":
-        category = "accessories";
-        break;
-      case "jewellery sets":
-        category = "jewelry";
-        break;
-      case "jewelry":
-        category = "jewelry";
-        break;
-      case "necklaces":
-        if (gender === "men") {
-          category = "accessories";
-          break;
-        } else if (gender === "women") {
-          category = "jewelry";
-          break;
-        }
-      case "rings":
-        if (gender === "men") {
-          category = "accessories";
-          break;
-        } else if (gender === "women") {
-          category = "jewelry";
-          break;
-        }
-      case "shoes":
-        category = "footwear";
-        break;
-      case "snow goggles":
-        category = "accessories";
-        break;
-      case "sunglasses":
-        category = "accessories";
-        break;
-      case "technology":
-        category = "accessories";
-        break;
-      case "wallets":
-        category = "accessories";
-        break;
-      case "watches":
-        category = "accessories";
-        break;
-    }
-    // for clothing
-  } else {
-    switch (subcategory) {
-      case "blazers":
-        if (gender === "men") {
-          category = "tailoring";
-          break;
-        } else if (gender === "women") {
-          category = "outerwear";
-          break;
-        }
-      case "cardigans":
-        category = "tops";
-        break;
-      case "dresses":
-        category = "dresses";
-        break;
-      case "jackets":
-        if (
-          !(
-            description.includes("windbreaker") || title.includes("windbreaker")
-          ) &&
-          (description.includes("sweater") || title.includes("sweater"))
-        ) {
-          category = "tops";
-          break;
-        } else {
-          category = "outerwear";
-          break;
-        }
-      case "jackets & coats":
-        category = "outerwear";
-        break;
-      case "jeans & pants":
-        if (
-          gender === "men" &&
-          !title.includes("jeans") &&
-          !description.includes("jeans") &&
-          !title.includes("casual") &&
-          !description.includes("casual") &&
-          !title.includes("cropped") &&
-          !description.includes("cropped") &&
-          (title.includes("dress") ||
-            description.includes("dress") ||
-            title.includes("formal") ||
-            description.includes("formal"))
-        ) {
-          category = "tailoring";
-          break;
-        } else {
-          category = "bottoms";
-          break;
-        }
-      case "polo shirt":
-        category = "tops";
-        break;
-      case "polo shirts":
-        category = "tops";
-        break;
-      case "ponchos":
-        category = "outerwear";
-        break;
-      case "shirts":
-        if (
-          gender === "men" &&
-          (title.includes("formal") ||
-            title.includes("dress") ||
-            description.includes("formal") ||
-            description.includes("formal"))
-        ) {
-          category = "tailoring";
-          break;
-        } else {
-          category = "tops";
-          break;
-        }
-      case "shorts":
-        category = "bottoms";
-        break;
-      case "skirts":
-        category = "bottoms";
-        break;
-      case "sleepwear":
-        category = "accessories";
-        break;
-      case "snow googles":
-        category = "accessories";
-        break;
-      case "suits":
-        category = "tailoring";
-        break;
-      case "suits & blazers":
-        if (gender === "men") {
-          category = "tailoring";
-          break;
-        } else if (gender === "women") {
-          category = "outerwear";
-          break;
-        }
-      case "sweaters":
-        category = "tops";
-        break;
-      case "sweatsuits":
-        category = "bottoms";
-        break;
-      case "swimwear":
-        if (gender === "men") {
-          category = "bottoms";
-          break;
-        } else if (gender === "women") {
-          category = "tops";
-          break;
-        }
-      case "t-shirts":
-        if (
-          gender === "men" &&
-          (title.includes("formal") ||
-            title.includes("dress") ||
-            description.includes("formal") ||
-            description.includes("formal"))
-        ) {
-          category = "tailoring";
-          break;
-        } else {
-          category = "tops";
-          break;
-        }
-      case "tights & socks":
-        category = "accessories";
-        break;
-      case "tops & t-shirts":
-        if (
-          gender === "men" &&
-          (title.includes("formal") ||
-            title.includes("dress") ||
-            description.includes("formal") ||
-            description.includes("formal"))
-        ) {
-          category = "tailoring";
-          break;
-        } else {
-          category = "tops";
-          break;
-        }
-      case "underwear":
-        category = "accessories";
-        break;
-      case "vests":
-        if (gender === "men" && title.includes("formal")) {
-          category = "tailoring";
-          break;
-        } else {
-          category = "outerwear";
-          break;
-        }
-    }
-  }
-  // if (!category) console.log(bgCat + "  " + subcategory);
-  return category;
-}
-
 function convertSubCategories(
   subcategory,
   gender,
   title,
   description,
   bgCat,
-  gCat = ""
+  SKU
 ) {
   let newSubCat;
   let options;
@@ -241,53 +12,27 @@ function convertSubCategories(
     if (gender === "men") {
       newSubCat = "bags_luggage";
     } else if (gender === "women") {
-      newSubCat = "messengers_satchels";
+      newSubCat = "handle_bags";
     }
   } else if (subcategory === "cummerbund") {
     newSubCat = "misc";
-  } else if (
-    subcategory === "wallets" &&
-    (!description.includes("bag") || !title.includes("bag"))
-  ) {
+  } else if (subcategory === "leather accessories") {
     if (
-      description.includes("document") ||
-      title.includes("document") ||
-      description.includes("messenger") ||
-      title.includes("messenger")
+      description.includes("condom") ||
+      title.includes("condom") ||
+      gender === "men"
     ) {
-      if (gender === "men") {
-        newSubCat = "bags_luggage";
-      }
-    } else {
-      newSubCat = "wallets";
-    }
-  } else if (
-    subcategory === "leather accessories" ||
-    description.includes("condom") ||
-    title.includes("condom")
-  ) {
-    newSubCat = "misc";
-  } else if (description.includes("toiletry") || title.includes("toiletry")) {
-    if (gender === "women") {
-      newSubCat = "toiletry_pouches";
-    } else if (gender === "men") {
       newSubCat = "misc";
-    } else if (
-      description.includes("sunglasses") ||
-      title.includes("sunglasses")
-    ) {
-      newSubCat = "sunglasses";
-    } else if (
-      subcategory === "wallets for women" ||
-      description.includes("wallets") ||
-      title.includes("wallets")
-    ) {
-      newSubCat = "wallets";
+    } else if (gender === "women") {
+      newSubCat = "miscellaneous";
     }
   } else if (
-    bgCat === "accessories" &&
-    (description.includes("scarf") || title.includes("scarf"))
+    subcategory === "wallets for women" ||
+    subcategory === "wallets" ||
+    bgCat === "wallets"
   ) {
+    newSubCat = "wallets";
+  } else if (bgCat === "accessories" && subcategory === "scarves") {
     if (gender === "men") {
       newSubCat = "gloves_scarves";
     } else if (gender === "women") {
@@ -305,7 +50,12 @@ function convertSubCategories(
     newSubCat = subcategory;
   } else if (subcategory === "belt bags") {
     newSubCat = "belt_bags";
-  } else if (subcategory === "clutch bags" || subcategory === "evening bags") {
+  } else if (
+    subcategory === "clutch bags" ||
+    subcategory === "evening bags" ||
+    (bgCat === "bags" &&
+      (title.includes("clutch") || description.includes("clutch")))
+  ) {
     newSubCat = "clutches";
   } else if (subcategory === "crossbody bags") {
     newSubCat = "crossbody_bags";
@@ -314,63 +64,65 @@ function convertSubCategories(
       "belts",
       "blazers",
       "boots",
-      "bracelets",
-      "brooches",
-      "charms",
-      "cufflinks",
       "earrings",
-      "gloves",
       "hats",
-      "heels",
-      "mules",
-      "platforms",
-      "necklaces",
-      "rings",
       "sandals",
-      "scarves",
       "shorts",
       "suits",
-      "sunglasses",
       "vests",
     ].includes(subcategory)
   ) {
     newSubCat = subcategory;
+  } else if (subcategory === "bracelets") {
+    if (gender === "women") {
+      newSubCat = "bracelets";
+    } else if (gender === "men") {
+      newSubCat = "jewelry_watches";
+    }
+  } else if (subcategory === "brooches") {
+    if (gender === "women") {
+      newSubCat = "brooches";
+    }
+  } else if (subcategory === "cufflinks") {
+    if (gender === "women") {
+      newSubCat = "cufflinks";
+    } else if (gender === "men") {
+      newSubCat = "misc";
+    }
+  } else if (subcategory === "earrings") {
+    if (gender === "women") {
+      newSubCat = "earrings";
+    }
   } else if (["sweatsuits"].includes(subcategory)) {
-    if (title.includes("pants")) {
+    if (
+      title.includes("pants") ||
+      description.includes("pants") ||
+      title.includes("jog") ||
+      description.includes("jog")
+    ) {
       newSubCat = "sweatpants_joggers";
-    } else if (title.includes("sweatsuit")) {
+    } else if (
+      title.includes("sweatsuit") ||
+      description.includes("sweatsuits") ||
+      title.includes("jumpsuit") ||
+      description.includes("jumpsuit")
+    ) {
       newSubCat = "jumpsuits";
     }
-  } else if (
-    ["hitop sneakers", "lowtop sneakers", "sneakers", "slip ons"].includes(
-      subcategory
-    )
-  ) {
-    options = ["hitop_sneakers", "lowtop_sneakers", "sneakers", "slip_ons"];
-  } else if (
-    [
-      "bucket bags",
-      "handle bags",
-      "hobo bags",
-      "luggage travel",
-      "mini bags",
-    ].includes(subcategory)
-  ) {
-    options = [
-      "belt_bags",
-      "bucket_bags",
-      "clutches",
-      "crossbody_bags",
-      "handle_bags",
-      "hobo_bags",
-      "luggage_travel",
-      "mini_bags",
-      "other",
-      "shoulder_bags",
-      "tote_bags",
-    ];
-  } else if (["dresses"].includes(subcategory)) {
-    if (
+  } else if (["sneakers"].includes(subcategory)) {
+    if (title.includes("hitop") || description.includes("hitop")) {
+      newSubCat = "hitop_sneakers";
+    } else {
+      newSubCat = "lowtop_sneakers";
+    }
+  } else if (["luggage and travel"].includes(subcategory)) {
+    if (gender === "men") {
+      newSubCat = "bags_luggage";
+    }
+  } else if (gender === "women" && ["dresses"].includes(subcategory)) {
+    if (title.includes("jumpsuit") || description.includes("jumpsuit")) {
+      newSubCat = "jumpsuits";
+    } else if (
       description.includes("mini") ||
       description.includes("above-knee") ||
       description.includes("above knee") ||
@@ -417,18 +169,20 @@ function convertSubCategories(
       newSubCat = "midi";
     }
   } else if (
-    ([
+    [
       "frames",
       "frames for men",
       "frames for women",
       "glasses",
       "unisex frames",
     ].includes(subcategory) ||
-      description.includes("frames") ||
-      title.includes("frames") ||
-      description.includes("glasses") ||
-      title.includes("glasses")) &&
-    (!title.includes("sunglasses") || !description.includes("sunglasses"))
+    [
+      "frames",
+      "frames for men",
+      "frames for women",
+      "glasses",
+      "unisex frames",
+    ].includes(bgCat)
   ) {
     newSubCat = "glasses";
   } else if (bgCat === "shoes") {
@@ -442,7 +196,12 @@ function convertSubCategories(
       newSubCat = "heels";
     } else if (subcategory === "flat shoes") {
       newSubCat = "flats";
-    } else if (description.includes("slip") || title.includes("slip")) {
+    } else if (
+      description.includes("slip") ||
+      title.includes("slip") ||
+      description.includes("moccasin") ||
+      title.includes("moccasin")
+    ) {
       newSubCat = "slip_ons";
     } else if (
       (description.includes("leather") || title.includes("leather")) &&
@@ -450,12 +209,7 @@ function convertSubCategories(
     ) {
       newSubCat = "leather";
     }
-  } else if (
-    bgCat === "accessories" &&
-    (subcategory === "gloves" ||
-      description.includes("gloves") ||
-      title.includes("gloves"))
-  ) {
+  } else if (bgCat === "accessories" && subcategory === "gloves") {
     if (gender === "men") {
       newSubCat = "gloves_scarves";
     } else if (gender === "women") {
@@ -465,17 +219,14 @@ function convertSubCategories(
     newSubCat = "shoulder_bags";
   } else if (subcategory === "handkerchief") {
     newSubCat = "ties_pocketsquares";
-  } else if (
-    bgCat === "accessories" &&
-    (description.includes("hat") ||
-      title.includes("hat") ||
-      description.includes("cap") ||
-      title.includes("cap"))
-  ) {
+  } else if (bgCat === "accessories" && subcategory === "hat") {
     newSubCat = "hats";
-  } else if (["headbands"].includes(subcategory)) {
+  } else if (gender === "women" && ["headbands"].includes(subcategory)) {
     newSubCat = "hair_accessories";
-  } else if (subcategory === "jackets" || subcategory === "jackets & coats") {
+  } else if (
+    (!title.includes("sweater") || !description.includes("sweater")) &&
+    (subcategory === "jackets" || subcategory === "jackets & coats")
+  ) {
     if (gender === "men") {
       if (
         description.includes("rain") ||
@@ -532,7 +283,10 @@ function convertSubCategories(
         newSubCat = "rain_jackets";
       } else if (description.includes("denim") || title.includes("denim")) {
         newSubCat = "denim_jackets";
-      } else if (description.includes("leather") || title.includes("leather")) {
+      } else if (
+        !title.includes("jumpsuit") &&
+        (description.includes("leather") || title.includes("leather"))
+      ) {
         newSubCat = "leather_jackets";
       } else if (description.includes("bomber") || title.includes("bomber")) {
         newSubCat = "bombers";
@@ -554,21 +308,29 @@ function convertSubCategories(
         title.includes("bubble")
       ) {
         newSubCat = "coats";
-      } else {
+      } else if (!title.includes("jumpsuit")) {
         newSubCat = "jackets";
       }
     }
   } else if (subcategory === "jeans & pants") {
     if (gender === "men") {
-      if (title.includes("jeans") || description.includes("jeans")) {
-        newSubCat = "denim";
-      } else if (
-        title.includes("dress") ||
-        title.includes("formal") ||
-        description.includes("dress") ||
-        description.includes("formal")
+      if (
+        !title.includes("jeans") &&
+        !description.includes("jeans") &&
+        !title.includes("casual") &&
+        !description.includes("casual") &&
+        !title.includes("cropped") &&
+        !description.includes("cropped") &&
+        (title.includes("dress") ||
+          title.includes("formal") ||
+          description.includes("dress") ||
+          description.includes("formal"))
       ) {
         newSubCat = "formal_trousers";
+      } else if (title.includes("cropped") || description.includes("cropped")) {
+        newSubCat = "cropped_pants";
+      } else if (title.includes("legging") || description.includes("legging")) {
+        newSubCat = "leggings";
       } else if (
         description.includes("jog") ||
         title.includes("jog") ||
@@ -599,6 +361,8 @@ function convertSubCategories(
         title.includes("capri")
       ) {
         newSubCat = "casual_pants";
+      } else if (title.includes("jeans") || description.includes("jeans")) {
+        newSubCat = "denim";
       } else {
         options = [
           "casual_pants",
@@ -612,12 +376,27 @@ function convertSubCategories(
     } else if (gender === "women") {
       if (title.includes("shorts") || description.includes("shorts")) {
         newSubCat = "shorts";
+      } else if (
+        description.includes("jumpsuits") ||
+        title.includes("jumpsuits")
+      ) {
+        newSubCat = "jumpsuits";
+      } else if (title.includes("legging") || description.includes("legging")) {
+        newSubCat = "leggings";
       } else if (description.includes("jog") || title.includes("jog")) {
         newSubCat = "joggers";
+      } else if (title.includes("jeans") || description.includes("jeans")) {
+        newSubCat = "jeans";
       } else {
-        options = ["jeans", "joggers", "leggings", "pants", "shorts"];
+        newSubCat = "pants";
       }
     }
+  } else if (
+    gender === "women" &&
+    bgCat === "jewelry" &&
+    ["other", "others"].includes(subcategory)
+  ) {
+    return "charms";
   } else if (
     [
       "keychains",
@@ -635,8 +414,22 @@ function convertSubCategories(
     newSubCat = "slip_ons";
   } else if (subcategory === "luggage and travel") {
     newSubCat = "luggage_travel";
-  } else if (description.includes("necklace") || title.includes("necklace")) {
-    newSubCat = "necklaces";
+  } else if (
+    [
+      "necklaces",
+      "jewellery sets for women",
+      "necklaces for men",
+      "necklaces for women",
+    ].includes(subcategory) ||
+    (["jewelry", "jewellery sets"].includes(bgCat) &&
+      description.includes("necklace")) ||
+    title.includes("necklace")
+  ) {
+    if (gender === "women" && bgCat !== "clothing" && bgCat !== "accessories") {
+      newSubCat = "necklaces";
+    } else if (gender === "men") {
+      newSubCat = "jewelry_watches";
+    }
   } else if (
     subcategory === "option" ||
     subcategory === "options" ||
@@ -653,21 +446,23 @@ function convertSubCategories(
     }
   } else if (subcategory === "platforms & wedges") {
     newSubCat = "platforms";
-  } else if (
-    subcategory === "polo shirts" ||
-    subcategory === "polo shirt" ||
-    title.includes("polo") ||
-    description.includes("polo")
-  ) {
+  } else if (subcategory === "polo shirts" || subcategory === "polo shirt") {
     newSubCat = "polos";
-  } else if (subcategory === "ponchos") {
+  } else if (
+    subcategory === "ponchos" &&
+    (!title.includes("sweater") || !description.includes("sweater"))
+  ) {
     if (gender === "men") {
       newSubCat = "light_jackets";
     } else if (gender === "women") {
       newSubCat = "coats";
     }
-  } else if (description.includes("rings") || title.includes("rings")) {
-    newSubCat = "rings";
+  } else if (subcategory === "rings" || subcategory === "rings for men") {
+    if (gender === "women") {
+      newSubCat = "rings";
+    } else if (gender === "men") {
+      newSubCat = "jewelry_watches";
+    }
   } else if (
     subcategory === "satchel bags" ||
     subcategory === "messenger bags"
@@ -680,7 +475,7 @@ function convertSubCategories(
           title.includes("formal") ||
           title.includes("dress") ||
           description.includes("formal") ||
-          description.includes("formal")
+          description.includes("dress")
         ) &&
         (title.includes("button up") || description.includes("button up"))
       ) {
@@ -689,7 +484,9 @@ function convertSubCategories(
         title.includes("formal") ||
         title.includes("dress") ||
         description.includes("formal") ||
-        description.includes("formal")
+        description.includes("dress") ||
+        title.includes("button up") ||
+        description.includes("button up")
       ) {
         newSubCat = "formal_shirting";
       } else if (
@@ -721,7 +518,9 @@ function convertSubCategories(
         title.includes("sweater") ||
         description.includes("sweater") ||
         title.includes("turtleneck") ||
-        description.includes("turtleneck")
+        description.includes("turtleneck") ||
+        title.includes("pullover") ||
+        description.includes("pullover")
       ) {
         newSubCat = "sweaters_knitwear";
       } else if (
@@ -748,7 +547,7 @@ function convertSubCategories(
         title.includes("bodysuit") ||
         description.includes("bodysuit")
       ) {
-        newSubCat = "bodysuit";
+        newSubCat = "bodysuits";
       } else if (
         title.includes("button up") ||
         description.includes("button up")
@@ -758,14 +557,6 @@ function convertSubCategories(
         newSubCat = "crop_tops";
       } else if (title.includes("hoodie") || description.includes("hoodie")) {
         newSubCat = "hoodies";
-      } else if (
-        !title.includes("t-shirt") &&
-        !title.includes("short sleeve") &&
-        !description.includes("t-shirt") &&
-        !description.includes("short sleeve") &&
-        (title.includes("jersey") || description.includes("jersey"))
-      ) {
-        newSubCat = "jerseys";
       } else if (
         title.includes("long sleeve") ||
         description.includes("long sleeve")
@@ -782,7 +573,9 @@ function convertSubCategories(
         title.includes("sweater") ||
         description.includes("sweater") ||
         title.includes("turtleneck") ||
-        description.includes("turtleneck")
+        description.includes("turtleneck") ||
+        title.includes("pullover") ||
+        description.includes("pullover")
       ) {
         newSubCat = "sweaters";
       } else if (
@@ -838,8 +631,6 @@ function convertSubCategories(
     } else if (gender === "women") {
       newSubCat = "socks_intimates";
     }
-  } else if (subcategory === "suits & blazers") {
-    options = ["suits", "blazers"];
   } else if (subcategory === "sweaters" || subcategory === "cardigans") {
     if (gender === "men") {
       newSubCat = "sweaters_knitwear";
@@ -847,8 +638,12 @@ function convertSubCategories(
       newSubCat = "sweaters";
     }
   } else if (
-    bgCat === "sunglasses" &&
-    (description.includes("sunglasses") || title.includes("sunglasses"))
+    bgCat === "sunglasses" ||
+    [
+      "sunglasses for men",
+      "sunglasses for women",
+      "unisex sunglasses",
+    ].includes(subcategory)
   ) {
     newSubCat = "sunglasses";
   } else if (subcategory === "sweatsuits") {
@@ -859,8 +654,6 @@ function convertSubCategories(
     } else if (gender === "women") {
       newSubCat = "bodysuits";
     }
-  } else if (description.includes("bikini")) {
-    newSubCat = "bodysuits";
   } else if (subcategory === "t-shirts") {
     if (gender === "men") {
       if (
@@ -868,7 +661,7 @@ function convertSubCategories(
           title.includes("formal") ||
           title.includes("dress") ||
           description.includes("formal") ||
-          description.includes("formal")
+          description.includes("dress")
         ) &&
         (title.includes("button up") || description.includes("button up"))
       ) {
@@ -877,7 +670,7 @@ function convertSubCategories(
         title.includes("formal") ||
         title.includes("dress") ||
         description.includes("formal") ||
-        description.includes("formal")
+        description.includes("dress")
       ) {
         newSubCat = "formal_shirting";
       } else if (
@@ -959,14 +752,6 @@ function convertSubCategories(
       } else if (title.includes("hoodie") || description.includes("hoodie")) {
         newSubCat = "hoodies";
       } else if (
-        !title.includes("t-shirt") &&
-        !title.includes("short sleeve") &&
-        !description.includes("t-shirt") &&
-        !description.includes("short sleeve") &&
-        (title.includes("jersey") || description.includes("jersey"))
-      ) {
-        newSubCat = "jerseys";
-      } else if (
         title.includes("long sleeve") ||
         description.includes("long sleeve")
       ) {
@@ -993,7 +778,7 @@ function convertSubCategories(
         newSubCat = "blouses";
       }
     }
-  } else if (subcategory === "ties & bowties") {
+  } else if (gender === "men" && subcategory === "ties & bowties") {
     newSubCat = "ties_pocketsquares";
   } else if (subcategory === "tights & socks") {
     if (gender === "men") {
@@ -1008,7 +793,7 @@ function convertSubCategories(
           title.includes("formal") ||
           title.includes("dress") ||
           description.includes("formal") ||
-          description.includes("formal")
+          description.includes("dress")
         ) &&
         (title.includes("button up") || description.includes("button up"))
       ) {
@@ -1017,7 +802,7 @@ function convertSubCategories(
         title.includes("formal") ||
         title.includes("dress") ||
         description.includes("formal") ||
-        description.includes("formal")
+        description.includes("dress")
       ) {
         newSubCat = "formal_shirting";
       } else if (
@@ -1094,14 +879,6 @@ function convertSubCategories(
       } else if (title.includes("hoodie") || description.includes("hoodie")) {
         newSubCat = "hoodies";
       } else if (
-        !title.includes("t-shirt") &&
-        !title.includes("short sleeve") &&
-        !description.includes("t-shirt") &&
-        !description.includes("short sleeve") &&
-        (title.includes("jersey") || description.includes("jersey"))
-      ) {
-        newSubCat = "jerseys";
-      } else if (
         title.includes("long sleeve") ||
         description.includes("long sleeve")
       ) {
@@ -1130,30 +907,29 @@ function convertSubCategories(
     }
   } else if (subcategory === "tote bags") {
     newSubCat = "tote_bags";
-  } else if (
-    subcategory === "underwear" ||
-    description.includes("underwear") ||
-    title.includes("underwear")
-  ) {
+  } else if (subcategory === "underwear") {
     if (gender === "men") {
       newSubCat = "socks_underwear";
     } else if (gender === "women") {
       newSubCat = "socks_intimates";
     }
+  } else if (title.includes("vest") || description.includes("vest")) {
+    newSubCat = "vests";
   } else if (
-    bgCat === "watches" &&
-    ([
-      "watches",
-      "watches for women",
-      "watches for men",
-      "unisex watches",
-    ].includes(subcategory) ||
-      description.includes("watch") ||
-      title.includes("watch"))
+    bgCat === "watches" ||
+    /^\s*(unisex)?\s*watches\s*(for)?\s*(men|women)?\s*$/i.test(subcategory)
   ) {
-    if (gender === "men" || gender === "unisex" || !gender) {
+    if (
+      gender === "men" ||
+      gender === "unisex" ||
+      /^\s*(unisex)?\s*watches\s*(for)?\s*(men)?\s*$/i.test(subcategory)
+    ) {
       newSubCat = "jewelry_watches";
-    } else if (gender === "women") {
+    } else if (
+      gender === "women" ||
+      gender === "Women" ||
+      /^\s*watches\s*for\s*women\s*$/i.test(subcategory)
+    ) {
       newSubCat = "watches";
     }
   } else if (
@@ -1182,11 +958,199 @@ function convertSubCategories(
   ) {
     newSubCat = "slip_ons";
   } else if (
+    bgCat === "shoes" &&
+    (subcategory === "casual" ||
+      description.includes("casual") ||
+      title.includes("casual"))
+  ) {
+    newSubCat = "lowtop_sneakers";
+  } else if (
     gender === "women" &&
     bgCat === "shoes" &&
     (description.includes("broque") || title.includes("broque"))
   ) {
     newSubCat = "flats";
+  } else if (title.includes("blouse") || description.includes("blouse")) {
+    newSubCat = "blouses";
+  } else if (
+    (title.includes("dress") && title.includes("sleeveless")) ||
+    (description.includes("dress") && description.includes("sleeveless"))
+  ) {
+    newSubCat = "midi";
+  } else if (subcategory === "suits & blazers") {
+    if (gender === "women") newSubCat = "blazers";
+    options = ["suits", "blazers"];
+  } else if (
+    gender === "men" &&
+    (title.includes("suit") || description.includes("suit"))
+  ) {
+    newSubCat = "suits";
+  } else if (
+    description.includes("document") ||
+    title.includes("document") ||
+    description.includes("messenger") ||
+    title.includes("messenger")
+  ) {
+    if (gender === "men") {
+      newSubCat = "bags_luggage";
+    } else if (gender === "women") {
+      newSubCat = "messengers_satchels";
+    }
+  } else if (title.includes("briefcase") || description.includes("briefcase")) {
+    if (gender === "men") {
+      newSubCat = "bags_luggage";
+    } else if (gender === "women") {
+      newSubCat = "handle_bags";
+    }
+  } else if (
+    description.includes("sunglasses") ||
+    title.includes("sunglasses")
+  ) {
+    newSubCat = "sunglasses";
+  } else if (
+    title.includes("cummerbund") ||
+    description.includes("cummerbund")
+  ) {
+    newSubCat = "misc";
+  } else if (description.includes("toiletry") || title.includes("toiletry")) {
+    if (gender === "women") {
+      newSubCat = "toiletry_pouches";
+    } else if (gender === "men") {
+      newSubCat = "misc";
+    }
+  } else if (
+    (!title.includes("skirt") || !description.includes("skirt")) &&
+    (description.includes("wallet") || title.includes("wallet"))
+  ) {
+    newSubCat = "wallets";
+  } else if (
+    description.includes("scarf") ||
+    title.includes("scarf") ||
+    description.includes("scarves") ||
+    title.includes("scarves")
+  ) {
+    if (gender === "men") {
+      newSubCat = "gloves_scarves";
+    } else if (gender === "women") {
+      newSubCat = "scarves";
+    }
+  } else if (title.includes("dresses") || description.includes("dresses")) {
+    if (title.includes("jumpsuit") || description.includes("jumpsuit")) {
+      newSubCat = "jumpsuits";
+    } else if (
+      description.includes("mini") ||
+      description.includes("above-knee") ||
+      description.includes("above knee") ||
+      description.includes("short dress") ||
+      description.includes("short sleeveless") ||
+      title.includes("mini") ||
+      title.includes("above knee") ||
+      title.includes("above-knee") ||
+      title.includes("short dress")
+    ) {
+      newSubCat = "mini";
+    } else if (
+      description.includes("midi") ||
+      description.includes("knee length") ||
+      description.includes("knee-length") ||
+      description.includes("knee long") ||
+      description.includes("knee-long") ||
+      description.includes("over knee") ||
+      title.includes("midi") ||
+      title.includes("knee length") ||
+      title.includes("knee-length") ||
+      title.includes("knee long") ||
+      title.includes("knee-long") ||
+      title.includes("over knee")
+    ) {
+      newSubCat = "midi";
+    } else if (
+      description.includes("maxi") ||
+      description.includes("floor length") ||
+      description.includes("floor-length") ||
+      description.includes("full length") ||
+      description.includes("full-length") ||
+      description.includes("long dress") ||
+      description.includes("long sleeveless") ||
+      title.includes("maxi") ||
+      title.includes("full length") ||
+      title.includes("floor length") ||
+      title.includes("long dress")
+    ) {
+      newSubCat = "maxi";
+    } else if (description.includes("gown") || title.includes("gown")) {
+      newSubCat = "gowns";
+    } else {
+      newSubCat = "midi";
+    }
+  } else if (
+    description.includes("hat") ||
+    title.includes("hat") ||
+    description.includes("cap") ||
+    title.includes("cap")
+  ) {
+    newSubCat = "hats";
+  } else if (description.includes("gloves") || title.includes("gloves")) {
+    if (gender === "men") {
+      newSubCat = "gloves_scarves";
+    } else if (gender === "women") {
+      newSubCat = "gloves";
+    }
+  } else if (description.includes("bikini")) {
+    newSubCat = "bodysuits";
+  } else if (title.includes("headband") || description.includes("headband")) {
+    if (gender === "women") {
+      newSubCat = "hair_accessories";
+    } else if (gender === "men") {
+      newSubCat = "hats";
+    }
+  } else if (title.includes("loafer") || description.includes("loafer")) {
+    newSubCat = "slip_ons";
+  } else if (
+    title.includes("platforms") ||
+    description.includes("platforms") ||
+    title.includes("wedge") ||
+    description.includes("wedge")
+  ) {
+    newSubCat = "platforms";
+  } else if (title.includes("polos") || description.includes("polos")) {
+    newSubCat = "polos";
+  } else if (
+    description.includes("rings") ||
+    title.includes("rings") ||
+    subcategory === "rings for men"
+  ) {
+    if (gender === "women") {
+      newSubCat = "rings";
+    } else if (gender === "men") {
+      newSubCat = "jewelry_watches";
+    }
+  } else if (title.includes("ties") || description.includes("ties")) {
+    newSubCat = "ties_pocketsquares";
+  } else if (description.includes("underwear") || title.includes("underwear")) {
+    if (gender === "men") {
+      newSubCat = "socks_underwear";
+    } else if (gender === "women") {
+      newSubCat = "socks_intimates";
+    }
+  } else if (
+    description.includes("watch") ||
+    title.includes("watch") ||
+    description.includes("watches") ||
+    title.includes("watches") ||
+    /^\s*watches\s*$/.test(title)
+  ) {
+    if (gender === "men" || gender === "unisex") {
+      newSubCat = "jewelry_watches";
+    } else if (gender === "women" || gender === "Women") {
+      newSubCat = "watches";
+    }
+  } else if (bgCat === "accessories") {
+    if (gender === "men" || gender === "unisex") {
+      newSubCat = "misc";
+    } else if (gender === "women") {
+      newSubCat = "miscellaneous";
+    }
   }
 
   const newOptions = [];
@@ -1227,8 +1191,315 @@ function convertSubCategories(
   } else if (options) return options;
   // else
   //   console.log(
-  //     "no Taxonomy Conversion " + gender + " " + bgCat + " " + subcategory
+  //     "no Taxonomy Conversion " +
+  //       " " +
+  //       SKU +
+  //       " " +
+  //       title +
+  //       " " +
+  //       gender +
+  //       " " +
+  //       bgCat +
+  //       " " +
+  //       subcategory
   //   );
+}
+
+function inferCatFromSub(subcategory) {
+  if (["ties_pocketsquares", "wallets"].includes(subcategory)) {
+    return "accessories";
+  }
+}
+
+function convertCategories(subcategory, gender, bgCat, title, description) {
+  let category;
+  if (bgCat !== "clothing") {
+    switch (bgCat) {
+      case "accessories":
+        category = "accessories";
+        break;
+      case "bags":
+        if (
+          gender === "men" ||
+          subcategory === "wallets" ||
+          title.includes("laptop") ||
+          description.includes("cardholder")
+        ) {
+          category = "accessories";
+          break;
+        } else if (
+          gender === "women" ||
+          title.includes("bag") ||
+          description.includes("bag")
+        ) {
+          category = "bags_luggage";
+          break;
+        } else if (
+          title.includes("wallet") ||
+          description.includes("wallet") ||
+          title.includes("accessory") ||
+          description.includes("accessory")
+        ) {
+          category = "accessories";
+          break;
+        }
+      case "earrings":
+        category = "jewelry";
+        break;
+      case "frames":
+        category = "accessories";
+        break;
+      case "frames for men":
+        category = "accessories";
+        break;
+      case "frames for women":
+        category = "accessories";
+        break;
+      case "jewellery sets":
+        category = "jewelry";
+        break;
+      case "jewelry":
+        if (gender === "women") {
+          category = "jewelry";
+          break;
+        } else if (gender === "men") {
+          category = "accessories";
+          break;
+        }
+      case "necklaces":
+        if (gender === "men") {
+          category = "accessories";
+          break;
+        } else if (gender === "women") {
+          category = "jewelry";
+          break;
+        }
+      case "rings":
+        if (gender === "men") {
+          category = "accessories";
+          break;
+        } else if (gender === "women") {
+          category = "jewelry";
+          break;
+        }
+      case "shoes":
+        category = "footwear";
+        break;
+      case "snow goggles":
+        category = "accessories";
+        break;
+      case "sunglasses":
+        category = "accessories";
+        break;
+      case "technology":
+        category = "accessories";
+        break;
+      case "wallets":
+        category = "accessories";
+        break;
+      case "watches":
+        category = "accessories";
+        break;
+    }
+    // for clothing
+  } else if (bgCat === "clothing") {
+    switch (subcategory) {
+      case "blazers":
+        if (gender === "men") {
+          category = "tailoring";
+          break;
+        } else if (gender === "women") {
+          category = "outerwear";
+          break;
+        }
+      case "cardigans":
+        category = "tops";
+        break;
+      case "dresses":
+        if (title.includes("jumpsuit") || description.includes("jumpsuit")) {
+          category = "bottoms";
+          break;
+        } else {
+          category = "dresses";
+          break;
+        }
+      case "jackets":
+        if (
+          !(
+            description.includes("windbreaker") || title.includes("windbreaker")
+          ) &&
+          (description.includes("sweater") || title.includes("sweater"))
+        ) {
+          category = "tops";
+          break;
+        } else if (
+          title.includes("jumpsuit") ||
+          description.includes("jumpsuit")
+        ) {
+          category = "bottoms";
+          break;
+        } else {
+          category = "outerwear";
+          break;
+        }
+      case "jackets & coats":
+        if (title.includes("jumpsuit") || description.includes("jumpsuit")) {
+          category = "bottoms";
+          break;
+        } else if (!title.includes("blouse")) {
+          category = "outerwear";
+          break;
+        }
+      case "jeans & pants":
+        if (
+          gender === "men" &&
+          !title.includes("jeans") &&
+          !description.includes("jeans") &&
+          !title.includes("casual") &&
+          !description.includes("casual") &&
+          !title.includes("cropped") &&
+          !description.includes("cropped") &&
+          (title.includes("dress") ||
+            description.includes("dress") ||
+            title.includes("formal") ||
+            description.includes("formal"))
+        ) {
+          category = "tailoring";
+          break;
+        } else {
+          category = "bottoms";
+          break;
+        }
+      case "polo shirt":
+        category = "tops";
+        break;
+      case "polo shirts":
+        category = "tops";
+        break;
+      case "ponchos":
+        category = "outerwear";
+        break;
+      case "shirts":
+        if (
+          gender === "men" &&
+          (title.includes("formal") ||
+            title.includes("dress") ||
+            description.includes("formal") ||
+            description.includes("dress"))
+        ) {
+          category = "tailoring";
+          break;
+        } else {
+          category = "tops";
+          break;
+        }
+      case "shorts":
+        category = "bottoms";
+        break;
+      case "skirts":
+        category = "bottoms";
+        break;
+      case "sleepwear":
+        category = "accessories";
+        break;
+      case "snow googles":
+        category = "accessories";
+        break;
+      case "suits":
+        category = "tailoring";
+        break;
+      case "suits & blazers":
+        if (gender === "men") {
+          category = "tailoring";
+          break;
+        } else if (gender === "women" && !title.includes("blouse")) {
+          category = "outerwear";
+          break;
+        }
+      case "sweaters":
+        category = "tops";
+        break;
+      case "sweatsuits":
+        category = "bottoms";
+        break;
+      case "swimwear":
+        if (gender === "men") {
+          category = "bottoms";
+          break;
+        } else if (gender === "women") {
+          category = "tops";
+          break;
+        }
+      case "t-shirts":
+        if (
+          gender === "men" &&
+          (title.includes("formal") ||
+            title.includes("dress") ||
+            description.includes("formal") ||
+            description.includes("dress"))
+        ) {
+          category = "tailoring";
+          break;
+        } else {
+          category = "tops";
+          break;
+        }
+      case "ties & bowties":
+        category = "accessories";
+        break;
+      case "tights & socks":
+        category = "accessories";
+        break;
+      case "tops & t-shirts":
+        if (
+          gender === "men" &&
+          (title.includes("formal") ||
+            title.includes("dress") ||
+            description.includes("formal") ||
+            description.includes("dress"))
+        ) {
+          category = "tailoring";
+          break;
+        } else {
+          category = "tops";
+          break;
+        }
+      case "underwear":
+        category = "accessories";
+        break;
+      case "vests":
+        if (gender === "men" && title.includes("formal")) {
+          category = "tailoring";
+          break;
+        } else {
+          category = "outerwear";
+          break;
+        }
+    }
+  } else if (gender === "women") {
+    if (
+      (title.includes("dress") || description.includes("dress")) &&
+      (title.includes("a-line") || description.includes("a-line"))
+    ) {
+      category = "dresses";
+    }
+  } else if (gender === "men") {
+    if (title.includes("suit")) {
+      category = "tailoring";
+    }
+  } else if (title.includes("wallet")) {
+    category = "accessories";
+  } else if (
+    title.includes("jeans") ||
+    title.includes("pants") ||
+    description.includes("jeans") ||
+    description.includes("pants")
+  ) {
+    category = "bottoms";
+  }
+
+  // if (!category) console.log(bgCat + "  " + subcategory);
+  return category;
 }
 
 function inferSubCategories() {
