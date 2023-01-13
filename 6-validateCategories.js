@@ -1,3 +1,37 @@
+const productsWithErrors =
+  SpreadsheetApp.getActiveSpreadsheet().getSheetByName("errors-products");
+
+function fetchMapCSVErrors() {
+  productsWithErrors
+    .getRange(1, 1, 1, 22)
+    .setValues([
+      [
+        "external_seller_reference",
+        "inventory",
+        "title",
+        "description",
+        "category",
+        "designer",
+        "designer2",
+        "designer3",
+        "size",
+        "exact_size",
+        "condition",
+        "color",
+        "price",
+        "tags",
+        "photo_urls",
+        "shipping_us",
+        "shipping_ca",
+        "shipping_uk",
+        "shipping_eu",
+        "shipping_asia",
+        "shipping_au",
+        "shipping_other",
+      ],
+    ]);
+}
+
 const validCategories = [
   "tops.long_sleeve_shirts",
   "tops.polos",
@@ -128,3 +162,13 @@ const validCategories = [
   "womens_bags_luggage.toiletry_pouches",
   "womens_bags_luggage.tote_bags",
 ];
+
+function validateCategories(sheet) {
+  const productCategories = sheet.getSheetValues(2, 5, sheet.getLastRow(), 1);
+  console.log(productCategories);
+  // const invalidCategories = productCategories.filter(
+  //   (category) => !validCategories.includes(category)
+  // );
+}
+
+validateCategories(grailed22);
