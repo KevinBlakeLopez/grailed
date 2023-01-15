@@ -1,6 +1,9 @@
 const productsWithErrors =
   SpreadsheetApp.getActiveSpreadsheet().getSheetByName("errors-products");
 
+const finalGrailed =
+  SpreadsheetApp.getActiveSpreadsheet().getSheetByName("finalGrailed");
+
 function fetchMapCSVErrors() {
   productsWithErrors
     .getRange(1, 1, 1, 22)
@@ -163,12 +166,38 @@ const validCategories = [
   "womens_bags_luggage.tote_bags",
 ];
 
-function validateCategories(sheet) {
-  const productCategories = sheet.getSheetValues(2, 5, sheet.getLastRow(), 1);
-  console.log(productCategories);
-  // const invalidCategories = productCategories.filter(
-  //   (category) => !validCategories.includes(category)
-  // );
+function validateCategories() {
+  const products = grailed22.getSheetValues(
+    2,
+    1,
+    grailed22.getLastRow(),
+    grailed22.getLastColumn()
+  );
+  const noCatsOrInvalid = products.filter(
+    (row) => !validCategories.includes(row[4] || !row[4])
+  );
+  const validatedProducts = products.filter((row) =>
+    validCategories.includes(row[4])
+  );
+
+  productsWithErrors
+    .getRange(2, 1, noCatsOrInvalid.length, noCatsOrInvalid[0].length)
+    .setValues(noCatsOrInvalid);
+
+  finalGrailed
+    .getRange(2, 1, validatedProducts.length, validatedProducts[0].length)
+    .setValues(validatedProducts);
 }
 
-validateCategories(grailed22);
+function clearErrorsSheet() {
+  productsWithErrors.clearContents();
+}
+
+function onEdit(e) {
+  // let activeSheet = e.source.getActiveSheet();
+  // if (activeSheet.getName() == "errors-products") {
+  if (e.range.columnStart == 5 && e.range.rowStart != 1) {
+    e.range.offset(1, 0).setValue("working");
+  }
+}
+// }

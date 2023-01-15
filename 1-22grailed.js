@@ -2,6 +2,18 @@ const grailed22 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
   "22grailed-inventory"
 );
 
+// const conversion = convertEUtoUS();
+const conversion = 1.1;
+
+const fileId = "1Pzj_DN87H9qrgby6Ee5ekz15ncZzvcjES4c7LpDbHqU";
+const masterSpreadsheet = SpreadsheetApp.openById(fileId);
+const masterSheetId = masterSpreadsheet.getActiveSheet().getSheetId();
+
+let csvLink = `https://docs.google.com/spreadsheets/d/${fileId}/export?format=csv&gid=${masterSheetId}`;
+
+let newResponse = UrlFetchApp.fetch(csvLink).getContentText();
+let brandsGatewayInventory = Utilities.parseCsv(newResponse);
+
 function fetchMapCSV22() {
   grailed22.clear();
   grailed22
@@ -33,8 +45,8 @@ function fetchMapCSV22() {
       ],
     ]);
 
-  let response = UrlFetchApp.fetch(link).getContentText();
-  const brandsGatewayInventory = Utilities.parseCsv(response);
+  // let response = UrlFetchApp.fetch(link).getContentText();
+  // const brandsGatewayInventory = Utilities.parseCsv(response);
 
   brandsGatewayInventory.shift();
 

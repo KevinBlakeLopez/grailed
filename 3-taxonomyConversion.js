@@ -1153,6 +1153,10 @@ function convertSubCategories(
     }
   }
 
+  if (!newSubCat) {
+    newSubCat = "noSubCat";
+  }
+
   const newOptions = [];
   if (options) {
     options.forEach((option) => {
@@ -1496,6 +1500,10 @@ function convertCategories(subcategory, gender, bgCat, title, description) {
     description.includes("pants")
   ) {
     category = "bottoms";
+  }
+
+  if (!category) {
+    category = "noCategory";
   }
 
   // if (!category) console.log(bgCat + "  " + subcategory);

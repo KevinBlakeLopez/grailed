@@ -486,6 +486,9 @@ function convertSize(
         "regexPattern: " +
         regexPattern
     );
-    return "no size conversion";
+  }
+
+  if (!grailedSize) {
+    return "noSizeConversion!";
   }
 }
