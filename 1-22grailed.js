@@ -62,7 +62,11 @@ function fetchMapCSV22() {
           column[25],
           column[20],
           htmlEntities(column[5]) + " " + column[6],
-          "original  size on tag: " + column[19] + "\n" + column[27],
+          "original size on tag: " +
+            column[19] +
+            "\n" +
+            column[27] +
+            "\n Sizing:\n Please note due to Grailed’s size requirements and differences between designer sizing, all sizes are automatically converted to their closest corresponding Grailed size based on the brand’s size chart.  Because of this, TAG SIZE MAY NOT BE THE SAME AS THE SIZE LISTED by Grailed.  We have included the tag size in all descriptions for your convenience. For specific size inquiries please reach out via message and we will be happy to assist! \n  About us:\n We are a small, woman owned business in the beautiful Hudson Valley region of NY. I am a registered nurse by trade, turned business owner after falling in love with resale.  All of our NWT luxury goods are purchased legitimately direct from the brands themselves and come with a 100% Authenticity Guarantee.  Please note due to the large quantity of items that are in their original packaging and carefully housed in our warehouse it may take 1-2 business days to accommodate additional photo and measurement requests for serious inquiries.  If you have any questions or if I can be of assistance in any way, please reach out! Ships out in 2-4 business days so we can package with care.  Most international deliveries arrive to your door in 5-7 business days.",
           convertCategories(
             htmlEntities(column[18].trim().toLowerCase()),
             column[16].trim().toLowerCase(),
@@ -124,7 +128,11 @@ function fetchMapCSV22() {
           column[25],
           column[20],
           htmlEntities(column[5]) + " " + column[6],
-          "original size on tag: " + column[19] + "\n" + column[27],
+          "original size on tag: " +
+            column[19] +
+            "\n" +
+            column[27] +
+            "\n Sizing:\n Please note due to Grailed’s size requirements and differences between designer sizing, all sizes are automatically converted to their closest corresponding Grailed size based on the brand’s size chart.  Because of this, TAG SIZE MAY NOT BE THE SAME AS THE SIZE LISTED by Grailed.  We have included the tag size in all descriptions for your convenience. For specific size inquiries please reach out via message and we will be happy to assist! \n  About us:\n We are a small, woman owned business in the beautiful Hudson Valley region of NY. I am a registered nurse by trade, turned business owner after falling in love with resale.  All of our NWT luxury goods are purchased legitimately direct from the brands themselves and come with a 100% Authenticity Guarantee.  Please note due to the large quantity of items that are in their original packaging and carefully housed in our warehouse it may take 1-2 business days to accommodate additional photo and measurement requests for serious inquiries.  If you have any questions or if I can be of assistance in any way, please reach out! Ships out in 2-4 business days so we can package with care.  Most international deliveries arrive to your door in 5-7 business days.",
           "womens_" +
             convertCategories(
               htmlEntities(column[18].trim().toLowerCase()),
