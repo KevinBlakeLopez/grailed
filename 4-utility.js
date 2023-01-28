@@ -12,6 +12,11 @@ function htmlEntities(str) {
 }
 
 function populateBGSheet() {
+  const brandsgateway = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+    "brandsgateway-inventory"
+  );
+  const link =
+    "https://brandsgateway.com//wp-json/wc-brandsgateway/v1/dropshipping-catalog/?api_key=BP5J4SRL7z8w74nv4TRX&&lang=en&format=csv&download=1";
   brandsgateway.clear();
   console.log(brandsgateway.getMaxRows());
 

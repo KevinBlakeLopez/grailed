@@ -191,6 +191,17 @@ function convertWomensBottoms(size) {
       return size;
     }
   }
+  if (/^\s*([3-6]\d)\s*$/i.test(size)) {
+    if (parseInt(size) % 2 != 0) {
+      return (parseInt(size) - 1).toString();
+    } else if (parseInt(size) < 34) {
+      return "34";
+    } else if (parseInt(size) > 52) {
+      return "52";
+    } else {
+      return size;
+    }
+  }
 }
 
 function convertTailoring(size) {
@@ -203,6 +214,10 @@ function convertTailoring(size) {
       return "42";
     } else if (size == "43") {
       return "44";
+    } else if (parseInt(size) > 54) {
+      return "54";
+    } else if (parseInt(size) < 34) {
+      return "34";
     } else {
       return size;
     }
@@ -218,11 +233,11 @@ function convertTailoring(size) {
     } else if (size === "l") {
       return "52";
     } else if (size === "xl") {
-      return "56";
+      return "54";
     } else if (size === "xxl") {
-      return "58";
+      return "54";
     } else if (size === "3xl" || size === "xxxl") {
-      return "60";
+      return "54";
     } else {
       return size;
     }
@@ -267,6 +282,7 @@ function removeUnusedGrailedSizes(
   } else if (
     parseInt(grailedSize) > 44 &&
     gCategory === "bottoms" &&
+    gender === "men" &&
     /^\s*W\s*([4-6]\d)\s*\|?\s*(IT|L)?\s*(\d\d)?\s*$/i.test(originalSize)
   ) {
     return "44";
@@ -347,20 +363,19 @@ function convertSize(
   ) {
     return "one size";
   } else if (
-    category === "bottoms" &&
+    gCategory === "bottoms" &&
     size === "one size" &&
     gender === "women"
   ) {
-    console.log("here");
     return "universal_32";
   } else if (
-    (category === "tops" || category === "outerwear") &&
+    (gCategory === "tops" || gCategory === "outerwear") &&
     size === "one size" &&
     gender === "men"
   ) {
     return "m";
   } else if (
-    category === "bottoms" &&
+    gCategory === "bottoms" &&
     size === "one size" &&
     gender === "men"
   ) {
@@ -425,9 +440,7 @@ function convertSize(
   if (
     USre.test(grailedSize) &&
     gender === "women" &&
-    (gCategory === "tops" ||
-      gCategory === "outerwear" ||
-      gCategory === "dresses")
+    ["tops", "dresses", "outerwear"].includes(gCategory)
   ) {
     return "universal_" + grailedSize;
   } else if (
@@ -435,17 +448,14 @@ function convertSize(
     (regexPattern.toString() === ITnumUSDEre.toString() ||
       regexPattern.toString() === ITnumUSre.toString() ||
       regexPattern.toString() === USnum.toString() ||
-      regexPattern.toString() === ITnumre.toString() ||
-      (gCategory === "bottoms" &&
-        (regexPattern.toString() === numUSType2.toString() ||
-          regexPattern.toString() === WnumITnum.toString())))
+      regexPattern.toString() === ITnumre.toString())
   ) {
     return "it_" + grailedSize;
   } else if (
     gender === "women" &&
     (Wnum.test(size) ||
       WnumLnum.test(size) ||
-      (numUSType2.test(size) && gCategory === "tops"))
+      (numUSType2.test(size) && gCategory.includes("tops")))
   ) {
     return "universal_" + grailedSize;
   } else if (
@@ -460,7 +470,7 @@ function convertSize(
     (regexPattern.toString() === EUnumUSnumre1.toString() ||
       regexPattern.toString() === numRE.toString() ||
       regexPattern.toString() === ITnumUSre.toString()) &&
-    gCategory === "footwear"
+    (gCategory.includes("footwear") || category === "shoes")
   ) {
     if (gender === "women") {
       return "it_" + grailedSize.toString().replace(".", "-");
@@ -469,7 +479,17 @@ function convertSize(
     }
   } else if (gCategory === "tops" && gender === "men") {
     return convertMensShirts(grailedSize, regexPattern);
-  } else if (gCategory === "bottoms" && gender === "women") {
+  } else if (
+    (gCategory.includes("bottoms") ||
+      ["jeans & pants", "skirts", "shorts"].includes(subCategory)) &&
+    gender === "women"
+  ) {
+    if (
+      regexPattern.toString() === numUSType2.toString() ||
+      regexPattern.toString() === WnumITnum.toString()
+    ) {
+      return "it_" + convertWomensBottoms(grailedSize);
+    }
     return convertWomensBottoms(grailedSize);
   } else if (grailedSize) {
     return grailedSize;
@@ -486,9 +506,6 @@ function convertSize(
         "regexPattern: " +
         regexPattern
     );
-  }
-
-  if (!grailedSize) {
     return "noSizeConversion!";
   }
 }

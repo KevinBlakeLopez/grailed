@@ -51,20 +51,15 @@ function fetchMapCSV22() {
   brandsGatewayInventory.shift();
 
   const grailedInventory = brandsGatewayInventory
-    .filter(
-      (column) =>
-        column[0].trim().toLowerCase() !== "parent" &&
-        (column[16].trim().toLowerCase() === "men" ||
-          column[16].trim().toLowerCase() === "women" ||
-          column[16].trim().toLowerCase() === "unisex")
-    )
+    .filter((column) => column[0].trim().toLowerCase() !== "parent")
     .map((column) => {
       if (
         column[16].trim().toLowerCase() === "men" ||
-        column[16].trim().toLowerCase() === "unisex"
+        column[16].trim().toLowerCase() === "unisex" ||
+        !column[16]
       ) {
         return [
-          column[3],
+          column[25],
           column[20],
           htmlEntities(column[5]) + " " + column[6],
           "original  size on tag: " + column[19] + "\n" + column[27],
@@ -115,7 +110,7 @@ function fetchMapCSV22() {
           column[21].toLowerCase(),
           Math.round(wholesaleMarkup(column[8] * conversion) / 10) * 10,
           htmlEntities(column[5].replace(/\s/g, "").toLowerCase()),
-          column[13],
+          column[10],
           0,
           0,
           0,
@@ -126,7 +121,7 @@ function fetchMapCSV22() {
         ];
       } else if (column[16].trim().toLowerCase() === "women") {
         return [
-          column[3],
+          column[25],
           column[20],
           htmlEntities(column[5]) + " " + column[6],
           "original size on tag: " + column[19] + "\n" + column[27],
@@ -178,7 +173,7 @@ function fetchMapCSV22() {
           column[21].toLowerCase(),
           Math.round(wholesaleMarkup(column[8] * conversion) / 10) * 10,
           htmlEntities(column[5].replace(/\s/g, "").toLowerCase()),
-          column[13],
+          column[10],
           0,
           0,
           0,

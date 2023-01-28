@@ -4,8 +4,39 @@ const productsWithErrors =
 const finalGrailed =
   SpreadsheetApp.getActiveSpreadsheet().getSheetByName("finalGrailed");
 
-function fetchMapCSVErrors() {
+function formatErrorsHeader() {
   productsWithErrors
+    .getRange(1, 1, 1, 22)
+    .setValues([
+      [
+        "external_seller_reference",
+        "inventory",
+        "title",
+        "description",
+        "category",
+        "designer",
+        "designer2",
+        "designer3",
+        "size",
+        "exact_size",
+        "condition",
+        "color",
+        "price",
+        "tags",
+        "photo_urls",
+        "shipping_us",
+        "shipping_ca",
+        "shipping_uk",
+        "shipping_eu",
+        "shipping_asia",
+        "shipping_au",
+        "shipping_other",
+      ],
+    ]);
+}
+
+function formatFinalHeader() {
+  finalGrailed
     .getRange(1, 1, 1, 22)
     .setValues([
       [
@@ -173,16 +204,27 @@ function validateCategories() {
     grailed22.getLastRow(),
     grailed22.getLastColumn()
   );
-  const noCatsOrInvalid = products.filter(
-    (row) => !validCategories.includes(row[4] || !row[4])
+  const invalidProducts = products.filter(
+    (row) =>
+      !validCategories.includes(
+        row[4] ||
+          !row[4] ||
+          row[8] === "noSizeConversion!" ||
+          row[9] === "noSizeConversion!" ||
+          (!row[8] && !row[9])
+      )
   );
-  const validatedProducts = products.filter((row) =>
-    validCategories.includes(row[4])
+  const validatedProducts = products.filter(
+    (row) =>
+      (row[8] || row[9]) &&
+      row[8] !== "noSizeConversion!" &&
+      row[9] !== "noSizeConversion" &&
+      validCategories.includes(row[4])
   );
 
   productsWithErrors
-    .getRange(2, 1, noCatsOrInvalid.length, noCatsOrInvalid[0].length)
-    .setValues(noCatsOrInvalid);
+    .getRange(2, 1, invalidProducts.length, invalidProducts[0].length)
+    .setValues(invalidProducts);
 
   finalGrailed
     .getRange(2, 1, validatedProducts.length, validatedProducts[0].length)
@@ -191,6 +233,10 @@ function validateCategories() {
 
 function clearErrorsSheet() {
   productsWithErrors.clearContents();
+}
+
+function clearFinalSheet() {
+  finalGrailed.clearContents();
 }
 
 function onEdit(e) {
