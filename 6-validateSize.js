@@ -453,6 +453,13 @@ function populateErrorsSheet() {
 }
 
 function populateFinalSheet() {
+  const products = grailed22.getSheetValues(
+    2,
+    1,
+    grailed22.getLastRow(),
+    grailed22.getLastColumn()
+  );
+
   const validProducts = products.filter((product) => {
     let categoryString = product[4].toLowerCase();
     let matchingKey;
