@@ -1,9 +1,9 @@
-function onOpen() {
-  var ui = SpreadsheetApp.getUi();
-  let menue = ui.createMenu("Utilites");
-  menue.addItem(`BG Data`, "populateBGSheet");
-  menue.addToUi();
-}
+// function onOpen() {
+//   var ui = SpreadsheetApp.getUi();
+//   let menue = ui.createMenu("Utilites");
+//   menue.addItem(`BG Data`, "populateBGSheet");
+//   menue.addToUi();
+// }
 
 function htmlEntities(str) {
   return String(str)
@@ -63,3 +63,5 @@ function convertEUtoUS() {
   const res = JSON.parse(response.getContentText());
   return res.result;
 }
+
+const conversion = convertEUtoUS();

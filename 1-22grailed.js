@@ -2,8 +2,6 @@ const grailed22 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
   "22grailed-inventory"
 );
 
-// const conversion = convertEUtoUS();
-const conversion = 1.1;
 
 const fileId = "1Pzj_DN87H9qrgby6Ee5ekz15ncZzvcjES4c7LpDbHqU";
 const masterSpreadsheet = SpreadsheetApp.openById(fileId);
@@ -114,7 +112,7 @@ function fetchMapCSV22() {
           column[21].toLowerCase(),
           Math.round(wholesaleMarkup(column[8] * conversion) / 10) * 10,
           htmlEntities(column[5].replace(/\s/g, "").toLowerCase()),
-          `${column[10]} + ", " + ${column[11]} + ", " + ${column[12]} + ", " + ${column[13]} + ", " + ${column[14]}} + ", " + ${column[15]}`,
+          `${column[10]}, ${column[11]}, ${column[12]}, ${column[13]}, ${column[14]}, ${column[15]}`,
           0,
           0,
           0,
@@ -181,7 +179,7 @@ function fetchMapCSV22() {
           column[21].toLowerCase(),
           Math.round(wholesaleMarkup(column[8] * conversion) / 10) * 10,
           htmlEntities(column[5].replace(/\s/g, "").toLowerCase()),
-          `${column[10]} + ", " + ${column[11]} + ", " + ${column[12]} + ", " + ${column[13]} + ", " + ${column[14]}  + ", " + ${column[15]}`,
+          `${column[10]}, ${column[11]}, ${column[12]}, ${column[13]}, ${column[14]}, ${column[15]}`,
           0,
           0,
           0,

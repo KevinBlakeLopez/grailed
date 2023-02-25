@@ -166,6 +166,8 @@ function convertMensShirts(gSize, RE) {
     } else if (gSize == "44") {
       return "xl";
     }
+  } else if (gSize == "2xl") {
+    return "xxl";
   } else {
     return gSize;
   }
